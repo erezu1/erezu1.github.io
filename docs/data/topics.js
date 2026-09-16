@@ -7,7 +7,7 @@ window.TOPICS = [
     "lead": "What is the quantum state of our universe?",
     "body": [
       "The early universe is one of the few places where quantum physics and gravity meet in an observable way. Small temperature variations in the cosmic microwave background are thought to have begun as quantum fluctuations, stretched to cosmic size by the rapid expansion of the early universe. Questions about the quantum state of the universe are therefore not only conceptual.",
-      "A closed universe, finite and with nothing outside it, is a strange quantum system: it has no external observer, and no boundary of the kind on which a holographic description usually lives. Which state describes it, and what a measurement inside it means, are questions without settled answers. I am interested in the observables available to an observer in such a universe, and in what entropy means for that observer."
+      "A closed universe is a strange quantum system: it has no external observer, and no boundary of the kind on which a holographic description usually lives. Which state describes it, and what a measurement inside it means, are questions without settled answers. I am interested in the observables available to an observer in such a universe, and in what entropy means for that observer."
     ],
     "papers": [
       "2505.14771"
@@ -35,7 +35,7 @@ window.TOPICS = [
     "lead": "What is spacetime made of?",
     "body": [
       "One of the most surprising lessons of string theory is that quantum gravity can be described by a quantum system with no gravity at all. In such a description, spacetime and gravity are not fundamental: they emerge from the dynamics of an ordinary quantum system.",
-      "This is holography. It gives a precise meaning to the question of what spacetime is made of, and it turns hard questions about gravity into questions about quantum mechanics. I am interested in different aspects of this correspondence, for example in cases where the gravitational description can be derived from the quantum system rather than conjectured."
+      "This is holography. It gives a precise meaning to the question of what spacetime is made of, and it turns hard questions about gravity into questions about quantum mechanics. I am interested in different aspects of this correspondence, such as cases where the gravitational description can be derived from the quantum system rather than conjectured."
     ],
     "papers": [
       "2406.14605",
@@ -50,7 +50,7 @@ window.TOPICS = [
     "lead": "When does a quantum system become chaotic?",
     "body": [
       "Chaos is familiar from classical mechanics: a small change in the initial conditions grows exponentially, and prediction soon becomes impossible. Quantum systems can be chaotic as well: a small disturbance quickly spreads through the whole system, until no simple measurement can tell it was there.",
-      "Black holes turn out to be, in a precise sense, among the most chaotic systems known. This is one reason quantum chaos matters for quantum gravity. I am interested in the different signatures of quantum chaos, and in how quantum systems become chaotic as their interactions are changed."
+      "Black holes turn out to be, in a precise sense, among the most chaotic systems known. This is one reason quantum chaos matters for quantum gravity. I work on the signatures of quantum chaos, and on how quantum systems become chaotic as their interactions are changed."
     ],
     "papers": [
       "2207.11980",

@@ -131,7 +131,7 @@ main.container::before {
   position: absolute;
   top: 0; bottom: 0;
   left: calc(clamp(1.25rem, 5vw, 2.5rem) - .75rem);
-  width: 1px;
+  width: 1.5px;
   background: var(--margin);
   pointer-events: none;
 }
