@@ -6,8 +6,8 @@ window.TOPICS = [
     "anim": "cosmos",
     "lead": "What is the quantum state of our universe?",
     "body": [
-      "The early universe is one of the few places where quantum physics and gravity meet in an observable way. Small temperature variations of the cosmic microwave background began as quantum fluctuations, stretched to cosmic size by the expansion of the universe. Treating the universe itself as a quantum system is therefore not only a conceptual question.",
-      "Conceptually, a closed universe is a strange quantum system: it has no outside, no external observer, and no boundary on which a holographic description could live. Which state describes it, and what a measurement inside it means, are questions without settled answers. I am interested in the observables available to an observer in such a universe, and in what they can teach us about the meaning of entropy, and of quantum mechanics itself."
+      "The early universe is one of the few places where quantum physics and gravity meet in an observable way. Small temperature variations in the cosmic microwave background are thought to have begun as quantum fluctuations, stretched to cosmic size by the rapid expansion of the early universe. Questions about the quantum state of the universe are therefore not only conceptual.",
+      "A closed universe, finite and with nothing outside it, is a strange quantum system: it has no external observer, and no boundary of the kind on which a holographic description usually lives. Which state describes it, and what a measurement inside it means, are questions without settled answers. I am interested in the observables available to an observer in such a universe, and in what entropy means for that observer."
     ],
     "papers": [
       "2505.14771"
@@ -19,8 +19,8 @@ window.TOPICS = [
     "anim": "stringStar",
     "lead": "What happens to a black hole when it shrinks to the size of a string?",
     "body": [
-      "A black hole is usually thought of as pure geometry: a horizon surrounding a region from which nothing escapes. Quantum mechanically, black holes have a temperature and an entropy, and slowly evaporate. As a black hole shrinks, it eventually becomes so small that classical geometry can no longer be trusted, and one has to ask what it has become.",
-      "String theory suggests an answer: the black hole transitions into a hot, highly excited string, held together by its own gravity. I study this transition, what it looks like in different situations, and what it can teach us about the microscopic structure of black holes."
+      "A black hole is usually thought of as pure geometry: a horizon surrounding a region from which nothing escapes. Quantum mechanically, it has a temperature and an entropy, and slowly evaporates. As it shrinks, it eventually becomes so small that classical geometry can no longer be trusted, and one has to ask what it has turned into.",
+      "String theory suggests an answer: the black hole transitions into a highly excited string, held together by its own gravity. I study this transition, what it looks like in different situations, and what it can teach us about the microscopic structure of black holes."
     ],
     "papers": [
       "2608.21511",
@@ -34,8 +34,8 @@ window.TOPICS = [
     "anim": "holography",
     "lead": "What is spacetime made of?",
     "body": [
-      "One of the most surprising lessons of string theory is that quantum gravity can be described by a quantum system with no gravity at all. In such a description, spacetime and the gravitational physics in it are not fundamental. They emerge from the dynamics of an ordinary quantum system.",
-      "This is holography. It gives a precise meaning to the question of what spacetime is made of, and it turns hard questions about gravity into questions about quantum mechanics. Part of my work asks where this correspondence comes from, in cases where the gravitational description can be derived from the quantum system rather than conjectured."
+      "One of the most surprising lessons of string theory is that quantum gravity can be described by a quantum system with no gravity at all. In such a description, spacetime and gravity are not fundamental: they emerge from the dynamics of an ordinary quantum system.",
+      "This is holography. It gives a precise meaning to the question of what spacetime is made of, and it turns hard questions about gravity into questions about quantum mechanics. I am interested in different aspects of this correspondence, for example in cases where the gravitational description can be derived from the quantum system rather than conjectured."
     ],
     "papers": [
       "2406.14605",
@@ -49,8 +49,8 @@ window.TOPICS = [
     "anim": "chaos",
     "lead": "When does a quantum system become chaotic?",
     "body": [
-      "Chaos is familiar from classical mechanics: a small change in the initial conditions grows exponentially, and prediction soon becomes impossible. Quantum systems can be chaotic as well.",
-      "Black holes turn out to be, in a precise sense, among the most chaotic systems known, which is one reason quantum chaos matters for quantum gravity. I am interested in different avatars of quantum chaos, and in how quantum systems become chaotic as their couplings are changed."
+      "Chaos is familiar from classical mechanics: a small change in the initial conditions grows exponentially, and prediction soon becomes impossible. Quantum systems can be chaotic as well: a small disturbance quickly spreads through the whole system, until no simple measurement can tell it was there.",
+      "Black holes turn out to be, in a precise sense, among the most chaotic systems known. This is one reason quantum chaos matters for quantum gravity. I am interested in the different signatures of quantum chaos, and in how quantum systems become chaotic as their interactions are changed."
     ],
     "papers": [
       "2207.11980",
