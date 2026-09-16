@@ -309,7 +309,8 @@ body[data-page="home"]:not(.show-brand) .brand { opacity: 0; transform: translat
 .section { margin-block: calc(2 * var(--line)); }
 .section-head {
   position: sticky; top: var(--stick); z-index: 5;   /* stays put under the header while its section scrolls by */
-  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  /* on a narrow phone the link drops to its own line rather than breaking the heading in two */
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: .2rem 1rem;
   border-bottom: 1px solid var(--rule);
   padding: .35rem 0 .4rem;
   margin-bottom: 1.25rem;
@@ -318,7 +319,7 @@ body[data-page="home"]:not(.show-brand) .brand { opacity: 0; transform: translat
   transition: background-color .35s var(--ease), border-color .35s var(--ease);
 }
 .section-head h2 { margin: 0; }
-.section-head a { font-size: .95rem; white-space: nowrap; }
+.section-head a { font-size: .95rem; white-space: nowrap; margin-left: auto; }
 .eyebrow {
   font-family: var(--mono);
   font-size: .72rem;
