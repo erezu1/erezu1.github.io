@@ -25,6 +25,7 @@
   --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --radius: 14px;
+  --measure: 40rem;                    /* how wide an abstract, and the line above it, are allowed to run */
   --stick: 3.3rem;
   --topic-pad: 2.5rem;
   --land-gap: .85rem;                   /* air between the header and a topic you land on */
@@ -469,8 +470,14 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
   .pub-meta { flex-direction: column; gap: .15rem; padding-top: .3rem; }
 }
 /* the foot of an entry: what you can open on the left, where the paper belongs on the right */
-.pub-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; margin-top: .45rem; }
-.pub-foot .topic-link { margin-left: auto; }   /* keeps to the right, on its own line when the phone is narrow */
+/* the foot ends where the abstract ends, not at the edge of the page */
+.pub-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; margin-top: .45rem; max-width: var(--measure); }
+.pub-foot .topic-link { margin-left: auto; }   /* the narrowest phones: its own line, still to the right */
+@media (min-width: 360px) {   /* from here the label and the toggle fit side by side (77px + 198px + a gap) */
+  /* out of the flow, so the abstract keeps its full width and the link stays on the summary's line */
+  .pub-foot { display: block; position: relative; }
+  .pub-foot .topic-link { position: absolute; right: 0; top: 0; margin-left: 0; }
+}
 .pub-foot .abstract { flex: 1 1 auto; min-width: 0; margin-top: 0; }
 .abstract { font-size: .92rem; color: var(--ink-2); }
 .abstract summary {
@@ -482,7 +489,7 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 .abstract summary::before { content: "+"; font-family: var(--mono); display: inline-block; transition: transform .25s var(--ease); }
 .abstract.is-open summary::before, .abstract[open]:not(.is-open):not([data-animating]) summary::before { transform: rotate(45deg); }
 .abstract-body { display: flow-root; }
-.abstract p { margin: 0; max-width: 72ch; }
+.abstract p { margin: 0; max-width: var(--measure); }
 
 .year-group { margin-top: 1.5rem; }
 .year-head {
