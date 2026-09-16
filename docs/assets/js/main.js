@@ -224,13 +224,15 @@
     const hashTopic = () => sections.find(s => s.id === decodeURIComponent(location.hash.slice(1)));
     // runs fn once the page has stopped moving (the scroll to a topic is animated, see scroll-behavior)
     const whenStill = fn => {
-      let last = null, still = 0, frames = 0;
+      let last = null, still = 0, frames = 0, done = false;
+      const run = () => { if (!done) { done = true; fn(); } };
       const step = () => {
         if (window.scrollY === last) still++; else { still = 0; last = window.scrollY; }
-        if (still >= 3 || ++frames > 120) return fn();
+        if (still >= 3 || ++frames > 120) return run();
         requestAnimationFrame(step);
       };
       requestAnimationFrame(step);
+      setTimeout(run, 2000);   // a page opened in a background tab gets no frames: don't wait for ever
     };
     const land = (smooth, andMark = true) => {
       const s = hashTopic();

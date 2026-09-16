@@ -27,6 +27,7 @@
   --radius: 14px;
   --stick: 3.3rem;
   --topic-pad: 2.5rem;
+  --land-gap: .85rem;                   /* air between the header and a topic you land on */
   --footer-pad: 1.25rem;                /* the last of the page, below the footer line */                  /* air above and below a topic on the research page */                      /* the line under the sticky header: titles park here, links land here */
   --pad: clamp(1.75rem, 5vw, 2.5rem);   /* side margins of the page */
   --rule-gap: 1.15rem;                  /* space between the red margin rule and the text */
@@ -479,8 +480,8 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
   display: grid;
   gap: 1.25rem;
   padding-block: var(--topic-pad);
-  /* a link to a topic lands with its drawing on the header line: the padding above it stays out of sight */
-  scroll-margin-top: calc(var(--stick) - var(--topic-pad));
+  /* a link to a topic lands with its drawing just clear of the header: the padding above it stays out of sight */
+  scroll-margin-top: calc(var(--stick) + var(--land-gap) - var(--topic-pad));
 }
 .topic:last-of-type { padding-bottom: 1rem; }
 .topic-figure {
