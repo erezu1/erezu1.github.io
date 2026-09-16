@@ -367,6 +367,11 @@ body[data-page="home"]:not(.show-brand) .brand { opacity: 0; transform: translat
 }
 
 .links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+/* on a phone the three profile links are meant to sit on one line: give them a little less air */
+@media (max-width: 560px) {
+  .links { gap: .3rem; }
+  .links .chip { font-size: .8rem; padding: .4rem .45rem; }   /* narrower, but as tall as before to stay easy to tap */
+}
 #pub-profile-links { margin: 0 0 1.25rem; }
 .chip {
   display: inline-flex; align-items: center; gap: .4rem;
