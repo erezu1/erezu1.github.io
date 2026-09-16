@@ -73,7 +73,7 @@
   function paperHTML(p, { compact = false } = {}) {
     const tags = (p.topics || []).map(s => {
       const t = topicOf(s);
-      return t ? `<a class="tag topic-tag" href="research#${s}">${esc(t.title)}</a>` : "";
+      return t ? `<a class="topic-link" href="research#${s}"><span class="to" aria-hidden="true">\u2192</span>${esc(t.title)}</a>` : "";
     }).join("");
     const links = [
       p.inspire_url && `<a href="${p.inspire_url}" target="_blank" rel="noopener">INSPIRE</a>`,

@@ -445,12 +445,12 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 .pub-place { color: var(--ink-2); font-size: .95rem; margin-top: .15rem; }
 .pub-note { color: var(--ink-3); font-size: .85rem; margin-top: .1rem; }
 .pub-links { display: flex; flex-wrap: wrap; gap: .35rem .9rem; margin-top: .35rem; font-size: .85rem; align-items: center; }
-.pub-links .tag {
-  font-family: var(--mono); font-size: .7rem; padding: .1rem .5rem;
-  border: 1px solid var(--rule); border-radius: 999px; color: var(--ink-2);
-}
-.pub-links .tag.topic-tag { cursor: pointer; }
-@media (hover: hover) { .pub-links .tag.topic-tag:hover { border-color: var(--accent); color: var(--accent); } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
+/* the way across to the research page: the same size and weight as the links beside it, but in ink
+   with the arrow the section links use, so it reads as a move inside the site rather than a way out */
+.pub-links .topic-link { color: var(--ink-2); display: inline-flex; align-items: baseline; gap: .3rem; }
+.pub-links .topic-link .to { color: var(--ink-3); }
+@media (hover: hover) { .pub-links .topic-link:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
+.pub-links .topic-link:active { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 .cites { font-family: var(--mono); font-size: .75rem; color: var(--ink-3); }
 .cites b { color: var(--ink-2); font-weight: 500; }
 @media (min-width: 720px) {
