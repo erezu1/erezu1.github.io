@@ -198,14 +198,14 @@
     // titles are sticky, so the previous one stays at the header until the next crosses the middle.
     // A change takes effect after a short pause, and is cancelled if the scroll position moves back.
     const sections = $$(".topic"), inTopHalf = new Set();
-    let current = null, pending = null, timer = 0, lockY = null;
+    let current = null, pending = null, timer = 0, locked = false;
     const mark = next => {
       if (current) current.classList.remove("is-current");
       current = next;
       if (current) current.classList.add("is-current");
     };
     const settle = () => {
-      if (lockY !== null) return;          // a topic reached through a link keeps its marker until you scroll on
+      if (locked) return;                  // a topic reached through a link keeps its marker until you scroll on
       let next = null;
       sections.forEach(s => { if (inTopHalf.has(s)) next = s; });
       if (next === pending) return;
@@ -218,31 +218,29 @@
     }, { rootMargin: "0px 0px -38% 0px", threshold: 0 });   // "up" = the title is above 62% of the screen height
     sections.forEach(s => { const h2 = s.querySelector("h2"); if (h2) topHalf.observe(h2); });
 
-    // Arriving from a topic card: land on the title itself, not on the top of the section — on a phone
-    // the drawing sits above the title and would otherwise fill the screen — and mark the topic at once
-    // instead of waiting for the scroll rule to notice it.
+    // Landing on a topic — from a card on the home page, from a link with #slug, or on a refresh — puts
+    // its drawing at the top of the page (the CSS scroll-margin sets that line) and marks the topic at
+    // once, without waiting for the scroll rule. The rule takes over again when you scroll away.
+    const hashTopic = () => sections.find(s => s.id === decodeURIComponent(location.hash.slice(1)));
     const land = smooth => {
-      const id = decodeURIComponent(location.hash.slice(1));
-      const s = id && document.getElementById(id);
-      if (!s || !sections.includes(s)) return;
-      const h2 = s.querySelector("h2");
-      const y = Math.max(0, window.scrollY + h2.getBoundingClientRect().top - 65);   // just below the header
-      window.scrollTo({ top: y, behavior: smooth ? "smooth" : "auto" });
-      clearTimeout(timer); pending = s; mark(s);
-      lockY = y;
-      setTimeout(() => { if (lockY !== null) lockY = window.scrollY; }, smooth ? 600 : 80);
+      const s = hashTopic();
+      if (!s) return;
+      s.scrollIntoView({ block: "start", behavior: smooth ? "smooth" : "auto" });
+      clearTimeout(timer); pending = s; mark(s); locked = true;
     };
-    addEventListener("scroll", () => {
-      if (lockY === null) return;
-      if (Math.abs(window.scrollY - lockY) > 24) { lockY = null; settle(); }   // you moved on: back to the scroll rule
-    }, { passive: true });
-    if (location.hash) {
-      land(false);
-      // the fonts and the browser's own jump to the anchor can still move the page under us
-      addEventListener("load", () => { if (lockY !== null) land(false); });
-      if (document.fonts) document.fonts.ready.then(() => { if (lockY !== null) land(false); });
-    }
+    // only a scroll you make yourself hands the page back to the scroll rule; the jumps the browser makes
+    // while the page settles (the anchor, late fonts) must not steal the marker
+    const unlock = () => { if (locked) { locked = false; settle(); } };
+    ["wheel", "touchmove", "keydown", "mousedown"].forEach(ev => addEventListener(ev, unlock, { passive: true }));
     addEventListener("hashchange", () => land(true));
+    if (hashTopic()) {
+      if (history.scrollRestoration) history.scrollRestoration = "manual";   // a refresh lands on the topic, not where you were
+      land(false);
+      // late fonts and the browser's own jump to the anchor move the page under us; land again while untouched
+      const again = () => { if (locked) land(false); };
+      addEventListener("load", again);
+      if (document.fonts) document.fonts.ready.then(again);
+    }
   }
 
   /* ---------- publications ---------- */

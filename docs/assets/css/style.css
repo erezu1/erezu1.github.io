@@ -25,6 +25,8 @@
   --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --radius: 14px;
+  --stick: 3.3rem;
+  --topic-pad: 2.5rem;                  /* air above and below a topic on the research page */                      /* the line under the sticky header: titles park here, links land here */
   --pad: clamp(1.75rem, 5vw, 2.5rem);   /* side margins of the page */
   --rule-gap: 1.15rem;                  /* space between the red margin rule and the text */
   --grid-size: 24px;
@@ -294,7 +296,7 @@ body[data-page="home"]:not(.show-brand) .brand { opacity: 0; transform: translat
 /* ---------- sections ---------- */
 .section { margin-block: calc(2 * var(--line)); }
 .section-head {
-  position: sticky; top: 3.3rem; z-index: 5;   /* stays put under the header while its section scrolls by */
+  position: sticky; top: var(--stick); z-index: 5;   /* stays put under the header while its section scrolls by */
   display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
   border-bottom: 1px solid var(--rule);
   padding: .35rem 0 .4rem;
@@ -448,7 +450,7 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 
 .year-group { margin-top: 1.5rem; }
 .year-head {
-  position: sticky; top: 3.3rem; z-index: 5;
+  position: sticky; top: var(--stick); z-index: 5;
   font-family: var(--serif); font-size: 1.1rem; color: var(--ink-2);
   margin: 0; padding: .35rem 0 .25rem; border-bottom: 1px solid var(--rule);
   display: flex; align-items: baseline; gap: .6rem;
@@ -475,10 +477,11 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 .topic {
   display: grid;
   gap: 1.25rem;
-  padding-block: 2.5rem;
+  padding-block: var(--topic-pad);
+  /* a link to a topic lands with its drawing on the header line: the padding above it stays out of sight */
+  scroll-margin-top: calc(var(--stick) - var(--topic-pad));
 }
 .topic:last-of-type { padding-bottom: 1rem; }
-.topic { scroll-margin-top: 5rem; }
 .topic-figure {
   width: min(100%, 360px);
   margin: 0 auto;
@@ -497,7 +500,7 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 }
 .topic-body h2 {
   /* the title stays under the header while its topic scrolls by */
-  position: sticky; top: 3.3rem; z-index: 5;
+  position: sticky; top: var(--stick); z-index: 5;
   margin: 0 0 .35rem; padding: .3rem 0;
   background: color-mix(in srgb, var(--paper) 86%, transparent);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
