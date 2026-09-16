@@ -219,14 +219,16 @@
     sections.forEach(s => { const h2 = s.querySelector("h2"); if (h2) topHalf.observe(h2); });
 
     // Landing on a topic — from a card on the home page, from a link with #slug, or on a refresh — puts
-    // its drawing at the top of the page (the CSS scroll-margin sets that line) and marks the topic at
-    // once, without waiting for the scroll rule. The rule takes over again when you scroll away.
+    // its drawing at the top of the page (the CSS scroll-margin sets that line) and marks it a moment
+    // later, whatever the scroll rule would have said. The rule takes over again when you scroll away.
     const hashTopic = () => sections.find(s => s.id === decodeURIComponent(location.hash.slice(1)));
-    const land = smooth => {
+    const land = (smooth, andMark = true) => {
       const s = hashTopic();
       if (!s) return;
       s.scrollIntoView({ block: "start", behavior: smooth ? "smooth" : "auto" });
-      clearTimeout(timer); pending = s; mark(s); locked = true;
+      locked = true;
+      // the highlighter arrives a moment after the landing, the same pause the scroll rule takes
+      if (andMark) { clearTimeout(timer); pending = s; timer = setTimeout(() => mark(s), 500); }
     };
     // only a scroll you make yourself hands the page back to the scroll rule; the jumps the browser makes
     // while the page settles (the anchor, late fonts) must not steal the marker
@@ -237,7 +239,7 @@
       if (history.scrollRestoration) history.scrollRestoration = "manual";   // a refresh lands on the topic, not where you were
       land(false);
       // late fonts and the browser's own jump to the anchor move the page under us; land again while untouched
-      const again = () => { if (locked) land(false); };
+      const again = () => { if (locked) land(false, false); };   // re-place the page, leave the marker alone
       addEventListener("load", again);
       if (document.fonts) document.fonts.ready.then(again);
     }

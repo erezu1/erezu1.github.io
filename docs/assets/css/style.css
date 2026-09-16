@@ -156,9 +156,6 @@ main.container::before,
   background: var(--margin);
   pointer-events: none;
 }
-/* the footer's own padding is the last of the page: the rule runs through it */
-.site-footer .container::before { bottom: calc(-1 * var(--footer-pad)); }
-
 @media (min-width: 1180px) {
   main.container::before,
   .site-footer .container::before { left: -1.5rem; }
@@ -545,11 +542,14 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 
 /* ---------- footer ---------- */
 .site-footer {
-  padding-block: 1rem var(--footer-pad);
   font-size: .82rem;
   color: var(--ink-3);
 }
-.site-footer .container { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; }
+.site-footer .container {
+  /* the footer's air sits inside the container, so the red rule covers it to the last pixel */
+  padding-block: 1rem var(--footer-pad);
+  display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between;
+}
 .site-footer a { color: var(--ink-2); }
 
 /* KaTeX tweaks */
