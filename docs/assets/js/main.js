@@ -88,8 +88,11 @@
         <h3 class="pub-title"><a href="${titleHref}"${compact ? "" : ' data-toggle="abstract"'}>${p.title}</a></h3>
         <div class="pub-authors">${fmtAuthors(p.authors)}</div>
         ${p.journal ? `<div class="pub-journal">${esc(p.journal)}</div>` : ""}
-        <div class="pub-links">${links}${tags}</div>
-        ${!compact && p.abstract ? `<details class="abstract"><summary>Abstract</summary><div class="abstract-body"><p>${p.abstract}</p></div></details>` : ""}
+        <div class="pub-links">${links}</div>
+        ${compact ? "" : `<div class="pub-foot">
+          ${p.abstract ? `<details class="abstract"><summary>Abstract</summary><div class="abstract-body"><p>${p.abstract}</p></div></details>` : "<span></span>"}
+          ${tags}
+        </div>`}
       </div>
     </li>`;
   }

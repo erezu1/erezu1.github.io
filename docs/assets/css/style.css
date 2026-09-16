@@ -445,12 +445,14 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 .pub-place { color: var(--ink-2); font-size: .95rem; margin-top: .15rem; }
 .pub-note { color: var(--ink-3); font-size: .85rem; margin-top: .1rem; }
 .pub-links { display: flex; flex-wrap: wrap; gap: .35rem .9rem; margin-top: .35rem; font-size: .85rem; align-items: center; }
-/* the way across to the research page: the same size and weight as the links beside it, but in ink
-   with the arrow the section links use, so it reads as a move inside the site rather than a way out */
-.pub-links .topic-link { color: var(--ink-2); display: inline-flex; align-items: baseline; gap: .3rem; }
-.pub-links .topic-link .to { color: var(--ink-3); }
-@media (hover: hover) { .pub-links .topic-link:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
-.pub-links .topic-link:active { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+/* the way across to the research page, set like the abstract toggle it shares the line with */
+.topic-link {
+  color: var(--accent-2); white-space: nowrap; flex: 0 0 auto;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+}
+.topic-link .to { margin-right: .3rem; }
+@media (hover: hover) { .topic-link:hover, .abstract summary:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
+.topic-link:active, .abstract summary:active { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 .cites { font-family: var(--mono); font-size: .75rem; color: var(--ink-3); }
 .cites b { color: var(--ink-2); font-weight: 500; }
 @media (min-width: 720px) {
@@ -458,9 +460,14 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
   .pub.plain { grid-template-columns: 1fr; }   /* entries without the year column */
   .pub-meta { flex-direction: column; gap: .15rem; padding-top: .3rem; }
 }
-.abstract { margin-top: .5rem; font-size: .92rem; color: var(--ink-2); }
+/* the foot of an entry: what you can open on the left, where the paper belongs on the right */
+.pub-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1rem; margin-top: .45rem; }
+.pub-foot .topic-link { margin-left: auto; }   /* keeps to the right, on its own line when the phone is narrow */
+.pub-foot .abstract { flex: 1 1 auto; min-width: 0; margin-top: 0; }
+.abstract { font-size: .92rem; color: var(--ink-2); }
 .abstract summary {
-  cursor: pointer; color: var(--accent); font-size: .85rem; list-style: none; display: inline-flex; align-items: center; gap: .3rem;
+  cursor: pointer; color: var(--accent-2); list-style: none; display: inline-flex; align-items: center; gap: .3rem;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
   user-select: none;
 }
 .abstract summary::-webkit-details-marker { display: none; }
