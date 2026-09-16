@@ -1,19 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- notebook paper -->
   <defs>
     <clipPath id="r"><rect width="64" height="64" rx="14"/></clipPath>
-    <pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse">
-      <path d="M8 0H0V8" fill="none" stroke="#3a5cad" stroke-opacity=".16" stroke-width="1"/>
-    </pattern>
   </defs>
   <g clip-path="url(#r)">
     <rect width="64" height="64" fill="#f6f3ea"/>
-    <rect width="64" height="64" fill="url(#grid)"/>
-    <line x1="12" y1="0" x2="12" y2="64" stroke="#c4403a" stroke-opacity=".55" stroke-width="1"/>
-    <!-- highlighter stroke -->
-    <rect x="16" y="30" width="38" height="13" rx="2" fill="#ffe05c" fill-opacity=".85" transform="rotate(-3 35 36)"/>
-    <!-- epsilon, drawn by hand -->
-    <path d="M44 20 C39 13 25 14 22 22 C20 28 26 32 33 32 C25 33 19 38 21 45 C24 53 40 52 44 45"
-          fill="none" stroke="#1d2433" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- epsilon, set in a serif italic as in a formula -->
+    <text x="32" y="49" fill="#1d2433" font-family="'Times New Roman', Times, Georgia, serif"
+          font-style="italic" font-size="76" text-anchor="middle">&#949;</text>
   </g>
 </svg>
