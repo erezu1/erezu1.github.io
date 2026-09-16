@@ -375,11 +375,11 @@ body[data-page="home"]:not(.show-brand) .brand { opacity: 0; transform: translat
   background: var(--card);
   color: var(--ink);
   font-size: .9rem;
-  transition: transform .2s var(--ease), border-color .2s, background-color .2s, color .2s;
+  transition: border-color .2s, background-color .2s, color .2s;
   cursor: pointer;
   text-decoration: none;
 }
-@media (hover: hover) { .chip:hover { transform: translateY(-1px); border-color: var(--accent); } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
+@media (hover: hover) { .chip:hover { border-color: var(--accent); } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
 a.chip { color: var(--accent); }   /* link chips read as links; the filter chips (buttons) stay neutral */
 /* a link chip underlines under the pointer, like every other link */
 @media (hover: hover) { a.chip:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; } }
@@ -437,8 +437,8 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 }
 .pub-title { font-family: var(--serif); font-size: 1.25rem; line-height: var(--line); margin: 0; font-weight: 500; }
 .pub-title a { color: var(--ink); }
-@media (hover: hover) { .pub-title a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
-.pub-title a:active { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+@media (hover: hover) { .pub-title a:hover { color: var(--ink); text-decoration: none; background-size: 100% 1px; } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
+.pub-title a:active { color: var(--ink); text-decoration: none; background-size: 100% 1px; }
 .pub-authors { color: var(--ink-2); font-size: .95rem; margin: 0; }
 .pub-authors b { color: var(--ink); font-weight: 600; }
 .pub-journal { font-size: .9rem; color: var(--ink-2); font-style: italic; }
@@ -552,8 +552,18 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 .topic-papers li .yr { font-family: var(--mono); font-size: .72rem; color: var(--ink-3); flex: 0 0 3rem; }
 .topic-papers li .t { flex: 1 1 auto; min-width: 0; }
 .topic-papers li a { color: var(--ink); font-family: var(--serif); font-size: 1.05rem; }
-@media (hover: hover) { .topic-papers li a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
-.topic-papers li a:active { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+@media (hover: hover) { .topic-papers li a:hover { color: var(--ink); text-decoration: none; background-size: 100% 1px; } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
+.topic-papers li a:active { color: var(--ink); text-decoration: none; background-size: 100% 1px; }
+
+/* The line under a paper title is drawn, not a text underline: a real underline breaks around a
+   formula, which sits in the line as a block of its own. This one runs straight through. */
+.pub-title a, .topic-papers li a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  background-position: 0 calc(100% - 3px);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
 @media (min-width: 820px) {
   .topic { grid-template-columns: 360px 1fr; gap: 3rem; align-items: start; }
   .topic:nth-of-type(even) { grid-template-columns: 1fr 360px; }   /* mirror: same column widths, figure on the right */
