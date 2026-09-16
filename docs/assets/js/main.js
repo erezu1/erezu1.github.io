@@ -198,23 +198,51 @@
     // titles are sticky, so the previous one stays at the header until the next crosses the middle.
     // A change takes effect after a short pause, and is cancelled if the scroll position moves back.
     const sections = $$(".topic"), inTopHalf = new Set();
-    let current = null, pending = null, timer = 0;
+    let current = null, pending = null, timer = 0, lockY = null;
+    const mark = next => {
+      if (current) current.classList.remove("is-current");
+      current = next;
+      if (current) current.classList.add("is-current");
+    };
     const settle = () => {
+      if (lockY !== null) return;          // a topic reached through a link keeps its marker until you scroll on
       let next = null;
       sections.forEach(s => { if (inTopHalf.has(s)) next = s; });
       if (next === pending) return;
       pending = next; clearTimeout(timer);
-      timer = setTimeout(() => {
-        if (current) current.classList.remove("is-current");
-        current = next;
-        if (current) current.classList.add("is-current");
-      }, 500);
+      timer = setTimeout(() => mark(next), 500);
     };
     const topHalf = new IntersectionObserver(es => {
       es.forEach(e => { const s = e.target.closest(".topic"); e.isIntersecting ? inTopHalf.add(s) : inTopHalf.delete(s); });
       settle();
     }, { rootMargin: "0px 0px -38% 0px", threshold: 0 });   // "up" = the title is above 62% of the screen height
     sections.forEach(s => { const h2 = s.querySelector("h2"); if (h2) topHalf.observe(h2); });
+
+    // Arriving from a topic card: land on the title itself, not on the top of the section — on a phone
+    // the drawing sits above the title and would otherwise fill the screen — and mark the topic at once
+    // instead of waiting for the scroll rule to notice it.
+    const land = smooth => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      const s = id && document.getElementById(id);
+      if (!s || !sections.includes(s)) return;
+      const h2 = s.querySelector("h2");
+      const y = Math.max(0, window.scrollY + h2.getBoundingClientRect().top - 65);   // just below the header
+      window.scrollTo({ top: y, behavior: smooth ? "smooth" : "auto" });
+      clearTimeout(timer); pending = s; mark(s);
+      lockY = y;
+      setTimeout(() => { if (lockY !== null) lockY = window.scrollY; }, smooth ? 600 : 80);
+    };
+    addEventListener("scroll", () => {
+      if (lockY === null) return;
+      if (Math.abs(window.scrollY - lockY) > 24) { lockY = null; settle(); }   // you moved on: back to the scroll rule
+    }, { passive: true });
+    if (location.hash) {
+      land(false);
+      // the fonts and the browser's own jump to the anchor can still move the page under us
+      addEventListener("load", () => { if (lockY !== null) land(false); });
+      if (document.fonts) document.fonts.ready.then(() => { if (lockY !== null) land(false); });
+    }
+    addEventListener("hashchange", () => land(true));
   }
 
   /* ---------- publications ---------- */

@@ -156,8 +156,8 @@ main.container::before {
   main.container::before { left: -1.5rem; }
 }
 
-main { flex: 1; padding-block: 1.5rem 1.5rem; }
-@media (min-width: 768px) { main { padding-block: 2.5rem 2rem; } }
+main { flex: 1; padding-block: 1rem 1.5rem; }
+@media (min-width: 768px) { main { padding-block: 1.5rem 2rem; } }
 main > .section:last-child, main > #topics { margin-bottom: 0; }
 
 /* ---------- header ---------- */
@@ -319,7 +319,7 @@ body[data-page="home"]:not(.show-brand) .brand { opacity: 0; transform: translat
   display: grid;
   gap: 1.5rem;
   align-items: center;
-  padding-block: 1rem 0;
+  padding-block: 0;
 }
 .hero-text p.lead { font-size: 1.05rem; max-width: 58ch; }
 .hero-text .role { font-family: var(--serif); font-style: italic; font-size: 1.2rem; color: var(--ink-2); margin: 0 0 var(--line); }
