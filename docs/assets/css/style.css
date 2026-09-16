@@ -447,12 +447,20 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 .pub-links { display: flex; flex-wrap: wrap; gap: .35rem .9rem; margin-top: .35rem; font-size: .85rem; align-items: center; }
 /* the way across to the research page, set like the abstract toggle it shares the line with */
 .topic-link {
-  color: var(--accent-2); white-space: nowrap; flex: 0 0 auto;
+  color: var(--ink-2); white-space: nowrap; flex: 0 0 auto;
   font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
 }
 .topic-link .to { margin-right: .3rem; }
-@media (hover: hover) { .topic-link:hover, .abstract summary:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
-.topic-link:active, .abstract summary:active { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+/* one drawn line for the whole label: a text underline stops at the + and at the arrow, because each
+   of those is a box of its own (the + turns when the abstract opens, so it has to be) */
+.abstract summary, .topic-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  background-position: 0 calc(100% - 1px);
+}
+@media (hover: hover) { .topic-link:hover, .abstract summary:hover { text-decoration: none; background-size: 100% 1px; } }   /* hover only where a pointer can hover: taps on phones leave no sticky state */
+.topic-link:active, .abstract summary:active { text-decoration: none; background-size: 100% 1px; }
 .cites { font-family: var(--mono); font-size: .75rem; color: var(--ink-3); }
 .cites b { color: var(--ink-2); font-weight: 500; }
 @media (min-width: 720px) {
@@ -466,7 +474,7 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 .pub-foot .abstract { flex: 1 1 auto; min-width: 0; margin-top: 0; }
 .abstract { font-size: .92rem; color: var(--ink-2); }
 .abstract summary {
-  cursor: pointer; color: var(--accent-2); list-style: none; display: inline-flex; align-items: center; gap: .3rem;
+  cursor: pointer; color: var(--ink-2); list-style: none; display: inline-flex; align-items: center; gap: .3rem;
   font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
   user-select: none;
 }
