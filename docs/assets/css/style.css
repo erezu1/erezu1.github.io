@@ -93,6 +93,21 @@ body {
   flex-direction: column;
 }
 
+/* A change of theme fades every colour on the page together: text, rules, boxes and icons,
+   including the ones whose own transitions cover other properties. The flag is set by main.js
+   for the length of the fade only, so hover and reveal timings are untouched the rest of the time. */
+:root[data-theme-switching] *,
+:root[data-theme-switching] *::before,
+:root[data-theme-switching] *::after {
+  transition: background-color .35s var(--ease), border-color .35s var(--ease), color .35s var(--ease),
+              fill .35s var(--ease), stroke .35s var(--ease), box-shadow .35s var(--ease) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme-switching] *,
+  :root[data-theme-switching] *::before,
+  :root[data-theme-switching] *::after { transition: none !important; }
+}
+
 /* Cross-document view transitions (Chrome/Safari): pages fade into each other. */
 @view-transition { navigation: auto; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .28s; }
@@ -131,7 +146,7 @@ main.container::before {
   position: absolute;
   top: 0; bottom: 0;
   left: calc(clamp(1.25rem, 5vw, 2.5rem) - .75rem);
-  width: 2px;
+  width: 3px;
   background: var(--margin);
   pointer-events: none;
 }

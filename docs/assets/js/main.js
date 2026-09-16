@@ -15,13 +15,22 @@
   const currentTheme = () => root.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
   // The site follows the device's light/dark setting. The toggle overrides it for this visit only,
   // and a change of the device setting takes over again immediately.
+  // While the theme changes, every colour on the page fades together (see the data-theme-switching rule).
+  let paletteTimer = 0;
+  const fadePalettes = () => {
+    root.setAttribute("data-theme-switching", "");
+    clearTimeout(paletteTimer);
+    paletteTimer = setTimeout(() => root.removeAttribute("data-theme-switching"), 450);
+  };
   $$(".theme-toggle").forEach(btn => btn.addEventListener("click", () => {
     const next = currentTheme() === "dark" ? "light" : "dark";
+    fadePalettes();
     root.setAttribute("data-theme", next);
     try { sessionStorage.setItem("theme", next); } catch (e) {}
     window.dispatchEvent(new Event("themechange"));
   }));
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+    fadePalettes();
     root.removeAttribute("data-theme");
     try { sessionStorage.removeItem("theme"); } catch (e) {}
     window.dispatchEvent(new Event("themechange"));
