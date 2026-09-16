@@ -26,7 +26,8 @@
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --radius: 14px;
   --stick: 3.3rem;
-  --topic-pad: 2.5rem;                  /* air above and below a topic on the research page */                      /* the line under the sticky header: titles park here, links land here */
+  --topic-pad: 2.5rem;
+  --footer-pad: 1.25rem;                /* the last of the page, below the footer line */                  /* air above and below a topic on the research page */                      /* the line under the sticky header: titles park here, links land here */
   --pad: clamp(1.75rem, 5vw, 2.5rem);   /* side margins of the page */
   --rule-gap: 1.15rem;                  /* space between the red margin rule and the text */
   --grid-size: 24px;
@@ -144,8 +145,9 @@ code, .mono { font-family: var(--mono); font-size: .85em; }
   position: relative;
 }
 
-/* the red margin rule of a notebook */
-main.container::before {
+/* the red margin rule of a notebook: from under the header to the very bottom of the page */
+main.container::before,
+.site-footer .container::before {
   content: "";
   position: absolute;
   top: 0; bottom: 0;
@@ -154,8 +156,12 @@ main.container::before {
   background: var(--margin);
   pointer-events: none;
 }
+/* the footer's own padding is the last of the page: the rule runs through it */
+.site-footer .container::before { bottom: calc(-1 * var(--footer-pad)); }
+
 @media (min-width: 1180px) {
-  main.container::before { left: -1.5rem; }
+  main.container::before,
+  .site-footer .container::before { left: -1.5rem; }
 }
 
 main { flex: 1; padding-block: 1rem 1.5rem; }
@@ -398,10 +404,8 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
   display: grid;
   grid-template-columns: 1fr;
   gap: .25rem .75rem;
-  padding: 1rem 0;
-  border-bottom: 1px dashed var(--rule);
+  padding: 1.1rem 0;
 }
-.pub:last-child { border-bottom: 0; }
 .pub { scroll-margin-top: 6.5rem; border-radius: 10px; }
 .pub.flash { animation: pubflash 2.2s var(--ease); }
 @keyframes pubflash {
@@ -527,7 +531,7 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 .topic-papers { margin-top: 1rem; }
 .topic-papers h4 { font-family: var(--mono); font-weight: 500; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-2); margin-bottom: .4rem; }
 .topic-papers ul { list-style: none; margin: 0; padding: 0; }
-.topic-papers li { padding: .3rem 0; border-bottom: 1px dotted var(--rule); font-size: .95rem; display: flex; gap: .6rem; align-items: baseline; }
+.topic-papers li { padding: .4rem 0; font-size: .95rem; display: flex; gap: .6rem; align-items: baseline; }
 .topic-papers li .yr { font-family: var(--mono); font-size: .72rem; color: var(--ink-3); flex: 0 0 3rem; }
 .topic-papers li .t { flex: 1 1 auto; min-width: 0; }
 .topic-papers li a { color: var(--ink); font-family: var(--serif); font-size: 1.05rem; }
@@ -541,8 +545,7 @@ button.chip { font: inherit; font-size: .9rem; appearance: none; }
 
 /* ---------- footer ---------- */
 .site-footer {
-  border-top: 1px dashed var(--rule);
-  padding-block: 1rem 1.25rem;
+  padding-block: 1rem var(--footer-pad);
   font-size: .82rem;
   color: var(--ink-3);
 }
