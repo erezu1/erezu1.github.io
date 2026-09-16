@@ -73,14 +73,14 @@
   function paperHTML(p, { compact = false } = {}) {
     const tags = (p.topics || []).map(s => {
       const t = topicOf(s);
-      return t ? `<a class="tag topic-tag" href="research.html#${s}">${esc(t.title)}</a>` : "";
+      return t ? `<a class="tag topic-tag" href="research#${s}">${esc(t.title)}</a>` : "";
     }).join("");
     const links = [
       p.inspire_url && `<a href="${p.inspire_url}" target="_blank" rel="noopener">INSPIRE</a>`,
       p.arxiv_url && `<a href="${p.arxiv_url}" target="_blank" rel="noopener">arXiv</a>`,
       p.doi && `<a href="https://doi.org/${p.doi}" target="_blank" rel="noopener">Journal</a>`,
     ].filter(Boolean).join("");
-    const titleHref = compact ? `publications.html#p-${p.id}` : `#p-${p.id}`;
+    const titleHref = compact ? `publications#p-${p.id}` : `#p-${p.id}`;
     // The year column only appears where there are no year headers (the home page's recent list).
     return `<li class="pub reveal${compact ? "" : " plain"}" id="p-${p.id}" data-id="${p.id}">
       ${compact ? `<div class="pub-meta"><span>${p.year}</span></div>` : ""}
@@ -169,7 +169,7 @@
       { rootMargin: `-${headerH}px 0px 0px 0px`, threshold: 0 }).observe(heroName);
     $("#recent").innerHTML = D.papers.slice(0, 3).map(p => paperHTML(p, { compact: true })).join("");
     $("#topic-cards").innerHTML = TOPICS.map(t => `
-      <a class="topic-card reveal" href="research.html#${t.slug}">
+      <a class="topic-card reveal" href="research#${t.slug}">
         <canvas data-anim="${t.anim}" aria-hidden="true"></canvas>
         <div><h3>${esc(t.title)}</h3><p>${esc(t.lead)}</p></div>
       </a>`).join("");
@@ -189,7 +189,7 @@
           ${t.body.map(b => `<p>${b}</p>`).join("")}
           <div class="topic-papers"><h4>Selected publications</h4><ul>${(t.papers || []).map(ax => {
             const p = D.papers.find(q => q.arxiv === ax);
-            return p ? `<li><span class="yr">${p.year}</span><span class="t"><a href="publications.html#p-${p.id}">${p.title}</a></span></li>` : "";
+            return p ? `<li><span class="yr">${p.year}</span><span class="t"><a href="publications#p-${p.id}">${p.title}</a></span></li>` : "";
           }).join("")}</ul></div>
         </div>
       </section>`).join("");
@@ -334,7 +334,7 @@
       }
     }
 
-    // Deep links: publications.html#p-<inspire id> opens that paper's abstract and scrolls to it.
+    // Deep links: publications#p-<inspire id> opens that paper's abstract and scrolls to it.
     function showFromHash(smooth) {
       const m = location.hash.match(/^#p-([\w.:-]+)$/);
       if (!m) return;
