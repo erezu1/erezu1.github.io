@@ -222,13 +222,26 @@
     // its drawing at the top of the page (the CSS scroll-margin sets that line) and marks it a moment
     // later, whatever the scroll rule would have said. The rule takes over again when you scroll away.
     const hashTopic = () => sections.find(s => s.id === decodeURIComponent(location.hash.slice(1)));
+    // runs fn once the page has stopped moving (the scroll to a topic is animated, see scroll-behavior)
+    const whenStill = fn => {
+      let last = null, still = 0, frames = 0;
+      const step = () => {
+        if (window.scrollY === last) still++; else { still = 0; last = window.scrollY; }
+        if (still >= 3 || ++frames > 120) return fn();
+        requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
     const land = (smooth, andMark = true) => {
       const s = hashTopic();
       if (!s) return;
       s.scrollIntoView({ block: "start", behavior: smooth ? "smooth" : "auto" });
       locked = true;
-      // the highlighter arrives a moment after the landing, the same pause the scroll rule takes
-      if (andMark) { clearTimeout(timer); pending = s; timer = setTimeout(() => mark(s), 500); }
+      // the highlighter arrives a moment after the page has come to rest, the same pause the scroll rule takes
+      if (andMark) {
+        clearTimeout(timer); pending = s;
+        whenStill(() => { if (pending === s) timer = setTimeout(() => mark(s), 500); });
+      }
     };
     // only a scroll you make yourself hands the page back to the scroll rule; the jumps the browser makes
     // while the page settles (the anchor, late fonts) must not steal the marker
