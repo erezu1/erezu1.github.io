@@ -26,15 +26,17 @@
     ]
   },
   "stats": {
-    "papers": 14,
-    "citations": 306,
+    "papers": 16,
+    "citations": 332,
     "h_index": 9
   },
   "papers": [
     {
       "id": 3207333,
       "title": "The cosmological necklace problem",
-      "topics": [],
+      "topics": [
+        "quantum-cosmology"
+      ],
       "authors": [
         "Blommaert, Andreas",
         "Kudler-Flam, Jonah",
@@ -344,6 +346,46 @@
       "abstract": "We construct holographic backgrounds that are dual by the AdS/CFT correspondence to Euclidean conformal field theories on products of spheres $ {S}^{d_1}\\times {S}^{d_2} $ , for conformal field theories whose dual may be approximated by classical Einstein gravity (typically these are large N strongly coupled theories). For d$_{2}$ = 1 these backgrounds correspond to thermal field theories on $ {S}^{d_1} $ , and Hawking and Page found that there are several possible bulk solutions, with two different topologies, that compete with each other, leading to a phase transition as the relative size of the spheres is modified. By numerically solving the Einstein equations we find similar results also for d$_{2}$> 1, with bulk solutions in which either one or the other sphere shrinks to zero smoothly at a minimal value of the radial coordinate, and with a first order phase transition (for d$_{1}$ + d$_{2}$< 9) between solutions of two different topologies as the relative radius changes. For a critical ratio of the radii there is a (sub-dominant) singular solution where both spheres shrink, and we analytically analyze the behavior near this radius. For d$_{1}$ + d$_{2}$< 9 the number of solutions grows to infinity as the critical ratio is approached.",
       "inspire_url": "https://inspirehep.net/literature/1730054",
       "source": "inspire"
+    },
+    {
+      "id": "arxiv-1806.01237",
+      "title": "The metric description of viscoelasticity and instabilities in viscoelastic solids",
+      "authors": [
+        "Urbach, Erez Y.",
+        "Efrati, Efi"
+      ],
+      "arxiv": "1806.01237",
+      "arxiv_url": "https://arxiv.org/abs/1806.01237",
+      "doi": null,
+      "journal": null,
+      "year": 2018,
+      "date": "2018-06-04",
+      "citations": 4,
+      "citations_wo_self": null,
+      "abstract": "Many manmade and naturally occurring materials form viscoelastic solids. The increasing use of biologically inspired elastomeric material and the extreme mechanical response these elastomers offer drive the need for a better, more intuitive and quantitative understanding of the mechanical response of such continua. This is in particular important in determining the stability of viscoelastic structure over time where in lieu of robust rules we often must resort to simulations. In this work we put forward a metric description of viscoelasticity in which the continua is characterized by temporally evolving reference lengths quantified by a rest reference metric. This rest reference metric serves as a state variable describing the result of the viscoelastic flow in the system, and allows us to provide robust claims regarding stability of incompressible isotropic viscoelastic media. We demonstrate these claims for a simple bistable systems of three standard-linear-solid spring dashpot assemblies where the predicted rules can be verified by explicit calculations, and also show quantitative agreement with recent experiments in viscoelastic silicone rubber shells that display delayed stability loss.",
+      "inspire_url": null,
+      "source": "arxiv",
+      "topics": []
+    },
+    {
+      "id": "arxiv-1711.09491",
+      "title": "Predicting delayed instabilities in viscoelastic solids",
+      "authors": [
+        "Urbach, Erez Y.",
+        "Efrati, Efi"
+      ],
+      "arxiv": "1711.09491",
+      "arxiv_url": "https://arxiv.org/abs/1711.09491",
+      "doi": "10.1126/sciadv.abb2948",
+      "journal": "Science Advances 6 (2020) eabb2948",
+      "year": 2017,
+      "date": "2017-11-26",
+      "citations": 22,
+      "citations_wo_self": null,
+      "abstract": "While determining the stability of an unconstrained elastic structure is a straightforward task, this is not the case for viscoelastic structures. Seemingly elastically stable conformations of viscoelastic structures may gradually creep until stability is lost, and conversely, creeping does not necessarily imply that a structure will eventually become unstable. Understanding instabilities in viscoelastic structures requires a more intuitive description of viscoelasticity to allow analytical results and quantitative predictions. In this work we put forward a metric description of viscoelasticity in which the continua is characterized by temporally evolving reference lengths with respect to which elastic strains are measured. Formulating the three dimensional theory using metric tensors we are able to predict which structures will exhibit delayed instability due to viscoelastic flow. We also quantitatively describe the viscoelastic relaxation in free standing structures including cases where the relaxation leads to no apparent motion. We demonstrate these results and the power of the metric approach by elucidating the subtle mechanism of delayed instability in elastomer shells showing quantitative agreement with experimental measurements.",
+      "inspire_url": null,
+      "source": "arxiv",
+      "topics": []
     }
   ]
 }
