@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-09-14",
+  "fetched": "2026-10-01",
   "profile": {
     "name": "Erez Y. Urbach",
     "orcid": "0000-0001-9900-3911",
@@ -26,11 +26,33 @@
     ]
   },
   "stats": {
-    "papers": 15,
-    "citations": 326,
+    "papers": 14,
+    "citations": 306,
     "h_index": 9
   },
   "papers": [
+    {
+      "id": 3207333,
+      "title": "The cosmological necklace problem",
+      "topics": [],
+      "authors": [
+        "Blommaert, Andreas",
+        "Kudler-Flam, Jonah",
+        "Narovlansky, Vladimir",
+        "Urbach, Erez Y."
+      ],
+      "arxiv": "2609.29859",
+      "arxiv_url": "https://arxiv.org/abs/2609.29859",
+      "doi": null,
+      "journal": null,
+      "year": 2026,
+      "date": "2026-09-24",
+      "citations": 0,
+      "citations_wo_self": 0,
+      "abstract": "We investigate 3d de Sitter axion wormhole which contribute to the no-boundary density matrix. We identify \"cosmological necklace\" solutions: an infinite series of Euclidean saddles corresponding with repeated bounces. This results in an unbound gravitational entropy, and a divergent path integral. To remedy this, we study the gravitational path integral using a (mostly) Lorentzian lapse contour. Within a minisuperspace steepest-descent analysis, we find that a single necklace dominates, leading to a finite entropy. A crucial element is to take into account an $(a\\to -a)$ redundancy in the FLRW path integral, where $a$ is the scale factor. Surprisingly, the dominant solution is not purely Euclidean. Its entropy turns out to be independent of the axion flux, and equals the empty de Sitter entropy. We also study higher-dimensional necklaces, sourced by either an axion flux or by Yang-Mills instantons, and argue for qualitatively similar results: the single necklace solution dominates along a Lorentzian lapse contour.",
+      "inspire_url": "https://inspirehep.net/literature/3207333",
+      "source": "inspire"
+    },
     {
       "id": 3195188,
       "title": "String stars, small black holes, and the supersymmetric index",
@@ -91,8 +113,8 @@
       "journal": "JHEP 11 (2025) 113",
       "year": 2025,
       "date": "2025-05-20",
-      "citations": 32,
-      "citations_wo_self": 26,
+      "citations": 36,
+      "citations_wo_self": 29,
       "abstract": "We investigate the no-boundary proposal for closed universes with an observer. We argue that the observer’s no-boundary state is the identity operator on the physical Hilbert space, i.e., the maximum entropy state and show this explicitly in Jackiw-Teitelboim gravity. Geometrically, the no-boundary state is a bra-ket wormhole. Expectation values in the no-boundary state provide a trace for the observer’s algebra, which allows one to define von Neumann entropy for observers in different universes as the relative entropy with respect to the no-boundary state. This result is consistent with all previously discussed cases of traces for invariantly defined regions.",
       "inspire_url": "https://inspirehep.net/literature/2923471",
       "source": "inspire"
@@ -113,8 +135,8 @@
       "journal": "Phys.Rev.D 110 (2024) 046028",
       "year": 2024,
       "date": "2024-06-20",
-      "citations": 47,
-      "citations_wo_self": 46,
+      "citations": 49,
+      "citations_wo_self": 48,
       "abstract": "We discuss in detail the $1+1$-dimensional superconformal field theory dual to type II string theory on ${\\mathrm{AdS}}_{3}×{S}^{3}×{T}^{4}$, emphasizing the string theoretic aspects of this duality. For one unit of Neveu-Schwarz (NS-NS) 5-brane flux (${Q}_{5}=1$), this string theory has been suggested to be dual to a grand-canonical ensemble of ${T}^{4N}/{S}_{N}$ free symmetric orbifold conformal field theories (CFTs). We show how the string genus expansion emerges to all orders for the free orbifold grand-canonical correlation functions. We also discuss how the strong coupling limit of the NS-NS string theory arises (even at large $N$) in the free orbifold description, and argue why this limit does not have a weakly coupled RR description. The dual conformal field theory (CFT) includes (for all values of ${Q}_{5}$) an extra ${T}^{4}$ factor that is decoupled from perturbative string theory. We discuss the exactly marginal deformations that relate the different values of ${Q}_{5}$, including the precise $J\\bar{J}$ deformations mixing this extra ${T}^{4}$ with the symmetric orbifold.",
       "inspire_url": "https://inspirehep.net/literature/2801270",
       "source": "inspire"
@@ -322,46 +344,6 @@
       "abstract": "We construct holographic backgrounds that are dual by the AdS/CFT correspondence to Euclidean conformal field theories on products of spheres $ {S}^{d_1}\\times {S}^{d_2} $ , for conformal field theories whose dual may be approximated by classical Einstein gravity (typically these are large N strongly coupled theories). For d$_{2}$ = 1 these backgrounds correspond to thermal field theories on $ {S}^{d_1} $ , and Hawking and Page found that there are several possible bulk solutions, with two different topologies, that compete with each other, leading to a phase transition as the relative size of the spheres is modified. By numerically solving the Einstein equations we find similar results also for d$_{2}$> 1, with bulk solutions in which either one or the other sphere shrinks to zero smoothly at a minimal value of the radial coordinate, and with a first order phase transition (for d$_{1}$ + d$_{2}$< 9) between solutions of two different topologies as the relative radius changes. For a critical ratio of the radii there is a (sub-dominant) singular solution where both spheres shrink, and we analytically analyze the behavior near this radius. For d$_{1}$ + d$_{2}$< 9 the number of solutions grows to infinity as the critical ratio is approached.",
       "inspire_url": "https://inspirehep.net/literature/1730054",
       "source": "inspire"
-    },
-    {
-      "id": "arxiv-1806.01237",
-      "title": "The metric description of viscoelasticity and instabilities in viscoelastic solids",
-      "authors": [
-        "Urbach, Erez Y.",
-        "Efrati, Efi"
-      ],
-      "arxiv": "1806.01237",
-      "arxiv_url": "https://arxiv.org/abs/1806.01237",
-      "doi": null,
-      "journal": null,
-      "year": 2018,
-      "date": "2018-06-04",
-      "citations": 4,
-      "citations_wo_self": null,
-      "abstract": "Many manmade and naturally occurring materials form viscoelastic solids. The increasing use of biologically inspired elastomeric material and the extreme mechanical response these elastomers offer drive the need for a better, more intuitive and quantitative understanding of the mechanical response of such continua. This is in particular important in determining the stability of viscoelastic structure over time where in lieu of robust rules we often must resort to simulations. In this work we put forward a metric description of viscoelasticity in which the continua is characterized by temporally evolving reference lengths quantified by a rest reference metric. This rest reference metric serves as a state variable describing the result of the viscoelastic flow in the system, and allows us to provide robust claims regarding stability of incompressible isotropic viscoelastic media. We demonstrate these claims for a simple bistable systems of three standard-linear-solid spring dashpot assemblies where the predicted rules can be verified by explicit calculations, and also show quantitative agreement with recent experiments in viscoelastic silicone rubber shells that display delayed stability loss.",
-      "inspire_url": null,
-      "source": "arxiv",
-      "topics": []
-    },
-    {
-      "id": "arxiv-1711.09491",
-      "title": "Predicting delayed instabilities in viscoelastic solids",
-      "authors": [
-        "Urbach, Erez Y.",
-        "Efrati, Efi"
-      ],
-      "arxiv": "1711.09491",
-      "arxiv_url": "https://arxiv.org/abs/1711.09491",
-      "doi": "10.1126/sciadv.abb2948",
-      "journal": "Science Advances 6 (2020) eabb2948",
-      "year": 2017,
-      "date": "2017-11-26",
-      "citations": 22,
-      "citations_wo_self": null,
-      "abstract": "While determining the stability of an unconstrained elastic structure is a straightforward task, this is not the case for viscoelastic structures. Seemingly elastically stable conformations of viscoelastic structures may gradually creep until stability is lost, and conversely, creeping does not necessarily imply that a structure will eventually become unstable. Understanding instabilities in viscoelastic structures requires a more intuitive description of viscoelasticity to allow analytical results and quantitative predictions. In this work we put forward a metric description of viscoelasticity in which the continua is characterized by temporally evolving reference lengths with respect to which elastic strains are measured. Formulating the three dimensional theory using metric tensors we are able to predict which structures will exhibit delayed instability due to viscoelastic flow. We also quantitatively describe the viscoelastic relaxation in free standing structures including cases where the relaxation leads to no apparent motion. We demonstrate these results and the power of the metric approach by elucidating the subtle mechanism of delayed instability in elastomer shells showing quantitative agreement with experimental measurements.",
-      "inspire_url": null,
-      "source": "arxiv",
-      "topics": []
     }
   ]
 }

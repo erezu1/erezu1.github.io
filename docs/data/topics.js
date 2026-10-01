@@ -10,6 +10,7 @@ window.TOPICS = [
       "A closed universe is a strange quantum system: it has no external observer, and no boundary of the kind on which a holographic description usually lives. Which state describes it, and what a measurement inside it means, are questions without settled answers. I am interested in the observables available to an observer in such a universe, and in what entropy means for that observer."
     ],
     "papers": [
+      "2609.29859",
       "2505.14771"
     ]
   },
