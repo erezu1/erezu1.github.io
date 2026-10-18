@@ -160,16 +160,12 @@ button { font-family: var(--sans); }
 .kicker { font: 500 .78rem var(--sans); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin: 1.3rem 0 .35rem; }
 h1.title { font: 600 2.15rem/1.12 var(--serif); margin: 0 0 .5rem; text-wrap: balance; letter-spacing: -.01em; }
 .authors { margin: 0; color: var(--muted); font-size: 1.02rem; }
-/* a marked name: tappable as a defined term is (the dotted line), its tap shows the author's affiliations */
+/* an author's name: tappable as a defined term is (the dotted line), its tap shows the author's affiliations */
 .au { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; border-bottom: 1px dotted var(--dot); border-radius: 3px; }
 .au:hover { background: var(--accent-soft); }
 .pop-affils { list-style: none; padding: 0; margin: 0; font: 400 .92rem/1.45 var(--sans); }
 .pop-affils li { margin: 0 0 .35rem; text-align: left; hyphens: manual; }
-.pop-affils sup { font-size: .68em; color: var(--muted); }
 .page .authors { text-align: left; hyphens: manual; -webkit-hyphens: manual; }   /* (names are not stretched to the line) */
-.authors sup, .affils sup { font-size: .68em; line-height: 0; }
-.page .affils { list-style: none; padding: 0; margin: .3rem 0 .2rem; font: 400 .8rem/1.4 var(--sans); color: var(--muted); }
-.page .affils li { margin: 0 0 .15rem; text-align: left; hyphens: manual; -webkit-hyphens: manual; }
 .note { font: .86rem/1.45 var(--sans); color: var(--muted); margin: .5rem 0 1.2rem; }
 .logo { width: 22px; height: 22px; vertical-align: -6px; margin-right: .3rem; color: var(--accent); }
 
@@ -710,7 +706,7 @@ mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
  <header class="titleblock">
   <p class="kicker">arXiv:2608.21511 · hep-th · August 2026</p>
   <h1 class="title"> String stars, small black holes, and the supersymmetric index </h1>
-  <p class="authors"><button type="button" class="au" data-au="0">Erez Y. Urbach<sup>a,b</sup></button></p><ul class="affils"><li><sup>a</sup> School of Natural Sciences, Institute for Advanced Study, Princeton, NJ 08540, USA</li><li><sup>b</sup> Institute for Theoretical Physics, University of Amsterdam, Amsterdam, 1098XH, The Netherlands</li></ul>
+  <p class="authors"><button type="button" class="au" data-au="0">Erez Y. Urbach</button></p>
  </header>
  <div id="paper"></div>
 </main>
@@ -1631,12 +1627,12 @@ mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
     openPeek(`<span class="peek-label">From</span> ${link}`, render(n, PAPER, peekCtx()), inPeek);
     return true;
   }
-  // an author's affiliations (the names in the title block carry their marks when the paper has several affiliations)
+  // an author's affiliations: every name in the title block is a button when the paper gives affiliations
   function openAffil(k, anchor) {
     const m = DOC.meta, marks = (m.authorAffiliations || [])[k] || [];
-    const A = (m.affiliations || []).filter(a => marks.includes(a.mark));
+    const A = marks.length ? (m.affiliations || []).filter(a => marks.includes(a.mark)) : (m.affiliations || []);   // (one for all, or no marks: all of them)
     if (!A.length) return;
-    const html = `<ul class="pop-affils">${A.map(a => `<li><sup>${esc(a.mark)}</sup> ${esc(a.text)}</li>`).join('')}</ul>`;
+    const html = `<ul class="pop-affils">${A.map(a => `<li>${esc(a.text)}</li>`).join('')}</ul>`;
     showLayer(esc(m.authors[k]), html, anchor, 'sheet-affil');
   }
   function openDef(id, anchor) {
