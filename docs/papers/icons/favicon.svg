@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Conifer">
+  <!-- a conifer drawn as a hierarchical graph: the apex node is the gist, each lower bough a deeper level -->
+  <g fill="none" stroke="#1d5b98" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 9 V 56"/>
+    <path d="M32 20 L 23 28 M32 20 L 41 28"/>
+    <path d="M32 32 L 17.5 43 M32 32 L 46.5 43"/>
+    <path d="M32 44 L 11 58 M32 44 L 53 58"/>
+  </g>
+  <g fill="#1d5b98">
+    <circle cx="32" cy="9" r="4"/>
+    <circle cx="32" cy="20" r="2.6"/><circle cx="23" cy="28" r="2.9"/><circle cx="41" cy="28" r="2.9"/>
+    <circle cx="32" cy="32" r="2.6"/><circle cx="17.5" cy="43" r="2.9"/><circle cx="46.5" cy="43" r="2.9"/>
+    <circle cx="32" cy="44" r="2.6"/><circle cx="11" cy="58" r="2.9"/><circle cx="53" cy="58" r="2.9"/>
+  </g>
+</svg>
