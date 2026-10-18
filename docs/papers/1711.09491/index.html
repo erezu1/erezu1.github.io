@@ -112,6 +112,10 @@ button { font-family: var(--sans); }
   padding: .35rem .5rem; border-radius: 999px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .bar-title:hover { background: var(--accent-soft); color: var(--fg); }
 .bar-title mjx-container { font-size: 100%; }
+/* in the bar's one line a formula is one piece: without the selection band beside it, a title too long for the bar ends
+   in "…" before the formula, not with the "…" under the formula's first letter and the formula cut through */
+.bar-title mjx-container > .mjx-hl { display: none; }
+.bar-title mjx-container[style*="--w"] > svg { margin-left: 0; }
 .bar-title { transition: opacity .1s ease; }
 .bar-title.fading { opacity: 0; transition-duration: .09s; }
 .bar-btn { border: 0; background: none; color: var(--accent); width: 2.2rem; height: 2.2rem; border-radius: 999px;
@@ -156,6 +160,9 @@ button { font-family: var(--sans); }
 .kicker { font: 500 .78rem var(--sans); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin: 1.3rem 0 .35rem; }
 h1.title { font: 600 2.15rem/1.12 var(--serif); margin: 0 0 .5rem; text-wrap: balance; letter-spacing: -.01em; }
 .authors { margin: 0; color: var(--muted); font-size: 1.02rem; }
+.authors sup, .affils sup { font-size: .68em; line-height: 0; }
+.page .affils { list-style: none; padding: 0; margin: .3rem 0 .2rem; font: 400 .8rem/1.4 var(--sans); color: var(--muted); }
+.page .affils li { margin: 0 0 .15rem; text-align: left; hyphens: manual; -webkit-hyphens: manual; }
 .note { font: .86rem/1.45 var(--sans); color: var(--muted); margin: .5rem 0 1.2rem; }
 .logo { width: 22px; height: 22px; vertical-align: -6px; margin-right: .3rem; color: var(--accent); }
 
