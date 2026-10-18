@@ -1,7 +1,7 @@
 {
   "name": "Conifer",
   "short_name": "Conifer",
-  "description": "Papers grown into trees: read at any depth.",
+  "description": "Papers you can read at any depth: gist, summary, paper.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
