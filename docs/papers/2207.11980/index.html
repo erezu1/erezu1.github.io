@@ -83,7 +83,7 @@ button { font-family: var(--sans); }
 @keyframes slideout { to { transform: translateX(14px); opacity: 0; } }
 @keyframes fadein { from { opacity: 0; transform: translateY(6px); } }
 @keyframes flash { 0% { background: color-mix(in srgb, var(--accent) 26%, transparent); box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 26%, transparent); } 60% { background: color-mix(in srgb, var(--accent) 18%, transparent); box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 18%, transparent); } 100% { background: transparent; box-shadow: 0 0 0 8px transparent; } }
-.btn, .ctl, .bar-btn, .bar-pill, .bar-title, .qbadge, .anchor, .fold-btn, .x-btn, .dial button, .seg button, .toc button, .gs, [data-def], .eqno {
+.btn, .ctl, .bar-btn, .bar-pill, .bar-title, .qbadge, .anchor, .fold-btn, .x-btn, .dial button, .seg button, .toc button, .gs, [data-def], .au, .eqno {
   transition: background-color .15s var(--ease-out), color .15s var(--ease-out), border-color .15s var(--ease-out), box-shadow .15s var(--ease-out), opacity .15s var(--ease-out); }
 /* nothing shrinks when pressed: feedback is colour, underline or a fade; the dial's pill glides */
 #paper.swap { animation: fadein .28s var(--ease-out); }
@@ -160,6 +160,12 @@ button { font-family: var(--sans); }
 .kicker { font: 500 .78rem var(--sans); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin: 1.3rem 0 .35rem; }
 h1.title { font: 600 2.15rem/1.12 var(--serif); margin: 0 0 .5rem; text-wrap: balance; letter-spacing: -.01em; }
 .authors { margin: 0; color: var(--muted); font-size: 1.02rem; }
+/* a marked name: tappable as a defined term is (the dotted line), its tap shows the author's affiliations */
+.au { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; border-bottom: 1px dotted var(--dot); border-radius: 3px; }
+.au:hover { background: var(--accent-soft); }
+.pop-affils { list-style: none; padding: 0; margin: 0; font: 400 .92rem/1.45 var(--sans); }
+.pop-affils li { margin: 0 0 .35rem; text-align: left; hyphens: manual; }
+.pop-affils sup { font-size: .68em; color: var(--muted); }
 .page .authors { text-align: left; hyphens: manual; -webkit-hyphens: manual; }   /* (names are not stretched to the line) */
 .authors sup, .affils sup { font-size: .68em; line-height: 0; }
 .page .affils { list-style: none; padding: 0; margin: .3rem 0 .2rem; font: 400 .8rem/1.4 var(--sans); color: var(--muted); }
@@ -1625,6 +1631,14 @@ mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
     openPeek(`<span class="peek-label">From</span> ${link}`, render(n, PAPER, peekCtx()), inPeek);
     return true;
   }
+  // an author's affiliations (the names in the title block carry their marks when the paper has several affiliations)
+  function openAffil(k, anchor) {
+    const m = DOC.meta, marks = (m.authorAffiliations || [])[k] || [];
+    const A = (m.affiliations || []).filter(a => marks.includes(a.mark));
+    if (!A.length) return;
+    const html = `<ul class="pop-affils">${A.map(a => `<li><sup>${esc(a.mark)}</sup> ${esc(a.text)}</li>`).join('')}</ul>`;
+    showLayer(esc(m.authors[k]), html, anchor, 'sheet-affil');
+  }
   function openDef(id, anchor) {
     const d = defs.get(id); if (!d) return;
     const at = d.at && byId.get(d.at.node);
@@ -1694,7 +1708,7 @@ mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
     if (pb) { if (pb.hasAttribute('data-peekclose')) closePeek(); else if (pb.hasAttribute('data-peekgo')) peekGo(); else peekBack(); return; }
     const foldHead = e.target.closest('[data-fold]');                           // the whole head of a fold is its control, open or closed
     if (foldHead && !e.target.closest('a, .anchor, .qwords, .qbadge, [data-def]')) { toggleFold(foldHead.dataset.fold); return; }
-    const t = e.target.closest('[data-act], [data-setlevel], .gs, [data-peek], [data-go], .qbadge, .qwords, [data-def], a[href^="#"], [data-open], [data-set], [data-reveal], [data-copy], .scrim, [data-close], #back');
+    const t = e.target.closest('[data-act], [data-setlevel], .gs, [data-peek], [data-go], .qbadge, .qwords, [data-def], [data-au], a[href^="#"], [data-open], [data-set], [data-reveal], [data-copy], .scrim, [data-close], #back');
     if (!t) { if (!e.target.closest('#pop')) closePop(); return; }
     if (t.matches('.scrim, [data-close]')) { if (t.closest('#pop')) closePop(); else closeSheet(); return; }   // (its own layer only: a peek under it stays)
     if (t.id === 'back') { goBack(); return; }
@@ -1716,6 +1730,7 @@ mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
     if (t.dataset.go) { if (longPressed) { longPressed = false; return; } reveal(t.dataset.go); return; }
     if (t.classList.contains('qbadge') || t.classList.contains('qwords')) { openQuestions(t.dataset.q, t.dataset.deep === '1'); return; }
     if (t.dataset.def) { e.preventDefault(); openDef(t.dataset.def, t); return; }
+    if (t.dataset.au !== undefined) { openAffil(+t.dataset.au, t); return; }
     if (t.dataset.reveal && t.closest('#peek-title') && !peekExpanding) { e.preventDefault(); peekGo(); return; }   // the peek grows into the page
     if (t.dataset.reveal) { e.preventDefault(); const q = t.dataset.quote, f = t.dataset.flash; reveal(t.dataset.reveal, { quote: q, flash: f }); return; }
     if (t.matches('a[href^="#"]')) {
