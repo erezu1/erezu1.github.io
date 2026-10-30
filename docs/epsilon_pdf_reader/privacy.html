@@ -149,7 +149,7 @@ footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
 <header class="nav" aria-label="Site">
   <a class="brand" href="index.html" aria-label="Epsilon PDF viewer, home"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg>Epsilon</a>
   <nav class="links" aria-label="Sections">
-    <a href="index.html#features">Features</a>
+    <a href="index.html#search">Features</a>
     <a href="index.html#new">What's new</a>
     <a href="index.html#privacy">Privacy</a>
   </nav>
@@ -158,16 +158,15 @@ footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 <main id="main" class="policy">
   <h1>Epsilon PDF viewer: privacy</h1>
-  <p class="date">Version 1.0, October 2026</p>
+  <p class="date">Version 1.1, October 2026</p>
   <p class="lede">Epsilon PDF viewer is a Chrome extension that opens PDF files in a viewer built on PDF.js. Everything it does
   happens in your browser, on your own computer.</p>
 
   <ul class="summary" aria-label="In short">
-    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Everything happens in your browser, on your own computer.</li>
-    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>No data collected: your PDFs and searches are sent to no one.</li>
+    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>No data collected: your PDFs, searches and browsing go to no one.</li>
     <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>No account, no analytics, no advertising.</li>
-    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Settings stay on your computer; removing the extension removes them.</li>
-    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>It reads the PDF files websites send, not other pages.</li>
+    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Settings and your place in each PDF stay in Chrome (with Chrome Sync on, settings follow you to your other computers); removing the extension removes them.</li>
+    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>It reads only the PDFs websites send, never other pages.</li>
   </ul>
 
   <section aria-labelledby="collect">
@@ -177,9 +176,12 @@ footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
   </section>
 
   <section aria-labelledby="keeps">
-    <h2 id="keeps">What it keeps on your computer</h2>
-    <p>Your settings for the viewer, and for each document the place you were reading, so that it opens there again.
-    These stay in Chrome's storage for the extension on your computer. Removing the extension removes them.</p>
+    <h2 id="keeps">What it keeps</h2>
+    <p>Your settings for the viewer; for each document, the place you were reading, so that it opens there again; the
+    signatures you choose to save; and which PDFs your open tabs show, so that they open again after the extension
+    updates. These stay in Chrome's storage for the extension on your computer. If you use Chrome Sync, Chrome may
+    also copy the viewer's settings to your other computers through your Google account, as it does for any
+    extension's settings; they still never reach the author. Removing the extension removes them.</p>
   </section>
 
   <section aria-labelledby="sites">
@@ -199,7 +201,7 @@ footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
     </div>
     <nav aria-label="Footer">
       <a href="privacy.html" aria-current="page">Privacy policy</a>
-      <a href="index.html#features">Features</a>
+      <a href="index.html#search">Features</a>
       <a href="index.html#new">What's new</a>
       <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Chrome Web Store</a>
     </nav>

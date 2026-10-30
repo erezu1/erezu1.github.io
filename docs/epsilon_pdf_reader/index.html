@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Epsilon PDF viewer</title>
-<meta name="description" content="The PDF reader made for scientific papers: search formulas as you type them, copy them as LaTeX, peek at links without losing your place. A Chrome extension built on PDF.js. Everything runs in your browser.">
+<meta name="description" content="A Chrome extension for reading scientific papers: search formulas as you type them, peek at a linked equation without losing your place, copy formulas as LaTeX. Built on PDF.js; everything runs in your browser.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1d1d1f" media="(prefers-color-scheme: dark)">
@@ -273,18 +273,13 @@ kbd {
 /* copy: a drag over the text and the formula, the selection drawn as the extension draws it; Cmd+C; the TeX */
 .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; background: var(--tonal); color: var(--on-tonal); font: 600 12px/1 var(--ui); letter-spacing: 0.02em; }
 .num .badge { text-transform: none; letter-spacing: 0.02em; margin-left: 4px; }
-.split-head { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 20px clamp(28px, 6vw, 96px); align-items: end; }
-.split-head .copy p:first-child { margin-top: 0; }
-.split .scene { margin-top: clamp(40px, 6vw, 72px); }
-.split .plane { --rx: 20deg; }
-@media (max-width: 860px) { .split-head { grid-template-columns: minmax(0, 1fr); } .split-head .copy p:first-child { margin-top: 4px; } }
-.copy-demo { max-width: 980px; margin-inline: auto; }
-.copy-demo .sheet { padding: 16px 0 12px; }
-.ibeam { position: absolute; z-index: 3; width: 11px; height: 3.2cqw; min-height: 14px; margin: -1.6cqw 0 0 -5.5px; opacity: 0; transition: opacity 200ms linear; pointer-events: none; }
+.copy-demo { max-width: 700px; margin-inline: auto; padding-top: 26px; }
+.copy-demo .sheet { padding: 22px 0; }
+.ibeam { position: absolute; z-index: 3; width: 11px; height: 4cqw; min-height: 16px; margin: -2cqw 0 0 -5.5px; opacity: 0; transition: opacity 200ms linear; pointer-events: none; }
 .ibeam.on { opacity: 1; }
-.copy-chip { right: 4%; bottom: 7%; top: auto; }
+.copy-chip { right: 5%; top: 0; }
 .clip {
-  position: relative; z-index: 2; margin: -20px 7% 0 14%;
+  position: relative; z-index: 2; margin: 16px 4% 0 12%;
   padding: 14px 16px 16px; border-radius: var(--radius); background: var(--float); box-shadow: var(--shadow);
   opacity: 0; transform: translateY(18px); transition: opacity 260ms linear, transform 520ms var(--ease);
 }
@@ -292,14 +287,13 @@ kbd {
 .clip-head { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
 .clip-head .icon { width: 18px; height: 18px; color: var(--blue); }
 .clip-head kbd { margin-left: auto; }
-.clip pre { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--text-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+.clip pre { margin: 0; font-size: 14px; line-height: 1.6; color: var(--text-2); white-space: pre-wrap; overflow-wrap: anywhere; }
 .clip pre b { font-weight: 400; color: var(--blue-text); }
 .clip pre i { font-style: normal; color: var(--text); }
 @media (max-width: 600px) {
-  .copy-demo .paper { width: 125%; }
-  .copy-demo .zoom { -webkit-mask-image: linear-gradient(90deg, #000 86%, transparent); mask-image: linear-gradient(90deg, #000 86%, transparent); }
-  .clip { margin: -14px 2% 0 4%; padding: 12px 13px 13px; }
-  .clip pre { font-size: 11.5px; }
+  .copy-demo .sheet { padding: 14px 0; border-radius: 12px; }
+  .clip { margin: 14px 2% 0 6%; padding: 12px 13px 13px; }
+  .clip pre { font-size: 12.5px; }
 }
 
 /* outline */
@@ -476,7 +470,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       <svg class="eps hero-icon" role="img" aria-label="Epsilon's icon, the letter ε"><use href="#eps"/></svg>
       <p class="eyebrow">Epsilon PDF viewer for Chrome</p>
       <h1 id="hero-title">The PDF reader made for scientific papers.</h1>
-      <p class="lede">Read, search and copy papers the way you think about them: in formulas.</p>
+      <p class="lede">It reads the math on the page, so formulas are as easy to search and copy as words.</p>
       <div class="cta-row">
         <a class="btn" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         <a class="link" href="#search">See what it does <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-down"/></svg></a>
@@ -486,7 +480,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
         <figure class="plane window" style="margin:0">
           <img src="assets/app-search.webp" srcset="assets/app-search-640.webp 640w, assets/app-search.webp 1280w" sizes="(max-width: 700px) 92vw, 1120px"
             width="1280" height="800" fetchpriority="high" decoding="async"
-            alt="Epsilon PDF viewer showing a physics paper: the outline on the left with the current section marked, the find bar searching \phi_r, and every match on the page highlighted in blue on exactly its symbols.">
+            alt="Epsilon showing a physics paper: the outline on the left with the current section marked, and a search for \phi_r with every match on the page highlighted in blue.">
         </figure>
       </div>
     </div>
@@ -498,7 +492,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       <div class="copy reveal">
         <p class="num">01 &nbsp;Search</p>
         <h2 id="f1">Search formulas, not just words.</h2>
-        <p>Type a formula in the find bar the way you would write it, in LaTeX (<code>\alpha_1</code>) or just as you type (<code>alpha_1</code>), and every place it appears is found and highlighted on exactly its symbols, however the paper spelled it.</p>
+        <p>Type a formula into the find bar, in LaTeX (<code>\alpha_1</code>) or plain (<code>alpha_1</code>). Epsilon finds every place it appears, however the authors typed it, and highlights exactly its symbols.</p>
         <ul class="pairs" aria-label="Examples of searches">
           <li><code>psi(t,x)</code><span class="arrow" aria-hidden="true">→</span><span class="m">ψ<span>(</span>t, x<span>)</span></span></li>
           <li><code>delta_ij</code><span class="arrow" aria-hidden="true">→</span><span class="m">δ<sub>ij</sub></span></li>
@@ -506,7 +500,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
         </ul>
       </div>
       <div class="scene">
-        <div class="plane find-demo" id="find-demo" role="img" aria-label="The find bar: \phi_r typed one key at a time; the marks on the page follow, first every φ, then only φ_r, each on exactly its symbols.">
+        <div class="plane find-demo" id="find-demo" role="img" aria-label="The find bar as \phi_r is typed: the highlights on the page narrow from every φ to only φ_r, each on exactly its symbols.">
           <div class="findbar lift" aria-hidden="true">
             <svg class="icon"><use href="#i-search"/></svg>
             <span class="q"><span class="typed">\phi_r</span><span class="caret"></span></span>
@@ -529,12 +523,12 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       <div class="copy center reveal">
         <p class="num">02 &nbsp;Peek</p>
         <h2 id="f2">Peek at any link without losing your place.</h2>
-        <p>Cmd/Ctrl+click a reference to an equation, a figure, a section or a citation. It opens in a panel below, its target marked, while your page stays where it is.</p>
-        <p class="keys"><span><kbd>⌘</kbd>/<kbd>Ctrl</kbd> + click to peek</span><span><kbd>Esc</kbd> closes it</span><span>Expand makes it your reading place</span></p>
+        <p>A link to an equation, figure, section or citation opens in a panel below, its target marked. Your page stays where it is.</p>
+        <p class="keys"><span><kbd>⌘</kbd>/<kbd>Ctrl</kbd> + click to peek</span><span><kbd>Esc</kbd> to close</span><span>Expand to read from there</span></p>
       </div>
       <div class="scene">
         <figure class="plane window" style="margin:0">
-          <div class="shot" id="peek-demo" role="img" aria-label="Reading page 20 of a paper: a Cmd+click on the reference (2.8), and a peek panel comes up from below showing equation 2.8 on page 16, marked in blue, while the page above stays where it was.">
+          <div class="shot" id="peek-demo" role="img" aria-label="Reading page 20 of a paper: a Cmd+click on the link (2.8), and a panel comes up from below showing equation (2.8) on page 16, marked in blue, while page 20 stays where it was.">
             <img src="assets/peek-base.webp" srcset="assets/peek-base-960.webp 960w, assets/peek-base.webp 1920w" sizes="(max-width: 700px) 92vw, 1120px"
               width="1920" height="1200" loading="lazy" decoding="async" alt="">
             <div class="peek-panel" aria-hidden="true"><img src="assets/peek-panel.webp" srcset="assets/peek-panel-770.webp 770w, assets/peek-panel.webp 1539w" sizes="(max-width: 700px) 74vw, 900px" width="1539" height="535" loading="lazy" decoding="async" alt=""></div>
@@ -549,32 +543,27 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
   </section>
 
   <!-- 03 copy (and the selection that follows the formula) -->
-  <section class="feature split" id="copy" aria-labelledby="f3">
-    <div class="wrap">
-      <div class="split-head reveal">
-        <div>
-          <p class="num">03 &nbsp;Copy <span class="badge">New selection</span></p>
-          <h2 id="f3">Select by formula, copy&nbsp;as&nbsp;LaTeX.</h2>
-        </div>
-        <div class="copy">
-          <p>Drag over text and formulas: the selection follows the formula. Drag into a fraction or a bracket and it is taken whole; <span style="white-space:nowrap"><kbd>Shift</kbd> + arrow keys</span> step one element at a time.</p>
-          <p>Copy, and you get its TeX, ready for your notes or your own paper. A whole formula comes as <code>$...$</code> or <code>\[...\]</code>, a piece as just that piece.</p>
-        </div>
+  <section class="feature flip" id="copy" aria-labelledby="f3">
+    <div class="wrap grid">
+      <div class="copy reveal">
+        <p class="num">03 &nbsp;Copy <span class="badge">New selection</span></p>
+        <h2 id="f3">Select by formula, copy&nbsp;as&nbsp;LaTeX.</h2>
+        <p>The selection follows the formula's structure: drag into a fraction or a bracket and it is taken whole. <span style="white-space:nowrap"><kbd>Shift</kbd> + arrow keys</span> extend it one symbol at a time.</p>
+        <p>Copy, and you get LaTeX, ready for your notes or your next paper. A whole formula comes wrapped in <code>$...$</code> or <code>\[...\]</code>; a part comes as just that part.</p>
       </div>
       <div class="scene">
         <div class="plane copy-demo" id="copy-demo">
+          <span class="chip copy-chip lift" aria-hidden="true"><kbd>⌘</kbd><kbd>C</kbd></span>
           <div class="sheet" aria-hidden="true">
-            <div class="zoom"><div class="paper">
-              <img src="assets/copy-page.webp" width="986" height="331" loading="lazy" decoding="async" alt="">
+            <div class="paper">
+              <img src="assets/select-eq.webp" width="951" height="149" loading="lazy" decoding="async" alt="">
               <div class="layer sel"></div>
               <svg class="ibeam" viewBox="0 0 11 24"><path d="M1.5 1.5c2 0 3 .6 4 1.6 1-1 2-1.6 4-1.6M5.5 3.1v17.8M1.5 22.5c2 0 3-.6 4-1.6 1 1 2 1.6 4 1.6M3 12h5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M1.5 1.5c2 0 3 .6 4 1.6 1-1 2-1.6 4-1.6M5.5 3.1v17.8M1.5 22.5c2 0 3-.6 4-1.6 1 1 2 1.6 4 1.6M3 12h5" fill="none" stroke="#111" stroke-width="1.2" stroke-linecap="round"/></svg>
-            </div></div>
-            <span class="chip copy-chip"><kbd>⌘</kbd><kbd>C</kbd></span>
+            </div>
           </div>
-          <div class="clip lift" role="img" aria-label="What was copied: the selected text, its inline formula as $n-1$, and the display formula as \[...\] in LaTeX.">
+          <div class="clip lift" role="img" aria-label="What was copied: the whole bracket, as LaTeX.">
             <div class="clip-head"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Copied as LaTeX<kbd>⌘C</kbd></div>
-            <pre aria-hidden="true">we must evaluate the action to leading order in $n-1$. By the general arguments of section 2.1, this will reproduce the generalized entropy in the bulk. Here we will check this explicitly. The gravitational action (2.8) in terms of the Schwarzian is
-\[-I_{\mathrm{grav}}=S_{0}+\frac{\varphi _{r}}{2\pi }n\int _{0}^{2\pi }d\tau (\{e^{i\theta },\tau \}+\frac{1}{2}(1-\frac{1}{n^{2}})R(\theta ))\]</pre>
+            <pre aria-hidden="true">(\{e^{i\theta },\tau \}+\frac{1}{2}(1-\frac{1}{n^{2}})R(\theta ))</pre>
           </div>
         </div>
       </div>
@@ -586,9 +575,9 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
     <div class="wrap grid">
       <div class="copy reveal">
         <p class="num">04 &nbsp;Outline</p>
-        <h2 id="f4">An outline that reads like the paper.</h2>
-        <p>The sidebar shows the paper's sections with their numbers and their math typeset, the section you are reading always marked.</p>
-        <p>Hover its button to glance at it over the page, click to keep it open.</p>
+        <h2 id="f4">See the whole paper, and where you are in it.</h2>
+        <p>The sidebar lists the sections with their numbers and their math typeset, and marks the one you are reading as you scroll.</p>
+        <p>Hover over the sidebar button to glance at it; click to keep it open.</p>
       </div>
       <div class="scene">
         <div class="plane outline-shot">
@@ -608,7 +597,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       <div class="copy center reveal">
         <p class="num">05 &nbsp;Journals</p>
         <h2 id="f5">Works with journals, not just arXiv.</h2>
-        <p>Tuned on hundreds of papers from arXiv and from publishers: their fonts, brackets, braces and scripts are read as drawn.</p>
+        <p>Tuned on hundreds of papers from arXiv and from publishers, so formulas set in each journal's own fonts, brackets and scripts are still found and copied correctly.</p>
       </div>
     </div>
     <div class="marquee" role="region" aria-label="Publishers it was tuned on">
@@ -653,12 +642,12 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
         <li><svg class="icon" aria-hidden="true"><use href="#i-ink"/></svg><h3>Draw</h3><p>Freehand, on any page.</p></li>
         <li><svg class="icon" aria-hidden="true"><use href="#i-sign"/></svg><h3>Sign</h3><p>Type, draw or upload your signature.</p></li>
         <li><svg class="icon" aria-hidden="true"><use href="#i-form"/></svg><h3>Fill in forms</h3><p>Right in the viewer.</p></li>
-        <li><svg class="icon" aria-hidden="true"><use href="#i-fit"/></svg><h3>Zoom and fit</h3><p>Fit to page or width, rotate.</p></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-fit"/></svg><h3>Zoom and fit</h3><p>Fit to page or width, or rotate.</p></li>
         <li><svg class="icon" aria-hidden="true"><use href="#i-spread"/></svg><h3>Two pages</h3><p>Single, or two side by side.</p></li>
-        <li><svg class="icon" aria-hidden="true"><use href="#i-print"/></svg><h3>Print and save</h3><p>Print it, or save the file.</p></li>
-        <li><svg class="icon" aria-hidden="true"><use href="#i-link"/></svg><h3>Back, Forward, link</h3><p>Inside the document; a link to the page you are on in one click.</p></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-print"/></svg><h3>Print and save</h3><p>Print it, or save a copy.</p></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-link"/></svg><h3>Back and Forward</h3><p>Return after a jump; copy a link to the page you are on.</p></li>
         <li><svg class="icon" aria-hidden="true"><use href="#i-present"/></svg><h3>Presentation mode</h3><p>Full screen, page by page.</p></li>
-        <li><svg class="icon" aria-hidden="true"><use href="#i-looks"/></svg><h3>Two looks</h3><p>Epsilon's calm one or Chrome's own, each light and dark.</p></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-looks"/></svg><h3>Two looks</h3><p>Epsilon's own or Chrome's, each in light and dark.</p></li>
       </ul>
     </div>
   </section>
@@ -670,11 +659,10 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
         <p class="num" style="justify-content:center">Private by design</p>
         <h2 id="priv">Your papers stay with you.</h2>
         <ul class="checks">
-          <li><span class="ck"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>Everything runs in your browser</li>
+          <li><span class="ck"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>Formulas read locally</li>
           <li><span class="ck"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>No account</li>
-          <li><span class="ck"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>No uploads</li>
-          <li><span class="ck"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>Nothing sent anywhere</li>
           <li><span class="ck"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>No analytics</li>
+          <li><span class="ck"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>Nothing sent anywhere</li>
         </ul>
         <a class="link" href="privacy.html">Privacy policy <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a>
       </div>
@@ -686,18 +674,16 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
     <div class="wrap news">
       <div class="copy reveal">
         <p class="num">What's new</p>
-        <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Faster on long papers, more formulas read whole.</h2>
-        <p class="ver">Version 1.3.3</p>
+        <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">A selection that follows the formula.</h2>
+        <p class="ver">Version 1.3.4</p>
       </div>
       <ul>
-        <li>A search while a long paper is still being read answers at once, a small spinner till it is all read.</li>
-        <li>No pause on slow computers when a long paper finishes reading.</li>
-        <li>More formulas read in plain letters: <span class="m">D(2,1;α)</span>, <span class="m">SU(2)</span>, <span class="m">AdS₂</span>, <span class="m">M = diag(λ₁, …)</span>.</li>
-        <li>Inline formulas read whole, not cut at a colon, bracket, Re or Im, or a number: <span class="m">f : A → B</span>, <span class="m">[Q,V] = 0</span>, <span class="m">a ≠ 0</span>.</li>
-        <li>The tab shows the paper's title, not its file name.</li>
-        <li>Zoom keys and buttons zoom round the middle of the view.</li>
-        <li>Sign PDFs, and redesigned highlight, text and drawing tools in one calm palette.</li>
-        <li>One ε icon everywhere, light or dark, and on PDF tabs from your computer.</li>
+        <li>Select by formula: drag into a bracket, a fraction or a matrix and it is taken whole; drag inside one part and you get just that part.</li>
+        <li><kbd>Shift</kbd> + arrow keys add one element at a time: a letter with its scripts, a whole fraction or bracket.</li>
+        <li>Selections are drawn the way search highlights are: one band per line, one box around a formula. What you see highlighted is what is copied.</li>
+        <li>Choose “Select by formula” or “Select as text” in the ⋮ menu.</li>
+        <li>The toolbar icon is as tall as Chrome's others.</li>
+        <li>Earlier, in 1.3.3: search answers at once on long papers, more formulas read whole, the tab shows the paper's title.</li>
       </ul>
     </div>
   </section>
@@ -707,7 +693,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
     <div class="wrap">
       <svg class="eps" aria-hidden="true"><use href="#eps"/></svg>
       <h2 id="last">Read your next paper in&nbsp;Epsilon.</h2>
-      <p>For Chrome. Opens every PDF, on the web or on your computer.</p>
+      <p>Add it once, and every PDF in Chrome opens in Epsilon.</p>
       <div class="cta-row">
         <a class="btn" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
@@ -807,34 +793,43 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
     }, () => { el.classList.add("peeking"); ptr.classList.add("on", "at"); chip.classList.add("on"); });
   }
 
-  // 3. copy: a drag over the text and into the formula (the boxes the extension drew at each step of the drag), Cmd+C,
-  //    and what it copied
+  // 3. copy: a press just left of the { of {e^{i\theta},\tau} in (3.31), a drag to the right: the selection the
+  //    extension drew as it went (it takes {...} whole, then +, the fraction whole, (1-1/n^2) whole, R, (\theta), and at
+  //    the big ) the whole bracket); Cmd+C, and what it copied
   {
     const el = $("#copy-demo");
-    const BOXES = [[],[[30.2,3.3,1.92,6.55]],[[30.2,2.91,67.25,6.95],[2.53,13.88,30.39,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,32.02,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,32.68,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,34.58,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,34.58,6.55],[6.2,35.02,40.14,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,34.58,6.55],[6.2,35.02,45.78,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,34.58,6.55],[6.2,35.02,49.95,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,34.58,6.55],[6.2,35.02,54.14,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,34.58,6.55],[6.2,35.02,56.12,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,34.58,6.55],[6.2,35.02,56.77,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,34.58,6.55],[6.2,35.02,57.95,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,34.58,6.55],[6.2,35.02,59.26,6.55],[81.67,2.75,6.23,7.27]],[[30.2,2.91,67.25,6.95],[2.53,13.88,94.91,6.55],[2.53,24.45,34.58,6.55],[6.2,35.02,61.61,6.55],[81.67,2.75,6.23,7.27],[20.42,50.44,57.84,19.09]]];
-    const PATH = [[30.1,6.4,0],[30.5,7.4,0],[31.1,9.2,0],[32,11.6,1],[32.9,14.1,2],[33.5,15.8,2],[33.9,16.9,2],[34,17.2,2],[34,17.7,2],[34.1,19,2],[34.4,21.1,2],[34.6,23.9,3],[34.8,26.1,4],[35,27.4,4],[35,27.8,4],[35.7,28.1,4],[37.7,28.9,5],[41.1,30.2,5],[45.8,32,6],[51.6,34.2,7],[56.3,36,8],[59.7,37.3,9],[61.7,38.1,10],[62.4,38.4,10],[62.7,39,11],[63.8,40.6,12],[65.6,43.2,13],[68.1,47,14],[71.1,51.5,14],[73.6,55.3,14],[75.4,57.9,14],[76.5,59.5,14],[76.8,60.1,14]];
+    const BOXES = [[],[[50.88,33.62,12.22,28.18]],[[50.88,33.62,15.88,28.18]],[[50.88,23.08,18.93,54.74]],[[50.88,23.08,33.07,54.74]],[[50.88,23.08,35.85,54.74]],[[50.88,23.08,40.55,54.74]],[[48.19,20.99,45.94,59.41]]];
+    const STEPS = [[52.4,1],[65.3,2],[68.5,3],[70.9,4],[85.4,5],[87.4,6],[92.7,7]];   // (from this x on, those boxes)
+    const X0 = 51.6, X1 = 94.3, Y = 49.8;
     const layer = $(".layer", el), beam = $(".ibeam", el), chip = $(".copy-chip", el), clip = $(".clip", el), pre = $(".clip pre", el);
-    // the TeX's commands and delimiters in the blue, the words as they are
+    // the TeX's commands and delimiters in the blue
     pre.innerHTML = pre.textContent.replace(/[&<>]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"})[c])
       .replace(/(\\[A-Za-z]+|\\[[\]{}]|\$)/g, "<b>$1</b>");
-    const draw = k => { layer.innerHTML = BOXES[k].length ? `<div>${BOXES[k].map(box).join("")}</div>` : ""; };
-    const at = p => { beam.style.left = p[0] + "%"; beam.style.top = p[1] + "%"; };
+    let shown = -1;
+    const draw = k => { if (k === shown) return; shown = k; layer.innerHTML = BOXES[k].length ? `<div>${BOXES[k].map(box).join("")}</div>` : ""; };
+    const at = x => { beam.style.left = x + "%"; beam.style.top = Y + "%"; draw(STEPS.reduce((k, [sx, sk]) => x >= sx - 0.01 ? sk : k, 0)); };
     loop(el, async () => {
-      draw(0); layer.classList.remove("out"); clip.classList.remove("on"); chip.className = "chip copy-chip";
-      at(PATH[0]); await sleep(600);
-      beam.classList.add("on"); await sleep(500);
-      for (const p of PATH) { at(p); draw(p[2]); await sleep(72); }
-      await sleep(450);
+      shown = -1; at(X0); layer.classList.remove("out"); clip.classList.remove("on"); chip.className = "chip copy-chip lift";
+      await sleep(600);
+      beam.classList.add("on"); await sleep(600);
+      const T = 3400, t0 = performance.now();
+      for (;;) {
+        const t = Math.min(1, (performance.now() - t0) / T);
+        at(X0 + (X1 - X0) * t);
+        if (t === 1) break;
+        await new Promise(r => requestAnimationFrame(r));
+      }
+      await sleep(500);
       beam.classList.remove("on"); await sleep(250);
       chip.classList.add("on"); await sleep(550);
       chip.classList.add("press"); await sleep(180);
       chip.classList.remove("press");
       clip.classList.add("on"); await sleep(450);
       chip.classList.remove("on");
-      await sleep(4800);
+      await sleep(4200);
       clip.classList.remove("on"); layer.classList.add("out");
       await sleep(1000);
-    }, () => { draw(14); clip.classList.add("on"); });
+    }, () => { at(X1); clip.classList.add("on"); });
   }
 
   // the nav: the section in view (the one across a line 40% down the window) marked
