@@ -153,9 +153,7 @@ kbd {
 .hero-icon { width: 76px; height: 76px; margin: 0 auto 26px; }
 .eyebrow { font: 500 13px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); margin-bottom: 22px; }
 .hero h1 { font-size: clamp(42px, 6.6vw, 86px); line-height: 1.0; max-width: 16ch; margin-inline: auto; }
-.hero .lede { font-size: clamp(18px, 2.1vw, 22px); color: var(--text-2); max-width: 36ch; margin: 26px auto 0; line-height: 1.45; }
 .cta-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 22px; margin-top: 36px; }
-.fine { margin-top: 16px; font-size: 14px; color: var(--text-2); }
 
 /* ---- 3D staging: a scene gives depth, its plane tilts back while it comes in, lies flat at the middle of the
    view, and leans away as it leaves; what floats over a plane sits a little above it (translateZ) ---- */
@@ -470,12 +468,10 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       <svg class="eps hero-icon" role="img" aria-label="Epsilon's icon, the letter ε"><use href="#eps"/></svg>
       <p class="eyebrow">Epsilon PDF viewer for Chrome</p>
       <h1 id="hero-title">The PDF reader made for scientific papers.</h1>
-      <p class="lede">It reads the math on the page, so formulas are as easy to search and copy as words.</p>
       <div class="cta-row">
         <a class="btn" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         <a class="link" href="#search">See what it does <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-down"/></svg></a>
       </div>
-      <p class="fine">Everything runs in your browser. Built on PDF.js.</p>
       <div class="scene hero-scene">
         <figure class="plane window" style="margin:0">
           <img src="assets/app-search.webp" srcset="assets/app-search-640.webp 640w, assets/app-search.webp 1280w" sizes="(max-width: 700px) 92vw, 1120px"
