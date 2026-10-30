@@ -103,10 +103,28 @@ p { text-wrap: pretty; }
 }
 .nav .brand { flex: none; display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 15px; text-decoration: none; padding-right: 8px; border-radius: 999px; }
 .nav .brand .eps { width: 18px; height: 24px; }
-.nav .links { display: flex; }
-.nav .links a { font-size: 14px; color: var(--text-2); text-decoration: none; padding: 7px 11px; border-radius: 999px; transition: background 140ms, color 140ms; }
+.nav .links { display: flex; align-items: center; gap: 1px; }
+.nav .links a {
+  display: inline-grid; justify-items: center; white-space: nowrap; font-size: 14px; color: var(--text-2); text-decoration: none; padding: 7px 10px; border-radius: 999px;
+  transition: background 140ms, color 140ms;
+}
+.nav .links a::after { content: attr(data-t); font-weight: 650; height: 0; visibility: hidden; overflow: hidden; }
 .nav .links a:hover { background: var(--bg-2); color: var(--text); }
-@media (max-width: 620px) { .nav .links { display: none; } }
+.nav .links a.on { color: var(--text); font-weight: 650; background: var(--surface); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
+/* (narrow: the name goes, the ε stays; the three tabs and the button a little smaller; below 370px the tabs go) */
+@media (max-width: 500px) {
+  .nav { padding: 5px 5px 5px 10px; gap: 2px; }
+  .nav .brand { padding-right: 2px; }
+  .nav .brand .bt { display: none; }
+  .nav .links a { font-size: 13.5px; padding: 7px 6px; }
+  .nav .btn-sm { padding: 0 10px; font-size: 13.5px; }
+}
+@media (max-width: 385px) {
+  .nav { padding-left: 8px; }
+  .nav .links a { font-size: 13px; padding: 6px 5px; }
+  .nav .btn-sm { padding: 0 9px; font-size: 13px; }
+}
+@media (max-width: 369px) { .nav .links { display: none; } .nav .brand .bt { display: inline; } }
 
 /* ---- the policy: one column ---- */
 .policy { max-width: calc(65ch + 2 * var(--gutter)); margin-inline: auto; padding: clamp(112px, 16vh, 150px) var(--gutter) clamp(72px, 11vh, 120px); }
@@ -147,11 +165,11 @@ footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
 </svg>
 
 <header class="nav" aria-label="Site">
-  <a class="brand" href="index.html" aria-label="Epsilon PDF viewer, home"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg>Epsilon</a>
+  <a class="brand" href="index.html" aria-label="Epsilon PDF viewer, home"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg><span class="bt">Epsilon</span></a>
   <nav class="links" aria-label="Sections">
-    <a href="index.html#search">Features</a>
-    <a href="index.html#new">What's new</a>
-    <a href="index.html#privacy">Privacy</a>
+    <a href="index.html#search" data-t="Features">Features</a>
+    <a class="on" href="privacy.html" data-t="Privacy" aria-current="page">Privacy</a>
+    <a href="index.html#new" data-t="What's new">What's new</a>
   </nav>
   <a class="btn btn-sm" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
 </header>
