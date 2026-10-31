@@ -298,7 +298,12 @@ kbd {
   box-shadow: 0 0 0 1px rgb(0 0 0 / 0.07), 0 0.16cqw 0.62cqw rgb(0 0 0 / 0.08), 0 0.94cqw 2.2cqw rgb(0 0 0 / 0.1);
   transform: translateY(calc(100% + 4cqw)); transition: transform 560ms var(--ease);
 }
-.peek-panel img { width: 100%; height: 100%; }
+.peek-panel > img { width: 100%; height: 100%; }
+/* the peek read in: its body (below its bar) scrolled, the page above where it was. The strip is the body's view at
+   the peek's first place and 260px further down, recorded from the extension and joined; it moves as the body scrolls */
+.pk-body { position: absolute; left: 0; top: 11.204%; width: 100%; height: 88.796%; overflow: hidden; opacity: 0; transition: opacity 400ms linear; }
+.pk-body.on { opacity: 1; }
+.pk-body img { display: block; width: 100%; height: auto; will-change: transform; }
 .peeking .peek-panel { transform: none; }
 .pointer {
   --pw: clamp(16px, 2.3cqw, 28px);
@@ -536,7 +541,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
             </div>
             <div class="layer find"></div>
             <div class="layer sel"></div>
-            <div class="peek-panel"><img src="assets/tour-peek.webp" srcset="assets/tour-peek-770.webp 770w, assets/tour-peek.webp 1539w" sizes="(max-width: 600px) 120vw, 900px" width="1539" height="535" decoding="async" alt=""></div>
+            <div class="peek-panel"><img src="assets/tour-peek.webp" srcset="assets/tour-peek-770.webp 770w, assets/tour-peek.webp 1539w" sizes="(max-width: 600px) 120vw, 900px" width="1539" height="535" decoding="async" alt=""><div class="pk-body"><img src="assets/tour-peek-strip.webp" srcset="assets/tour-peek-strip-770.webp 770w, assets/tour-peek-strip.webp 1539w" sizes="(max-width: 600px) 120vw, 900px" width="1539" height="865" decoding="async" alt=""></div></div>
             <svg class="ibeam" viewBox="0 0 11 24"><path d="M1.5 1.5c2 0 3 .6 4 1.6 1-1 2-1.6 4-1.6M5.5 3.1v17.8M1.5 22.5c2 0 3-.6 4-1.6 1 1 2 1.6 4 1.6M3 12h5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M1.5 1.5c2 0 3 .6 4 1.6 1-1 2-1.6 4-1.6M5.5 3.1v17.8M1.5 22.5c2 0 3-.6 4-1.6 1 1 2 1.6 4 1.6M3 12h5" fill="none" stroke="#111" stroke-width="1.2" stroke-linecap="round"/></svg>
             <span class="chip t-peek"><kbd>⌘</kbd>+ click</span>
             <span class="chip t-copy"><kbd>⌘</kbd><kbd>C</kbd></span>
@@ -596,7 +601,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
           <div class="shot" id="peek-demo" role="img" aria-label="Reading page 20 of a paper: a Cmd+click on the link (2.8), and a panel comes up from below showing equation (2.8) on page 16, marked in blue, while page 20 stays where it was.">
             <img src="assets/peek-base.webp" srcset="assets/peek-base-960.webp 960w, assets/peek-base.webp 1920w" sizes="(max-width: 700px) 92vw, 1120px"
               width="1920" height="1200" loading="lazy" decoding="async" alt="">
-            <div class="peek-panel" aria-hidden="true"><img src="assets/peek-panel.webp" srcset="assets/peek-panel-770.webp 770w, assets/peek-panel.webp 1539w" sizes="(max-width: 700px) 74vw, 900px" width="1539" height="535" loading="lazy" decoding="async" alt=""></div>
+            <div class="peek-panel" aria-hidden="true"><img src="assets/peek-panel.webp" srcset="assets/peek-panel-770.webp 770w, assets/peek-panel.webp 1539w" sizes="(max-width: 700px) 74vw, 900px" width="1539" height="535" loading="lazy" decoding="async" alt=""><div class="pk-body"><img src="assets/peek-strip.webp" srcset="assets/peek-strip-770.webp 770w, assets/peek-strip.webp 1539w" sizes="(max-width: 700px) 74vw, 900px" width="1539" height="865" loading="lazy" decoding="async" alt=""></div></div>
             <span class="ripple" aria-hidden="true"></span>
             <svg class="pointer" viewBox="0 0 24 28" aria-hidden="true"><path d="M3 2 L3 22 L8.5 17 L12 25.5 L15.5 24 L12 15.8 L19.5 15.8 Z" fill="#1f1f1f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
             <span class="chip peek-chip" aria-hidden="true"><kbd>⌘</kbd>+ click</span>
@@ -788,6 +793,18 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   const $ = (s, el = document) => el.querySelector(s);
   const box = b => `<span style="left:${b[0]}%;top:${b[1]}%;width:${b[2]}%;height:${b[3]}%"></span>`;
+  // the peek's body scrolled: its strip moved from one place to another, eased, over T ms (places in % of the strip:
+  // 390 of its 865 rows is 45.087%)
+  const PEEK_DOWN = -45.087;
+  const glide = async (img, from, to, T) => {
+    const t0 = performance.now();
+    for (;;) {
+      const t = Math.min(1, (performance.now() - t0) / T), e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      img.style.transform = `translateY(${(from + (to - from) * e).toFixed(3)}%)`;
+      if (t === 1) return;
+      await new Promise(r => requestAnimationFrame(r));
+    }
+  };
 
   // a demo plays while it is in view: each round waits till it is
   const seen = new Map();
@@ -812,6 +829,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
     const fl = $(".layer.find", el), sl = $(".layer.sel", el);
     const ptr = $(".pointer", el), rip = $(".ripple", el), back = $(".back-chip", el), beam = $(".ibeam", el);
     const cPeek = $(".t-peek", el), cCopy = $(".t-copy", el), card = $(".tclip", el), pre = $(".tclip pre", el);
+    const pk = $(".pk-body", el), pkStrip = $(".pk-body img", el);
     const steps = [...document.querySelectorAll(".tour-steps li")];
     pre.innerHTML = pre.textContent.replace(/[&<>]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"})[c])
       .replace(/(\\[A-Za-z]+|\\[[\]{}]|\$)/g, "<b>$1</b>");
@@ -856,7 +874,9 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       label("peek"); go(fig(LINK)); await sleep(1000);
       cPeek.classList.add("on"); await sleep(450); cPeek.classList.add("press"); await click(fig(LINK));
       el.classList.add("peeking"); await sleep(450); cPeek.classList.remove("on", "press"); ptr.classList.remove("on");
-      await sleep(1800); el.classList.remove("peeking"); await sleep(700);
+      await sleep(600); pk.classList.add("on"); await sleep(400);
+      await glide(pkStrip, 0, PEEK_DOWN, 1400); await sleep(300); await glide(pkStrip, PEEK_DOWN, 0, 1400); await sleep(300);
+      el.classList.remove("peeking"); await sleep(700); pk.classList.remove("on"); pkStrip.style.transform = "";
       // copy
       label("copy"); shown = -1; selAt(S0[0]); beam.classList.add("on"); await sleep(450);
       const T = 1500, t0 = performance.now();
@@ -898,12 +918,14 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
     }, () => show(Q.length));
   }
 
-  // 2. peek: the pointer to (2.8), Cmd+click, the panel up from the foot; and down again
+  // 2. peek: the pointer to (2.8), Cmd+click, the panel up from the foot; read in (its body scrolled down and back);
+  //    and down again
   {
     const el = $("#peek-demo");
-    const ptr = $(".pointer", el), rip = $(".ripple", el), chip = $(".peek-chip", el);
+    const ptr = $(".pointer", el), rip = $(".ripple", el), chip = $(".peek-chip", el), pk = $(".pk-body", el), strip = $(".pk-body img", el);
     loop(el, async () => {
       el.classList.remove("peeking"); ptr.className.baseVal = "pointer"; chip.className = "chip peek-chip";
+      pk.classList.remove("on"); strip.style.transform = "";
       await sleep(700);
       ptr.classList.add("on"); await sleep(250);
       ptr.classList.add("at"); await sleep(1150);
@@ -915,7 +937,10 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       el.classList.add("peeking");
       await sleep(500);
       chip.classList.remove("on", "press"); ptr.classList.remove("on");
-      await sleep(4200);
+      await sleep(1100);
+      pk.classList.add("on"); await sleep(500);                 // (the target's mark gone, as it goes)
+      await glide(strip, 0, PEEK_DOWN, 1800); await sleep(800);
+      await glide(strip, PEEK_DOWN, 0, 1800); await sleep(600);
       el.classList.remove("peeking");
       await sleep(1300);
     }, () => { el.classList.add("peeking"); ptr.classList.add("on", "at"); chip.classList.add("on"); });
