@@ -101,7 +101,7 @@ kbd {
 }
 :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
 .wrap { max-width: 1200px; margin-inline: auto; padding-inline: var(--gutter); }
-.skip { position: absolute; left: 12px; top: -60px; z-index: 100; background: var(--surface); padding: 10px 14px; border-radius: 10px; box-shadow: var(--shadow); }
+.skip { position: absolute; left: 12px; top: -120px; z-index: 100; background: var(--surface); padding: 10px 14px; border-radius: 10px; box-shadow: var(--shadow); }
 .skip:focus { top: 12px; }
 .icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 /* the ε: the extension's own path, a stroke in the text's near-black (near-white in the dark), no disc behind it */
@@ -135,7 +135,12 @@ kbd {
   background: color-mix(in srgb, var(--bg) 78%, transparent);
   -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
   box-shadow: var(--shadow);
+  transition: opacity 260ms ease, transform 360ms var(--ease), visibility 0s;
 }
+/* the bar away while the hero's name and its Add to Chrome are in view; in once they scroll past */
+.nav.away { opacity: 0; transform: translate(-50%, -18px); visibility: hidden; pointer-events: none;
+  transition: opacity 200ms ease, transform 300ms var(--ease), visibility 0s 300ms; }
+@media (prefers-reduced-motion: reduce) { .nav, .nav.away { transform: translateX(-50%); } }
 .nav .brand { flex: none; display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 15px; text-decoration: none; padding-right: 8px; border-radius: 999px; }
 .nav .brand .eps { width: 22px; height: 22px; }
 .nav .links { display: flex; align-items: center; gap: 1px; }
@@ -162,9 +167,15 @@ kbd {
 @media (max-width: 369px) { .nav .links { display: none; } .nav .brand .bt { display: inline; } }
 
 /* ---- hero ---- */
-.hero { padding-top: clamp(110px, 15vh, 150px); text-align: center; }
-.hero-icon { width: 76px; height: 76px; margin: 0 auto 26px; }
-.eyebrow { font: 500 13px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); margin-bottom: 22px; }
+.hero { padding-top: 14px; text-align: center; }
+/* the app's name, as the store's promo tiles draw it (store/name.mjs): the ε as tall as the two-line title, from the
+   top of its E to the second line's baseline (measured by the script at the page's end, in em, so it scales with
+   the block's font size), and a line under the title only */
+.eps-name { display: inline-grid; grid-template-columns: auto auto; column-gap: 0.43em; align-items: start; text-align: left;
+  font: 600 40px/1.1 var(--ui); letter-spacing: -0.012em; color: var(--text); }
+.eps-name .eps-e { width: 1.67em; height: 2.3em; margin-top: 0.1em; }
+.eps-name .eps-sub { font-size: 0.45em; font-weight: 400; line-height: 1.3; letter-spacing: 0; color: var(--text-2); margin-top: 0.3em; }
+.hero-name { font-size: clamp(30px, 3.4vw, 40px); margin: 0 auto clamp(28px, min(9vh, 6vw), 104px); }
 .hero h1 { font-size: clamp(42px, 6.6vw, 86px); line-height: 1.0; max-width: 16ch; margin-inline: auto; }
 .cta-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 22px; margin-top: 36px; }
 
@@ -431,7 +442,7 @@ kbd {
 .final h2 { font-size: clamp(38px, 6vw, 72px); line-height: 1.02; }
 .final p { color: var(--text-2); margin-top: 18px; font-size: 18px; }
 .final .cta-row { margin-top: 30px; }
-.final .eps { width: 60px; height: 60px; margin: 0 auto 26px; }
+.final .eps-name { font-size: 30px; margin: 0 auto 30px; }
 
 footer { background: var(--bg-2); padding: 36px 0 48px; font-size: 14px; color: var(--text-2); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px 40px; align-items: flex-start; }
@@ -509,7 +520,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
   <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.1 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.2-.3-.4-.5-.8-.5-1.3 0-.9.8-1.7 1.7-1.7h2.1a3.9 3.9 0 0 0 3.9-3.9c0-4-3.8-7.2-8.5-7.2z"/><circle cx="7.6" cy="11.6" r="1.15" fill="currentColor" stroke="none"/><circle cx="9.6" cy="7.7" r="1.15" fill="currentColor" stroke="none"/><circle cx="14.2" cy="7.4" r="1.15" fill="currentColor" stroke="none"/><circle cx="17.2" cy="10.6" r="1.15" fill="currentColor" stroke="none"/></symbol>
 </svg>
 
-<header class="nav" aria-label="Site">
+<header class="nav away" aria-label="Site">
   <a class="brand" href="#top" aria-label="Epsilon PDF viewer, back to top"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg><span class="bt">Epsilon</span></a>
   <nav class="links" aria-label="Sections">
     <a href="#search" data-t="Features" data-spy="search peek copy navigation journals more">Features</a>
@@ -524,8 +535,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
   <!-- hero -->
   <section class="hero" id="top" aria-labelledby="hero-title">
     <div class="wrap">
-      <svg class="eps hero-icon" role="img" aria-label="Epsilon's icon, the letter ε"><use href="#eps"/></svg>
-      <p class="eyebrow">Epsilon PDF viewer for Chrome</p>
+      <div class="eps-name hero-name" role="img" aria-label="Epsilon PDF viewer for Chrome"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span><span></span><span class="eps-sub">for Chrome</span></div>
       <h1 id="hero-title">The PDF reader made for scientific papers.</h1>
       <div class="cta-row">
         <a class="btn" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -756,7 +766,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
   <!-- last call -->
   <section class="final" aria-labelledby="last">
     <div class="wrap">
-      <svg class="eps" aria-hidden="true"><use href="#eps"/></svg>
+      <div class="eps-name" role="img" aria-label="Epsilon PDF viewer"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span></div>
       <h2 id="last">Read your next paper in&nbsp;Epsilon.</h2>
       <div class="cta-row">
         <a class="btn" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -1070,6 +1080,33 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
   addEventListener("scroll", ask, {passive: true});
   addEventListener("resize", ask);
   ask();
+})();
+</script>
+<script>
+/* the name blocks' ε: as tall as the title's ink, from the top of its E to its second line's baseline (store/name.mjs's
+   sizeName), set in em of the block's font size */
+(() => {
+  const size = () => document.querySelectorAll(".eps-name").forEach(n => {
+    const t = n.querySelector(".eps-title"), e = n.querySelector(".eps-e"), cs = getComputedStyle(t), fs = parseFloat(cs.fontSize);
+    const c = document.createElement("canvas").getContext("2d");
+    c.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
+    const m = c.measureText("E"), lh = parseFloat(cs.lineHeight);
+    const top = (lh - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2 + m.fontBoundingBoxAscent - m.actualBoundingBoxAscent, h = lh + m.actualBoundingBoxAscent;
+    e.style.height = h / fs + "em"; e.style.width = h / fs * 199 / 274.1 + "em"; e.style.marginTop = top / fs + "em";
+  });
+  size(); if (document.fonts) document.fonts.ready.then(size);
+})();
+</script>
+<noscript><style>.nav.away { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%); }</style></noscript>
+<script>
+// the tab bar in once the hero's Add to Chrome has scrolled up past the bar's place, away again when it comes back
+(() => {
+  const nav = document.querySelector(".nav"), cta = document.querySelector(".hero .cta-row");
+  if (!nav || !cta) { nav && nav.classList.remove("away"); return; }
+  const set = () => { const away = cta.getBoundingClientRect().bottom > 0; nav.classList.toggle("away", away); nav.inert = away; };
+  new IntersectionObserver(set, {threshold: [0, 1]}).observe(cta);
+  addEventListener("scroll", set, {passive: true});
+  set();
 })();
 </script>
 </body>
