@@ -11,8 +11,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="preload" as="image" href="assets/nav-a.webp" imagesrcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" imagesizes="1120px" media="(min-width: 601px)" fetchpriority="high">
-<link rel="preload" as="image" href="assets/tour-a-m.webp" media="(max-width: 600px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/nav-a.webp" imagesrcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" imagesizes="(max-width: 600px) 100vw, 1120px" fetchpriority="high">
 <style>
 /* Epsilon PDF viewer: one page, everything local (system fonts, images in assets/). The look is the extension's
    "Epsilon" skin (src/epsilon-skin.css): a warm grey frame, a lighter card, white sheets, what floats with a hairline
@@ -225,12 +224,8 @@ kbd {
 .tour-steps li { font: 600 13px/1 var(--ui); color: var(--text-3); padding: 7px 12px; border-radius: 999px; transition: background 260ms var(--ease), color 260ms var(--ease); }
 .tour-steps li.on { background: var(--surface); color: var(--text); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
 @media (max-width: 600px) {
-  /* (the phone: the page and the find bar, not the outline) */
-  /* (the view's x 268..1088 of 1280: a crop of its own, captured at 3x, so it is sharp there) */
-  .tour > .shot { aspect-ratio: 820 / 800; }
-  .tour .stage { width: 156.0976%; margin-left: -32.7148%; }
-  .tour .vw { left: 20.9375%; width: 64.0625%; }
-  .tclip { left: 38%; width: 46%; }
+  /* (the phone shows the whole window, as on a computer: the outline click and the find bar stay in view) */
+  .tclip { left: 30%; width: 62%; }
 }
 
 /* ---- feature sections ---- */
@@ -544,8 +539,8 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       <div class="scene hero-scene">
         <figure class="plane window tour" id="tour" style="margin:0" role="img" aria-label="One reading session in Epsilon on a physics paper: a click on section 3.5 in the outline jumps there; \phi_r typed in the find bar marks every φ_r on the page; a Cmd+click on the reference (2.8) brings up a peek of that equation from below; a drag into equation (3.31) selects the whole bracket, Cmd+C copies it as LaTeX; and Back returns to where the reading started.">
           <div class="shot" aria-hidden="true"><div class="stage">
-            <picture><source media="(max-width: 600px)" srcset="assets/tour-a-m.webp"><img class="vw" src="assets/nav-a.webp" srcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" sizes="1120px" width="1920" height="1200" fetchpriority="high" decoding="async" alt=""></picture>
-            <picture><source media="(max-width: 600px)" srcset="assets/tour-v-m.webp"><img class="vw fr" data-k="v" src="assets/tour-v.webp" srcset="assets/tour-v-960.webp 960w, assets/tour-v.webp 1920w" sizes="1120px" width="1920" height="1200" decoding="async" alt=""></picture>
+            <picture><img class="vw" src="assets/nav-a.webp" srcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" sizes="(max-width: 600px) 100vw, 1120px" width="1920" height="1200" fetchpriority="high" decoding="async" alt=""></picture>
+            <picture><img class="vw fr" data-k="v" src="assets/tour-v.webp" srcset="assets/tour-v-960.webp 960w, assets/tour-v.webp 1920w" sizes="(max-width: 600px) 100vw, 1120px" width="1920" height="1200" decoding="async" alt=""></picture>
             <div class="strips">
               <img data-i="0" src="assets/tour-find0.webp" width="693" height="138" alt=""><img data-i="1" src="assets/tour-find1.webp" width="693" height="138" alt=""><img data-i="2" src="assets/tour-find2.webp" width="693" height="138" alt=""><img data-i="3" src="assets/tour-find3.webp" width="693" height="138" alt=""><img data-i="4" src="assets/tour-find4.webp" width="693" height="138" alt=""><img data-i="5" src="assets/tour-find5.webp" width="693" height="138" alt=""><img data-i="6" src="assets/tour-find6.webp" width="693" height="138" alt="">
             </div>
@@ -655,7 +650,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       <div class="copy center reveal">
         <p class="num">04 &nbsp;Navigation</p>
         <h2 id="f4">Move through the paper, and back.</h2>
-        <p>The outline shows every section, the one you are reading marked. Jump to any of them; Back takes you to where you were.</p>
+        <p>The outline shows every section, the one you are reading marked. Jump to any of them; Back takes you to where you were. If a paper has no outline or links of its own, Epsilon makes them for you.</p>
       </div>
       <div class="scene">
         <figure class="plane window nav-demo" id="nav-demo" style="margin:0" role="img" aria-label="Reading the introduction: a click on section 3.1 in the outline jumps there, Back returns to the introduction, a click on section 2.2 jumps there, and Back returns again.">
