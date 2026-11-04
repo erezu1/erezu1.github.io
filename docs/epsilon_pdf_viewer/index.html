@@ -437,6 +437,7 @@ kbd {
 .news ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
 .news li { position: relative; padding: 16px 0 16px 26px; border-bottom: 1px solid var(--line); color: var(--text); font-size: 16px; }
 .news li::before { content: ""; position: absolute; left: 4px; top: calc(16px + 0.62em); width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+.news .news-all { margin-top: 18px; }
 .news .m { font-family: var(--math); font-size: 1.08em; white-space: nowrap; }
 .news .ver { font: 500 13px/1 var(--mono); color: var(--text-2); margin-top: 16px; }
 @media (max-width: 860px) { .news { grid-template-columns: minmax(0, 1fr); } }
@@ -758,6 +759,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
         <p class="num">What's new</p>
         <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Links and an outline, even where the PDF has none.</h2>
         <p class="ver">Version 1.4.4</p>
+        <a class="link news-all" href="releases.html">All release notes <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a>
       </div>
       <ul>
         <li>New in 1.4.4: text selects as in Chrome, and Epsilon steps in only at formulas. Displays with words read whole, and older plain TeX papers read better.</li>
@@ -791,6 +793,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       <a href="privacy.html">Privacy policy</a>
       <a href="#search">Features</a>
       <a href="#new">What's new</a>
+      <a href="releases.html">Release notes</a>
       <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome Web Store</a>
     </nav>
   </div>
