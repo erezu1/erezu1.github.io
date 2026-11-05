@@ -293,7 +293,7 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
   const measure = () => {
     pending = false;
     if (!on) return;
-    const vh = innerHeight, dpr = devicePixelRatio || 1, maxY = Math.max(0, document.documentElement.scrollHeight - vh);
+    const vh = VH, dpr = devicePixelRatio || 1, maxY = Math.max(0, document.documentElement.scrollHeight - vh);
     document.documentElement.style.setProperty("--maxy", maxY + "px");
     geo = wins.map(({b, art, img}) => {
       b.classList.remove("sd"); art.style.transform = "";
@@ -330,7 +330,10 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
   const onScroll = () => { if (on && !queued && geo.some(g => !g.css)) { queued = true; requestAnimationFrame(frame); } };
   const set = () => { on = !mq.matches; if (on) measure(); else { geo = []; reset(); } };
   addEventListener("scroll", onScroll, {passive: true});
-  addEventListener("resize", later);
+  // (a phone's toolbar shows and hides as a scroll ends, a resize of the height only: not measured again, or every
+  // painting would jump as the hand lets go; the height kept from the last change of width)
+  let VH = innerHeight, lastW = innerWidth;
+  addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; VH = innerHeight; later(); });
   addEventListener("load", later);
   new ResizeObserver(later).observe(document.body);
   mq.addEventListener("change", set);
