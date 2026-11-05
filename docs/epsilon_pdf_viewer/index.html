@@ -20,8 +20,11 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="preload" as="image" type="image/avif" imagesrcset="assets/paintings/milkyway-800.avif 800w, assets/paintings/milkyway-1200.avif 1200w, assets/paintings/milkyway-1672.avif 1672w, assets/paintings/milkyway-2800.avif 2800w" imagesizes="(max-width: 600px) 1010px, 119vw" fetchpriority="high">
+<link rel="preload" as="image" type="image/avif" imagesrcset="assets/paintings/milkyway-800.avif 800w, assets/paintings/milkyway-1200.avif 1200w, assets/paintings/milkyway-1672.avif 1672w, assets/paintings/milkyway-2048.avif 2048w, assets/paintings/milkyway-2800.avif 2800w" imagesizes="(max-width: 600px) 1010px, 119vw" fetchpriority="high">
 <link rel="preload" as="image" href="assets/nav-a.webp" imagesrcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" imagesizes="(max-width: 600px) 100vw, 1120px" fetchpriority="high">
+<style>html.art-wait body{opacity:0}body{transition:opacity .3s ease-out}@media (prefers-reduced-motion: reduce){body{transition:none}}</style>
+<script>/* the page shows once its top painting is decoded (or after 3 s, or if it fails), so it never paints without it */
+document.documentElement.classList.add("art-wait");addEventListener("DOMContentLoaded",()=>{const d=document.documentElement,i=document.querySelector(".art img"),go=()=>d.classList.remove("art-wait");if(!i)return go();setTimeout(go,3000);i.decode().then(go,go);});</script>
 <style>
 /* Epsilon PDF viewer: one page, everything local (system fonts, images in assets/). The look is the extension's
    "Epsilon" skin (src/epsilon-skin.css): a warm grey frame, a lighter card, white sheets, what floats with a hairline
@@ -433,6 +436,15 @@ kbd {
 .checks .ck .icon { width: 16px; height: 16px; stroke-width: 2.2; }
 @media (max-width: 520px) { .checks { flex-direction: column; align-items: stretch; max-width: 300px; } }
 
+/* the privacy frame: a window onto the moonlit garden, the painting of the Privacy page */
+.privacy-box.on-art { position: relative; isolation: isolate; overflow: hidden; border: 0; background: rgb(79 51 54); }
+.privacy-box .art-band { inset: 0; --scrim: 30 10 26; }
+.privacy-box .art-band::after { background: radial-gradient(ellipse 75% 60% at 50% 50%, rgb(var(--scrim) / 0.55), rgb(var(--scrim) / 0.25)); }
+.privacy-box .art-band img { object-position: 50% 40%; }
+.privacy-box.on-art .checks li { background: rgb(255 255 255 / 0.14); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.28); color: #fff;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.privacy-box.on-art .checks .ck { background: #fff; color: rgb(30 10 26); }
+
 /* ---- what's new ---- */
 .news { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(28px, 6vw, 96px); align-items: start; }
 .news ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
@@ -586,7 +598,7 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 
   <!-- hero -->
   <section class="hero" id="top" aria-labelledby="hero-title">
-    <div class="art-band" data-speed="0.3" data-far><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/milkyway-800.avif 800w, assets/paintings/milkyway-1200.avif 1200w, assets/paintings/milkyway-1672.avif 1672w, assets/paintings/milkyway-2800.avif 2800w" sizes="(max-width: 600px) 1010px, 119vw"><source type="image/webp" srcset="assets/paintings/milkyway-800.webp 800w, assets/paintings/milkyway-1200.webp 1200w, assets/paintings/milkyway-1672.webp 1672w" sizes="(max-width: 600px) 1010px, 119vw"><img src="assets/paintings/milkyway-1200.webp" width="1672" height="942" alt="" decoding="async" fetchpriority="high"></picture></div>
+    <div class="art-band" data-speed="0.3" data-far><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/milkyway-800.avif 800w, assets/paintings/milkyway-1200.avif 1200w, assets/paintings/milkyway-1672.avif 1672w, assets/paintings/milkyway-2048.avif 2048w, assets/paintings/milkyway-2800.avif 2800w" sizes="(max-width: 600px) 1010px, 119vw"><source type="image/webp" srcset="assets/paintings/milkyway-800.webp 800w, assets/paintings/milkyway-1200.webp 1200w, assets/paintings/milkyway-1672.webp 1672w, assets/paintings/milkyway-2048.webp 2048w" sizes="(max-width: 600px) 1010px, 119vw"><img src="assets/paintings/milkyway-1200.webp" width="1672" height="942" alt="" decoding="async" fetchpriority="high"></picture></div>
     <div class="wrap">
       <div class="on-art" style="display:contents"><div class="eps-name hero-name" role="img" aria-label="Epsilon PDF viewer for Chrome"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span><span></span><span class="eps-sub">for Chrome</span></div>
       <h1 id="hero-title">The PDF reader made for scientific papers.</h1>
@@ -727,12 +739,12 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 
   <!-- 05 journals -->
   <section class="feature wide" id="journals" aria-labelledby="f5">
-    <div class="art-band"><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/cubist-800.avif 800w, assets/paintings/cubist-1200.avif 1200w, assets/paintings/cubist-1672.avif 1672w, assets/paintings/cubist-2800.avif 2800w" sizes="(max-width: 600px) 1015px, 100vw"><source type="image/webp" srcset="assets/paintings/cubist-800.webp 800w, assets/paintings/cubist-1200.webp 1200w, assets/paintings/cubist-1672.webp 1672w" sizes="(max-width: 600px) 1015px, 100vw"><img src="assets/paintings/cubist-1200.webp" width="1672" height="942" alt="" decoding="async" loading="lazy"></picture></div>
+    <div class="art-band"><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/cubist-800.avif 800w, assets/paintings/cubist-1200.avif 1200w, assets/paintings/cubist-1672.avif 1672w, assets/paintings/cubist-2048.avif 2048w, assets/paintings/cubist-2800.avif 2800w" sizes="(max-width: 600px) 1015px, 100vw"><source type="image/webp" srcset="assets/paintings/cubist-800.webp 800w, assets/paintings/cubist-1200.webp 1200w, assets/paintings/cubist-1672.webp 1672w, assets/paintings/cubist-2048.webp 2048w" sizes="(max-width: 600px) 1015px, 100vw"><img src="assets/paintings/cubist-1200.webp" width="1672" height="942" alt="" decoding="async" loading="lazy"></picture></div>
     <div class="wrap">
       <div class="copy center reveal on-art">
         <p class="num">05 &nbsp;Any journal</p>
         <h2 id="f5">Works with every journal.</h2>
-        <p>Whoever the publisher, Epsilon reads the formulas in its papers: search them, select them, copy them.</p>
+        <p>Whoever the publisher, Epsilon understands the paper and works for you.</p>
       </div>
     </div>
     <div class="marquee" role="region" aria-label="Publishers it was tuned on">
@@ -787,7 +799,8 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
   <!-- privacy -->
   <section class="band" id="privacy" aria-labelledby="priv" style="padding-top:0">
     <div class="wrap">
-      <div class="privacy-box reveal">
+      <div class="privacy-box on-art reveal">
+        <div class="art-band"><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w, assets/paintings/garden-2800.avif 2800w" sizes="(max-width: 1200px) calc(100vw - 32px), 1160px"><source type="image/webp" srcset="assets/paintings/garden-800.webp 800w, assets/paintings/garden-1200.webp 1200w, assets/paintings/garden-1672.webp 1672w, assets/paintings/garden-2048.webp 2048w" sizes="(max-width: 1200px) calc(100vw - 32px), 1160px"><img src="assets/paintings/garden-1200.webp" width="1672" height="942" alt="" decoding="async" loading="lazy"></picture></div>
         <p class="num" style="justify-content:center">Private by design</p>
         <h2 id="priv">Your papers stay with you.</h2>
         <ul class="checks">
@@ -823,7 +836,7 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 </main>
 
 <div class="end on-art">
-  <div class="art-band"><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2800.avif 2800w" sizes="(max-width: 600px) 1080px, 100vw"><source type="image/webp" srcset="assets/paintings/forest-800.webp 800w, assets/paintings/forest-1200.webp 1200w, assets/paintings/forest-1536.webp 1536w" sizes="(max-width: 600px) 1080px, 100vw"><img src="assets/paintings/forest-1200.webp" width="1536" height="1024" alt="" decoding="async" loading="lazy"></picture></div>
+  <div class="art-band"><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w, assets/paintings/forest-2800.avif 2800w" sizes="(max-width: 600px) 1080px, 100vw"><source type="image/webp" srcset="assets/paintings/forest-800.webp 800w, assets/paintings/forest-1200.webp 1200w, assets/paintings/forest-1536.webp 1536w, assets/paintings/forest-2048.webp 2048w" sizes="(max-width: 600px) 1080px, 100vw"><img src="assets/paintings/forest-1200.webp" width="1536" height="1024" alt="" decoding="async" loading="lazy"></picture></div>
   <!-- last call -->
   <section class="final" aria-labelledby="last">
     <div class="wrap">
