@@ -234,9 +234,11 @@ kbd {
 .tour .ripple { z-index: 5; }
 .tour .back-chip { z-index: 5; }
 .tour-steps { display: flex; justify-content: center; gap: 6px; margin: 22px 0 0; padding: 0; list-style: none; }
-.tour-steps button { appearance: none; border: 0; background: none; margin: 0; cursor: pointer; font: 600 13px/1 var(--ui); color: var(--text-3); padding: 7px 12px; border-radius: 999px; transition: background 260ms var(--ease), color 260ms var(--ease); }
-.tour-steps button:hover { color: var(--text-2); }
-.tour-steps button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.tour-steps button { appearance: none; border: 0; background: none; margin: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; outline: none; font: 600 13px/1 var(--ui); color: var(--text-3); padding: 7px 12px; border-radius: 999px; transition: background 260ms var(--ease), color 260ms var(--ease); }
+/* as the bar's own links: grey on hover, the white pill when on; no click rectangle, a pill-shaped ring for the keyboard */
+.tour-steps button:hover { background: var(--bg-2); color: var(--text); }
+.tour-steps button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 999px; }
+.tour-steps button:active { transform: scale(0.97); }
 .tour-steps li.on button { background: var(--surface); color: var(--text); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
 .tour .shot { transition: opacity 140ms linear; }
 .tour .shot.jump { opacity: 0; }
