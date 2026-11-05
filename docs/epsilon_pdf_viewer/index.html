@@ -20,6 +20,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" as="image" type="image/avif" imagesrcset="assets/paintings/milkyway-800.avif 800w, assets/paintings/milkyway-1200.avif 1200w, assets/paintings/milkyway-1672.avif 1672w, assets/paintings/milkyway-2800.avif 2800w" imagesizes="(max-width: 600px) 1010px, 119vw" fetchpriority="high">
 <link rel="preload" as="image" href="assets/nav-a.webp" imagesrcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" imagesizes="(max-width: 600px) 100vw, 1120px" fetchpriority="high">
 <style>
 /* Epsilon PDF viewer: one page, everything local (system fonts, images in assets/). The look is the extension's
@@ -501,6 +502,52 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
   .marquee { -webkit-mask-image: none; mask-image: none; }
   .peek-panel, .pointer, .chip, .clip, .layer > div { transition: none; }
 }
+
+/* ---- paintings (mockup) ---- */
+.art { display: block; }
+.art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.art-band { position: absolute; z-index: -1; inset: 0 0 auto 0; overflow: hidden; }
+.art-band > .art { position: absolute; inset: 0; }
+/* the scrim: the painting's own dark, deeper at the top (the nav) and under the title */
+.art-band::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgb(var(--scrim) / 0.42), rgb(var(--scrim) / 0.16) 34%, rgb(var(--scrim) / 0.3) 68%, rgb(var(--scrim) / 0.58)); }
+.on-art { --text: rgb(255 255 255 / 0.95); --text-2: rgb(255 255 255 / 0.8); --eps: #fff; --blue-text: #fff; --cta: #f5f4f0; --on-cta: #141415; color: var(--text); }
+.on-art h1, .on-art h2, .on-art .eps-name, .on-art .date { text-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 30px rgb(0 0 0 / 0.4); }
+.on-art .link { border-bottom-color: rgb(255 255 255 / 0.5); }
+.on-art .date::before { background: #fff; }
+/* a window onto a painting far away: the script below moves the painting more slowly than the page (a translateY
+   at a fraction of the scroll), in a box taller than the window by its travel; with reduced motion it stays still */
+.art-band.win > .art { backface-visibility: hidden; }
+@keyframes win-pan { from { transform: translateY(var(--t0)); } to { transform: translateY(var(--t1)); } }
+@media (prefers-reduced-motion: no-preference) {
+  .art-band.sd > .art { animation: win-pan linear both; animation-timeline: scroll(root block); animation-range: 0px var(--maxy); }
+}
+.on-art .num::before { background: #fff; }
+footer.on-art { background: transparent; }
+footer.on-art .who, footer.on-art p, footer.on-art nav a { text-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 1px 16px rgb(0 0 0 / 0.3); }
+/* the footer's overlay: the painting's own dark, deepest under the text at the foot */
+footer.on-art .art-band::after, .end .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.18), rgb(var(--scrim) / 0.42) 45%, rgb(var(--scrim) / 0.78)); }
+
+.hero { position: relative; isolation: isolate; padding-top: clamp(40px, 7vh, 84px); --win: calc(min(1120px, 100vw - 2 * var(--gutter)) * 0.625); }
+.hero .art-band { height: calc(100% - var(--win) * 0.58 - 66px); background: rgb(59 66 70); --scrim: 6 12 28; }
+.hero .art-band img { object-position: 74% 38%; }
+.hero-scene { margin-top: clamp(56px, 7vw, 88px); }
+@media (max-width: 600px) { .hero .art-band img { object-position: 78% 40%; } }
+.end { position: relative; isolation: isolate; margin-top: clamp(40px, 6vh, 80px); background: rgb(87 83 58); --scrim: 6 18 10; }
+.end .art-band { inset: 0; }
+.end .final { padding-bottom: clamp(72px, 11vh, 120px); }
+/* the forest is busy: a deeper scrim in the middle, where the words are */
+.end .art-band::after { background: radial-gradient(ellipse 70% 40% at 50% 34%, rgb(var(--scrim) / 0.42), rgb(var(--scrim) / 0)),
+  linear-gradient(180deg, rgb(var(--scrim) / 0.3), rgb(var(--scrim) / 0.36) 55%, rgb(var(--scrim) / 0.8)); }
+.end .art-band img { object-position: 55% 30%; }
+@media (max-width: 600px) { .end .art-band img { object-position: 64% 30%; } }
+#journals { position: relative; isolation: isolate; padding-bottom: clamp(56px, 9vh, 104px); }
+#journals .marquee { -webkit-mask-image: none; mask-image: none; }
+#journals .wm { box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08), 0 10px 28px -12px rgb(0 0 0 / 0.55); }
+#journals .wm.more { background: var(--surface); box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08), 0 10px 28px -12px rgb(0 0 0 / 0.55); }
+#journals .art-band { inset: 0; background: rgb(154 92 69); --scrim: 44 20 12; }
+#journals .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.4), rgb(var(--scrim) / 0.5) 50%, rgb(var(--scrim) / 0.35)); }
+#journals .art-band img { object-position: 50% 40%; }
 </style>
 </head>
 <body>
@@ -539,13 +586,14 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
 
   <!-- hero -->
   <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="art-band" data-speed="0.3" data-far><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/milkyway-800.avif 800w, assets/paintings/milkyway-1200.avif 1200w, assets/paintings/milkyway-1672.avif 1672w, assets/paintings/milkyway-2800.avif 2800w" sizes="(max-width: 600px) 1010px, 119vw"><source type="image/webp" srcset="assets/paintings/milkyway-800.webp 800w, assets/paintings/milkyway-1200.webp 1200w, assets/paintings/milkyway-1672.webp 1672w" sizes="(max-width: 600px) 1010px, 119vw"><img src="assets/paintings/milkyway-1200.webp" width="1672" height="942" alt="" decoding="async" fetchpriority="high"></picture></div>
     <div class="wrap">
-      <div class="eps-name hero-name" role="img" aria-label="Epsilon PDF viewer for Chrome"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span><span></span><span class="eps-sub">for Chrome</span></div>
+      <div class="on-art" style="display:contents"><div class="eps-name hero-name" role="img" aria-label="Epsilon PDF viewer for Chrome"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span><span></span><span class="eps-sub">for Chrome</span></div>
       <h1 id="hero-title">The PDF reader made for scientific papers.</h1>
       <div class="cta-row">
         <a class="btn" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         <a class="link" href="#search">See what it does <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-down"/></svg></a>
-      </div>
+      </div></div>
       <div class="scene hero-scene">
         <figure class="plane window tour" id="tour" style="margin:0" role="img" aria-label="One reading session in Epsilon on a physics paper: a click on section 3.5 in the outline jumps there; \phi_r typed in the find bar marks every φ_r on the page; a Cmd+click on the reference (2.8) brings up a peek of that equation from below; a drag into equation (3.31) selects the whole bracket, Cmd+C copies it as LaTeX; and Back returns to where the reading started.">
           <div class="shot" aria-hidden="true"><div class="stage">
@@ -679,8 +727,9 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
 
   <!-- 05 journals -->
   <section class="feature wide" id="journals" aria-labelledby="f5">
+    <div class="art-band"><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/cubist-800.avif 800w, assets/paintings/cubist-1200.avif 1200w, assets/paintings/cubist-1672.avif 1672w, assets/paintings/cubist-2800.avif 2800w" sizes="(max-width: 600px) 1015px, 100vw"><source type="image/webp" srcset="assets/paintings/cubist-800.webp 800w, assets/paintings/cubist-1200.webp 1200w, assets/paintings/cubist-1672.webp 1672w" sizes="(max-width: 600px) 1015px, 100vw"><img src="assets/paintings/cubist-1200.webp" width="1672" height="942" alt="" decoding="async" loading="lazy"></picture></div>
     <div class="wrap">
-      <div class="copy center reveal">
+      <div class="copy center reveal on-art">
         <p class="num">05 &nbsp;Any journal</p>
         <h2 id="f5">Works with every journal.</h2>
         <p>Whoever the publisher, Epsilon reads the formulas in its papers: search them, select them, copy them.</p>
@@ -771,6 +820,10 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
     </div>
   </section>
 
+</main>
+
+<div class="end on-art">
+  <div class="art-band"><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2800.avif 2800w" sizes="(max-width: 600px) 1080px, 100vw"><source type="image/webp" srcset="assets/paintings/forest-800.webp 800w, assets/paintings/forest-1200.webp 1200w, assets/paintings/forest-1536.webp 1536w" sizes="(max-width: 600px) 1080px, 100vw"><img src="assets/paintings/forest-1200.webp" width="1536" height="1024" alt="" decoding="async" loading="lazy"></picture></div>
   <!-- last call -->
   <section class="final" aria-labelledby="last">
     <div class="wrap">
@@ -781,9 +834,8 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
       </div>
     </div>
   </section>
-</main>
 
-<footer>
+<footer class="on-art">
   <div class="wrap">
     <div>
       <div class="who"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg>Epsilon PDF viewer</div>
@@ -798,6 +850,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
     </nav>
   </div>
 </footer>
+</div>
 
 <script>
 /* The page's script: the three demos (they play while in view, loop, and show their last state for reduced
@@ -1115,6 +1168,66 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
   const set = () => { const away = cta.getBoundingClientRect().bottom > 0; nav.classList.toggle("away", away); nav.inert = away; };
   new IntersectionObserver(set, {threshold: [0, 1]}).observe(cta);
   addEventListener("scroll", set, {passive: true});
+  set();
+})();
+</script>
+<script>
+/* the bands are windows onto paintings far away: each painting moves more slowly than the page, its offset in the
+   band (1 - speed) times the scroll, a plain translateY. Its box is the least that keeps the part of the band in view
+   covered at every scroll position (sampled every 2 px): a band at the top of the page, which only leaves upward, and
+   a footer band at the page's end need no height beyond their own; a band crossing the whole viewport needs more.
+   Where the browser has scroll-driven animations the offset is a CSS animation on the page's scroll, moved with the
+   scroll itself (no frame of lag); elsewhere a requestAnimationFrame sets it. With reduced motion: still. */
+(() => {
+  const SPEED = 0.6;      // the painting's speed, as a fraction of the page's (a band's data-speed sets its own)
+  const mq = matchMedia("(prefers-reduced-motion: reduce)"), sd = CSS.supports("animation-timeline: scroll()");
+  const wins = [...document.querySelectorAll(".art-band")].map(b => ({b, art: b.querySelector(".art"), img: b.querySelector("img")})).filter(w => w.art && w.img);
+  let geo = [], on = false, queued = false, pending = false;
+  const reset = () => wins.forEach(({b, art}) => { b.classList.remove("win", "sd"); art.style.top = art.style.height = art.style.bottom = art.style.transform = ""; });
+  const measure = () => {
+    pending = false;
+    if (!on) return;
+    const vh = innerHeight, dpr = devicePixelRatio || 1, maxY = Math.max(0, document.documentElement.scrollHeight - vh);
+    document.documentElement.style.setProperty("--maxy", maxY + "px");
+    geo = wins.map(({b, art, img}) => {
+      b.classList.remove("sd"); art.style.transform = "";
+      const r = b.getBoundingClientRect(), top = r.top + scrollY, H = r.height, W = r.width;
+      const srcW = +img.getAttribute("width"), aspect = srcW / +img.getAttribute("height");
+      const yc = top + H / 2 - vh / 2;   // the scroll at which the band's middle is the view's middle: offset 0 there
+      const box = f => { let lo = Infinity, hi = -Infinity;
+        for (let y = 0; ; y = Math.min(y + 2, maxY)) {
+          const vt = Math.max(0, y - top), vb = Math.min(H, y + vh - top);
+          if (vb > vt) { const T = f * (y - yc); lo = Math.min(lo, vt - T); hi = Math.max(hi, vb - T); }
+          if (y >= maxY) break;
+        }
+        return lo === Infinity ? [0, H] : [lo - 1, hi - lo + 2]; };
+      // data-far: a view farther off, whose speed comes before its pixels (no cap on the box); the others are never
+      // drawn larger than their pixels allow, or 10% beyond what the band alone needs
+      const speed = +b.dataset.speed || SPEED, far = "far" in b.dataset;
+      const maxBox = far ? Infinity : Math.max(srcW / dpr, Math.max(W, H * aspect) * 1.1) / aspect;
+      let f = 1 - speed, [boxTop, boxH] = box(f);
+      if (boxH > maxBox) { let a = 0, z = f; for (let k = 0; k < 18; k++) { const m = (a + z) / 2; if (box(m)[1] > maxBox) z = m; else a = m; } f = a; [boxTop, boxH] = box(f); }
+      art.style.top = boxTop + "px"; art.style.bottom = "auto"; art.style.height = boxH + "px";
+      art.style.setProperty("--t0", -f * yc + "px"); art.style.setProperty("--t1", f * (maxY - yc) + "px");
+      b.classList.add("win");
+      if (sd && maxY > 0) b.classList.add("sd");
+      return {art, f, yc, css: sd && maxY > 0};
+    });
+    frame();
+  };
+  const frame = () => {
+    queued = false;
+    const y = scrollY, dpr = devicePixelRatio || 1;
+    for (const g of geo) if (!g.css) g.art.style.transform = "translateY(" + Math.round(g.f * (y - g.yc) * dpr) / dpr + "px)";
+  };
+  const later = () => { if (on && !pending) { pending = true; requestAnimationFrame(measure); } };
+  const onScroll = () => { if (on && !queued && geo.some(g => !g.css)) { queued = true; requestAnimationFrame(frame); } };
+  const set = () => { on = !mq.matches; if (on) measure(); else { geo = []; reset(); } };
+  addEventListener("scroll", onScroll, {passive: true});
+  addEventListener("resize", later);
+  addEventListener("load", later);
+  new ResizeObserver(later).observe(document.body);
+  mq.addEventListener("change", set);
   set();
 })();
 </script>
