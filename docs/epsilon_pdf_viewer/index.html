@@ -1285,5 +1285,25 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
   set();
 })();
 </script>
+<script>
+/* the journals' chips roll through two equal rows (the track moved by half its width): without the edge fade a row
+   narrower than the band left a gap on the right before the copy came in. Each row filled with its chips again until
+   it is at least as wide as the band, its speed kept (the duration grown with it); again when the width changes */
+(() => {
+  for (const mq of document.querySelectorAll(".marquee")) {
+    const track = mq.querySelector(".track"), rows = [...track.children];
+    if (rows.length < 2) continue;
+    const base = [...rows[0].children].map(li => li.cloneNode(true)), w0 = rows[0].offsetWidth, dur0 = parseFloat(getComputedStyle(track).animationDuration) || 42;
+    const fill = () => {
+      if (!w0) return;
+      while (rows[0].offsetWidth < mq.clientWidth + 1) for (const r of rows) for (const li of base) r.appendChild(li.cloneNode(true));
+      track.style.animationDuration = dur0 * rows[0].offsetWidth / w0 + "s";
+    };
+    fill();
+    let lastW = innerWidth;
+    addEventListener("resize", () => { if (innerWidth !== lastW) { lastW = innerWidth; fill(); } });
+  }
+})();
+</script>
 </body>
 </html>
