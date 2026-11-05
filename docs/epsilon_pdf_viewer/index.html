@@ -234,8 +234,12 @@ kbd {
 .tour .ripple { z-index: 5; }
 .tour .back-chip { z-index: 5; }
 .tour-steps { display: flex; justify-content: center; gap: 6px; margin: 22px 0 0; padding: 0; list-style: none; }
-.tour-steps li { font: 600 13px/1 var(--ui); color: var(--text-3); padding: 7px 12px; border-radius: 999px; transition: background 260ms var(--ease), color 260ms var(--ease); }
-.tour-steps li.on { background: var(--surface); color: var(--text); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
+.tour-steps button { appearance: none; border: 0; background: none; margin: 0; cursor: pointer; font: 600 13px/1 var(--ui); color: var(--text-3); padding: 7px 12px; border-radius: 999px; transition: background 260ms var(--ease), color 260ms var(--ease); }
+.tour-steps button:hover { color: var(--text-2); }
+.tour-steps button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.tour-steps li.on button { background: var(--surface); color: var(--text); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
+.tour .shot { transition: opacity 140ms linear; }
+.tour .shot.jump { opacity: 0; }
 @media (max-width: 600px) {
   /* (the phone shows the whole window, as on a computer: the outline click and the find bar stay in view) */
   .tclip { left: 30%; width: 62%; }
@@ -626,7 +630,7 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
           <span class="ripple" aria-hidden="true"></span>
           <svg class="pointer" viewBox="0 0 24 28" aria-hidden="true"><path d="M3 2 L3 22 L8.5 17 L12 25.5 L15.5 24 L12 15.8 L19.5 15.8 Z" fill="#1f1f1f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
         </figure>
-        <ol class="tour-steps" aria-hidden="true"><li data-s="nav">Navigate</li><li data-s="find">Search</li><li data-s="peek">Peek</li><li data-s="copy">Copy</li></ol>
+        <ol class="tour-steps" aria-label="Show a step"><li data-s="nav"><button type="button">Navigate</button></li><li data-s="find"><button type="button">Search</button></li><li data-s="peek"><button type="button">Peek</button></li><li data-s="copy"><button type="button">Copy</button></li></ol>
       </div>
     </div>
   </section>
@@ -942,39 +946,71 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
       beam.style.left = x + "%"; beam.style.top = S0[1] + "%";
       if (k !== shown) { shown = k; sl.innerHTML = BOXES[k].length ? `<div>${BOXES[k].map(box).join("")}</div>` : ""; }
     };
+    // the chips under the window jump to their step: the round in play is cut at its next wait, the window fades out
+    // fast, every layer is set as it is when that step begins, and the window fades back in there
+    const ORDER = ["nav", "find", "peek", "copy"], shot = $(".shot", el), ABORT = {};
+    let pending = 0, cut, cutP;
+    const arm = () => { cutP = new Promise((_, r) => cut = r); cutP.catch(() => {}); };
+    arm();
+    const w = ms => Promise.race([sleep(ms), cutP]);
+    const wGlide = (...a) => Promise.race([glide(...a), cutP]);
+    const clean = k => {   // the window as it is when step k begins
+      const all = [ptr, rip, back, beam, V, strips, fl, sl, pk, cPeek, cCopy, card, ...strip];
+      all.forEach(x => x.style.transition = "none");
+      ptr.classList.remove("on", "down"); rip.classList.remove("go"); back.classList.remove("on", "press"); beam.classList.remove("on");
+      strips.classList.remove("on"); strip.forEach(im => im.classList.remove("on")); fl.innerHTML = ""; fl.classList.remove("out");
+      sl.innerHTML = ""; sl.classList.remove("out"); shown = -1; pk.classList.remove("on"); pkStrip.style.transform = "";
+      el.classList.remove("peeking"); cPeek.classList.remove("on", "press"); cCopy.classList.remove("on", "press"); card.classList.remove("on");
+      V.classList.toggle("on", k > 0); go(fig(REST), false); label(ORDER[k]);
+      void el.offsetWidth; all.forEach(x => x.style.transition = "");
+    };
+    const play = async k => {
+      if (k <= 0) {   // navigate
+        label("nav"); await w(500);
+        go(fig(NAV)); await w(1000); await click(fig(NAV)); V.classList.add("on"); await w(1200);
+      }
+      if (k <= 1) {   // search
+        label("find"); ptr.classList.remove("on");
+        typed(0); strips.classList.add("on"); await w(600);
+        for (let i = 1; i <= 6; i++) { typed(i); await w(i === 4 ? 700 : 300); }
+        await w(1500);
+        strips.classList.remove("on"); fl.classList.add("out"); await w(400); fl.innerHTML = ""; fl.classList.remove("out");
+      }
+      if (k <= 2) {   // peek
+        label("peek"); go(fig(LINK)); await w(1000);
+        cPeek.classList.add("on"); await w(450); cPeek.classList.add("press"); await click(fig(LINK));
+        el.classList.add("peeking"); await w(450); cPeek.classList.remove("on", "press"); ptr.classList.remove("on");
+        await w(600); pk.classList.add("on"); await w(400);
+        await wGlide(pkStrip, 0, PEEK_DOWN, 1400); await w(300); await wGlide(pkStrip, PEEK_DOWN, 0, 1400); await w(300);
+        el.classList.remove("peeking"); await w(700); pk.classList.remove("on"); pkStrip.style.transform = "";
+      }
+      // copy
+      label("copy"); shown = -1; selAt(S0[0]); beam.classList.add("on"); await w(450);
+      const T = 1500, t0 = performance.now();
+      for (;;) { const t = Math.min(1, (performance.now() - t0) / T); selAt(S0[0] + (S1 - S0[0]) * t); if (t === 1) break; await Promise.race([new Promise(r => requestAnimationFrame(r)), cutP]); }
+      await w(350); beam.classList.remove("on");
+      cCopy.classList.add("on"); await w(400); cCopy.classList.add("press"); await w(160); cCopy.classList.remove("press");
+      card.classList.add("on"); await w(300); cCopy.classList.remove("on");
+      await w(2200);
+      card.classList.remove("on"); sl.classList.add("out"); await w(450); sl.innerHTML = ""; sl.classList.remove("out"); shown = -1;
+      // back, to the start
+      label("nav"); const b = backAt(); back.classList.add("on"); go(b); await w(950);
+      back.classList.add("press"); await click(b); back.classList.remove("press"); V.classList.remove("on");
+      await w(350); back.classList.remove("on"); await w(550);
+    };
     let first = true;
     loop(el, async () => {
       if (first) { first = false; ptr.style.transition = "none"; go(fig(REST), false); void ptr.offsetWidth; ptr.style.transition = ""; }
-      // navigate
-      label("nav"); await sleep(500);
-      go(fig(NAV)); await sleep(1000); await click(fig(NAV)); V.classList.add("on"); await sleep(1200);
-      // search
-      label("find"); ptr.classList.remove("on");
-      typed(0); strips.classList.add("on"); await sleep(600);
-      for (let i = 1; i <= 6; i++) { typed(i); await sleep(i === 4 ? 700 : 300); }
-      await sleep(1500);
-      strips.classList.remove("on"); fl.classList.add("out"); await sleep(400); fl.innerHTML = ""; fl.classList.remove("out");
-      // peek
-      label("peek"); go(fig(LINK)); await sleep(1000);
-      cPeek.classList.add("on"); await sleep(450); cPeek.classList.add("press"); await click(fig(LINK));
-      el.classList.add("peeking"); await sleep(450); cPeek.classList.remove("on", "press"); ptr.classList.remove("on");
-      await sleep(600); pk.classList.add("on"); await sleep(400);
-      await glide(pkStrip, 0, PEEK_DOWN, 1400); await sleep(300); await glide(pkStrip, PEEK_DOWN, 0, 1400); await sleep(300);
-      el.classList.remove("peeking"); await sleep(700); pk.classList.remove("on"); pkStrip.style.transform = "";
-      // copy
-      label("copy"); shown = -1; selAt(S0[0]); beam.classList.add("on"); await sleep(450);
-      const T = 1500, t0 = performance.now();
-      for (;;) { const t = Math.min(1, (performance.now() - t0) / T); selAt(S0[0] + (S1 - S0[0]) * t); if (t === 1) break; await new Promise(r => requestAnimationFrame(r)); }
-      await sleep(350); beam.classList.remove("on");
-      cCopy.classList.add("on"); await sleep(400); cCopy.classList.add("press"); await sleep(160); cCopy.classList.remove("press");
-      card.classList.add("on"); await sleep(300); cCopy.classList.remove("on");
-      await sleep(2200);
-      card.classList.remove("on"); sl.classList.add("out"); await sleep(450); sl.innerHTML = ""; sl.classList.remove("out"); shown = -1;
-      // back, to the start
-      label("nav"); const b = backAt(); back.classList.add("on"); go(b); await sleep(950);
-      back.classList.add("press"); await click(b); back.classList.remove("press"); V.classList.remove("on");
-      await sleep(350); back.classList.remove("on"); await sleep(550);
+      for (let k = 0; ;) {
+        try { await play(k); return; }
+        catch (e) {
+          if (e !== ABORT) throw e;
+          k = pending; arm(); shot.classList.add("jump"); ptr.classList.remove("on"); back.classList.remove("on");
+          await sleep(140); clean(k); await sleep(60); shot.classList.remove("jump"); await sleep(140);
+        }
+      }
     }, () => { V.classList.add("on"); strips.classList.add("on"); typed(6); label("find"); });
+    if (!still) steps.forEach(li => { const b = li.querySelector("button"); if (b) b.addEventListener("click", () => { pending = ORDER.indexOf(li.dataset.s); cut(ABORT); }); });
   }
 
   // 1. search: \phi_r typed; after each key the marks the extension drew for what is typed so far, and its count
