@@ -560,7 +560,9 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 .end .art-band img { object-position: 55% 30%; }
 @media (max-width: 600px) { .end .art-band img { object-position: 64% 30%; } }
 #journals { position: relative; isolation: isolate; padding-bottom: clamp(56px, 9vh, 104px); }
-#journals .marquee { -webkit-mask-image: none; mask-image: none; }
+#journals .marquee { -webkit-mask-image: none; mask-image: none;
+  /* (room for the chips' shadow, 26px under them, which the strip's overflow cut with a hard edge; the layout unmoved) */
+  padding-block: 30px; margin-top: calc(clamp(44px, 6vw, 72px) - 16px); margin-bottom: -16px; }
 #journals .wm { box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08), 0 10px 28px -12px rgb(0 0 0 / 0.55); }
 #journals .wm.more { background: var(--surface); box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08), 0 10px 28px -12px rgb(0 0 0 / 0.55); }
 #journals .art-band { inset: 0; background: rgb(154 92 69); --scrim: 44 20 12; }
