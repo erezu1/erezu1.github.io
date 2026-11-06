@@ -87,6 +87,8 @@ document.documentElement.classList.add("art-wait");addEventListener("DOMContentL
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 88px; }
+/* (the features start where the tour's chips end: landing there, the section's own top padding clears the bar, the chips out of sight) */
+#search { scroll-margin-top: -88px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   margin: 0;
@@ -580,8 +582,8 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 .end .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.1), rgb(var(--scrim) / 0.16) 55%, rgb(var(--scrim) / 0.74)); }
 .page-band .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.26), rgb(var(--scrim) / 0.06) 30%, rgb(var(--scrim) / 0.14) 62%, rgb(var(--scrim) / 0.36)); }
 .privacy-box .art-band::after { background: radial-gradient(ellipse 75% 60% at 50% 50%, rgb(var(--scrim) / 0.3), rgb(var(--scrim) / 0.1)); }
-.hero h1, .final h2, .page-band .band-in, .privacy-box h2 { position: relative; }
-.hero h1::before, .final h2::before, .page-band .band-in::before, .privacy-box h2::before { content: ""; position: absolute; z-index: -1;
+.hero h1, .final h2, .page-band .band-in, .privacy-box h2, .hero .hero-name, .hero .cta-row, .final .eps-name, .final .cta-row, .privacy-box .num, .privacy-box .link { position: relative; }
+.hero h1::before, .final h2::before, .page-band .band-in::before, .privacy-box h2::before, .hero .hero-name::before, .hero .cta-row::before, .final .eps-name::before, .final .cta-row::before, .privacy-box .num::before, .privacy-box .link::before { content: ""; position: absolute; z-index: -1;
   inset: -30% -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.32), rgb(0 0 0 / 0.16) 55%, rgb(0 0 0 / 0));
   filter: blur(24px); pointer-events: none; }
 </style>
@@ -843,12 +845,13 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <div class="wrap news">
       <div class="copy reveal">
         <p class="num">What's new</p>
-        <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Links and an outline, even where the PDF has none.</h2>
+        <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Every journal's math, read as it is set.</h2>
         <p class="ver">Version 1.4.5</p>
         <a class="link news-all" href="releases.html">All release notes <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a>
       </div>
       <ul>
-        <li>New in 1.4.5: fraction bars, roots and overlines read by the fonts' own layout rules, about 20% fewer equations missed; APS journals and matplotlib figure labels read as they are set; books get their chapters in the outline.</li>
+        <li>New in 1.4.5: fraction bars, roots and overlines read by the fonts' own layout rules, about 20% fewer equations missed. APS journals and matplotlib figure labels read as they are set, and equations with words in them read whole.</li>
+        <li>Accents and bars over letters read right in more fonts, and accented words copy as they read (Kähler). Books get their chapters in the outline, and a figure link opens with the whole figure in view.</li>
         <li>In 1.4.4, text selects as in Chrome, and Epsilon steps in only at formulas. Displays with words read whole, and older plain TeX papers read better.</li>
         <li>In 1.4.3, papers without links get them: sections, equations, figures, citations and the contents. Click to go there, Cmd or Ctrl+click to peek.</li>
         <li>Papers without an outline get one from their numbered headings, and the tab shows the paper's title.</li>
