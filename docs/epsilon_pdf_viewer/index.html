@@ -566,8 +566,24 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 #journals .wm { box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08), 0 10px 28px -12px rgb(0 0 0 / 0.55); }
 #journals .wm.more { background: var(--surface); box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08), 0 10px 28px -12px rgb(0 0 0 / 0.55); }
 #journals .art-band { inset: 0; background: rgb(154 92 69); --scrim: 44 20 12; }
-#journals .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.4), rgb(var(--scrim) / 0.5) 50%, rgb(var(--scrim) / 0.35)); }
+#journals .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.18), rgb(var(--scrim) / 0.24) 50%, rgb(var(--scrim) / 0.14)); }
+/* (the painting shown with less shade; behind the words a large, blurred, barely there shadow, centred, as the chips have) */
+#journals .copy { position: relative; isolation: isolate; }
+#journals .copy::before { content: ""; position: absolute; z-index: -1; inset: -12% -18%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(44 20 12 / 0.42), rgb(44 20 12 / 0.22) 55%, rgb(44 20 12 / 0)); filter: blur(24px); pointer-events: none; }
 #journals .art-band img { object-position: 50% 40%; }
+
+/* (6 Nov: the paintings shown with less shade; the words given a large, blurred, barely there shadow centred behind
+   them, as the journals' band has; the footer's dark kept at its foot, where its text is) */
+.art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.24), rgb(var(--scrim) / 0.06) 34%, rgb(var(--scrim) / 0.12) 68%, rgb(var(--scrim) / 0.3)); }
+footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.06), rgb(var(--scrim) / 0.16) 45%, rgb(var(--scrim) / 0.74)); }
+.end .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.1), rgb(var(--scrim) / 0.16) 55%, rgb(var(--scrim) / 0.74)); }
+.page-band .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.26), rgb(var(--scrim) / 0.06) 30%, rgb(var(--scrim) / 0.14) 62%, rgb(var(--scrim) / 0.36)); }
+.privacy-box .art-band::after { background: radial-gradient(ellipse 75% 60% at 50% 50%, rgb(var(--scrim) / 0.3), rgb(var(--scrim) / 0.1)); }
+.hero h1, .final h2, .page-band .band-in, .privacy-box h2 { position: relative; }
+.hero h1::before, .final h2::before, .page-band .band-in::before, .privacy-box h2::before { content: ""; position: absolute; z-index: -1;
+  inset: -30% -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.32), rgb(0 0 0 / 0.16) 55%, rgb(0 0 0 / 0));
+  filter: blur(24px); pointer-events: none; }
 </style>
 </head>
 <body>
@@ -828,11 +844,12 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
       <div class="copy reveal">
         <p class="num">What's new</p>
         <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Links and an outline, even where the PDF has none.</h2>
-        <p class="ver">Version 1.4.4</p>
+        <p class="ver">Version 1.4.5</p>
         <a class="link news-all" href="releases.html">All release notes <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a>
       </div>
       <ul>
-        <li>New in 1.4.4: text selects as in Chrome, and Epsilon steps in only at formulas. Displays with words read whole, and older plain TeX papers read better.</li>
+        <li>New in 1.4.5: fraction bars, roots and overlines read by the fonts' own layout rules, about 20% fewer equations missed; APS journals and matplotlib figure labels read as they are set; books get their chapters in the outline.</li>
+        <li>In 1.4.4, text selects as in Chrome, and Epsilon steps in only at formulas. Displays with words read whole, and older plain TeX papers read better.</li>
         <li>In 1.4.3, papers without links get them: sections, equations, figures, citations and the contents. Click to go there, Cmd or Ctrl+click to peek.</li>
         <li>Papers without an outline get one from their numbered headings, and the tab shows the paper's title.</li>
         <li>Cases, wide accents and integral limits read right, so almost every copy compiles. Earlier, in 1.4.2: copy part of a matrix, and every standard symbol read as its LaTeX command.</li>

@@ -200,6 +200,18 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 .foot-band { position: relative; isolation: isolate; background: rgb(131 90 118); padding-top: clamp(96px, 16vh, 160px); --scrim: 34 14 40; }
 .foot-band .art-band { inset: 0; }
 .foot-band .art-band img { object-position: 50% 80%; }
+
+/* (6 Nov: the paintings shown with less shade; the words given a large, blurred, barely there shadow centred behind
+   them, as the journals' band has; the footer's dark kept at its foot, where its text is) */
+.art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.24), rgb(var(--scrim) / 0.06) 34%, rgb(var(--scrim) / 0.12) 68%, rgb(var(--scrim) / 0.3)); }
+footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.06), rgb(var(--scrim) / 0.16) 45%, rgb(var(--scrim) / 0.74)); }
+.end .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.1), rgb(var(--scrim) / 0.16) 55%, rgb(var(--scrim) / 0.74)); }
+.page-band .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.26), rgb(var(--scrim) / 0.06) 30%, rgb(var(--scrim) / 0.14) 62%, rgb(var(--scrim) / 0.36)); }
+.privacy-box .art-band::after { background: radial-gradient(ellipse 75% 60% at 50% 50%, rgb(var(--scrim) / 0.3), rgb(var(--scrim) / 0.1)); }
+.hero h1, .final h2, .page-band .band-in, .privacy-box h2 { position: relative; }
+.hero h1::before, .final h2::before, .page-band .band-in::before, .privacy-box h2::before { content: ""; position: absolute; z-index: -1;
+  inset: -30% -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.32), rgb(0 0 0 / 0.16) 55%, rgb(0 0 0 / 0));
+  filter: blur(24px); pointer-events: none; }
 </style>
 </head>
 <body>
