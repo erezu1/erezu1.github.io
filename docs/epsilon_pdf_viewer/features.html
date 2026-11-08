@@ -312,7 +312,7 @@ kbd {
       <li><h3>Select by formula</h3><p>In a formula a selection takes whole elements, e.g. a fraction or bracket entered from outside, and what is highlighted is what is copied; "Select as text" in the ⋮ menu switches to Chrome's own selection.</p></li>
       <li><h3>Copy as LaTeX</h3><p><kbd>⌘</kbd> <kbd>C</kbd> copies inline formulas as <code>$…$</code>, displayed equations as <code>\[…\]</code>, and part of a formula as the TeX of that part.</p></li>
       <li><h3>Copied TeX</h3><p>Symbols copy as their commands, e.g. α as <code>\alpha</code>, matrices and cases as environments, and text inside formulas as <code>\text{…}</code>.</p></li>
-      <li><h3>Copy as Mathematica <span class="badge">Coming in 1.4.6</span></h3><p>Right-click a formula, or a selected part of one, and choose "Copy as Mathematica" to copy it as Mathematica input; on a formula it cannot convert the menu shows "Highlight selection" instead.</p></li>
+      <li><h3>Copy as Mathematica <span class="badge">Coming in 1.4.6</span></h3><p><kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>C</kbd> copies the selected formula, or the formula under the pointer, as Mathematica input (an ordinary copy where it cannot convert); right-click a formula for "Copy as Mathematica" in the menu.</p></li>
       <li><h3>Keyboard</h3><p>With a selection, <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> extends it by one element (a letter with its scripts, a whole fraction), <kbd>⌥</kbd> <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> (<kbd>Ctrl</kbd> <kbd>Shift</kbd> on Windows and Linux) by a word, and <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> by a line.</p></li>
       <li><h3>Triple click</h3><p>Selects the sentence, across lines; on a displayed formula, the whole formula with all its rows, without its number.</p></li>
       <li><h3>Submatrix</h3><p>Drag from one matrix entry to another to select the block between them, copied as <code>\begin{matrix}…\end{matrix}</code>.</p></li>
@@ -376,6 +376,19 @@ kbd {
       <li><h3>Link borders</h3><p>Off by default; on, it draws the coloured boxes some PDFs put round their links.</p></li>
       <li><h3>Signatures</h3><p>Turns the signature tool off or on.</p></li>
       <li><h3>Sync</h3><p>With Chrome Sync on, settings are copied to your other computers.</p></li>
+    </ul>
+  </section>
+
+  <section class="cat" id="latex" aria-labelledby="h-latex">
+    <h2 id="h-latex">LaTeX support</h2>
+    <ul class="list">
+      <li><h3>Publishers</h3><p>arXiv preprints and journal PDFs (e.g. APS Physical Review, Springer and JHEP, Elsevier, IOP, Cambridge University Press) are read as they are typeset.</p></li>
+      <li><h3>Fonts</h3><p>Computer Modern, Latin Modern, Times (txfonts, newtx), Palatino (pxfonts, mathpazo), STIX and STIX Two, MathTime, MnSymbol, and publishers' own math fonts.</p></li>
+      <li><h3>Layout rules</h3><p>Fraction bars, roots, overlines, scripts and limits are told apart by TeX's own placement rules for the font in use.</p></li>
+      <li><h3>Structures</h3><p>Fractions, roots, scripts and limits, matrices and cases, sized brackets, accents, <code>\atop</code> and <code>\genfrac</code>, and multi-row displays.</p></li>
+      <li><h3>Symbols</h3><p>AMS symbols, bold symbols (<code>\boldsymbol</code>), and blackboard, calligraphic, script and fraktur letters.</p></li>
+      <li><h3>Plain TeX</h3><p>Papers set in plain TeX or harvmac (e.g. <code>\pmatrix</code>, <code>\eqalign</code>, <code>\cal</code>) are read as their LaTeX equivalents.</p></li>
+      <li><h3>Figure labels</h3><p>Labels made with matplotlib's mathtext are read as formulas.</p></li>
     </ul>
   </section>
 
