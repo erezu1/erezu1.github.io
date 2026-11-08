@@ -262,6 +262,7 @@ kbd {
 .feature h2, .band h2 { font-size: clamp(34px, 4.6vw, 56px); line-height: 1.04; }
 .copy p { font-size: 18px; color: var(--text-2); margin-top: 20px; max-width: 42ch; }
 .copy p + p { margin-top: 14px; }
+.nw { white-space: nowrap; }
 .center { text-align: center; }
 .center .num { justify-content: center; }
 .center p { margin-inline: auto; }
@@ -381,6 +382,27 @@ kbd {
   .copy-demo .sheet { padding: 14px 0; border-radius: 12px; }
   .clip { margin: 14px 2% 0 6%; padding: 12px 13px 13px; }
   .clip pre { font-size: 12.5px; }
+  .clip + .clip { margin-top: 10px; }
+}
+/* then a right-click on the selection: Chrome's menu, its Copy as Mathematica clicked, and what that copied */
+.clip + .clip { margin-top: 12px; }
+.ctx {
+  position: absolute; z-index: 5; left: 0; top: 0; min-width: 214px; padding: 6px 0; border-radius: 10px;
+  background: var(--float); box-shadow: var(--shadow); font: 400 13px/1 var(--ui); color: var(--text-3); white-space: nowrap;
+  opacity: 0; transform: scale(0.96); transform-origin: 0 0; transition: opacity 120ms linear, transform 160ms var(--ease); pointer-events: none;
+}
+.ctx.on { opacity: 1; transform: none; }
+.ctx > div { display: flex; align-items: center; gap: 9px; padding: 7px 16px 7px 34px; }
+.ctx > hr { border: 0; border-top: 1px solid var(--line); margin: 5px 0; }
+.ctx .m { padding-left: 11px; color: var(--text); transition: background 120ms linear; }
+.ctx .m.hl { background: var(--bg-2); }
+.ctx .m svg { width: 14px; height: 14px; color: var(--blue); }
+.copy-demo .ripple { z-index: 6; width: 44px; margin: -22px 0 0 -22px; }
+.copy-demo .pointer { z-index: 7; }
+@media (max-width: 600px) {
+  .ctx { min-width: 176px; font-size: 11.5px; padding: 4px 0; }
+  .ctx > div { padding: 6px 12px 6px 28px; }
+  .ctx .m { padding-left: 8px; }
 }
 
 /* navigation: the reader in three places (real screenshots), the pointer, and Chrome's Back standing over the window */
@@ -524,7 +546,7 @@ footer nav a:hover { color: var(--text); text-decoration: underline; text-underl
   .row { flex-wrap: wrap; justify-content: center; gap: 12px; padding: 0; width: 100%; }
   .row + .row { display: none; }
   .marquee { -webkit-mask-image: none; mask-image: none; }
-  .peek-panel, .pointer, .chip, .clip, .layer > div { transition: none; }
+  .peek-panel, .pointer, .chip, .clip, .ctx, .layer > div { transition: none; }
 }
 
 /* ---- paintings (mockup) ---- */
@@ -718,9 +740,8 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <section class="feature flip" id="copy" aria-labelledby="f3">
     <div class="wrap grid">
       <div class="copy reveal">
-        <h2 id="f3"><a class="h-link" href="features.html#copy">Select by formula, copy&nbsp;as&nbsp;LaTeX.</a></h2>
-        <p>The selection follows the formula's structure: drag into a fraction or a bracket and it is taken whole.</p>
-        <p>Copy, and you get LaTeX, ready for your notes or your next paper.</p>
+        <h2 id="f3"><a class="h-link" href="features.html#copy">Select by formula, copy&nbsp;as&nbsp;LaTeX or&nbsp;Mathematica.</a></h2>
+        <p>The selection follows the formula's structure: drag into a fraction or a bracket and it is taken whole. Copy, and you get LaTeX, ready for your notes or your next paper. Or copy it as Mathematica <span class="nw">(<kbd>Ctrl</kbd>+<kbd>⌘</kbd>+<kbd>C</kbd>).</span></p>
       </div>
       <div class="scene">
         <div class="plane copy-demo" id="copy-demo">
@@ -736,6 +757,13 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
             <div class="clip-head"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Copied as LaTeX<kbd>⌘C</kbd></div>
             <pre aria-hidden="true">\left(\{e^{i\theta },\tau \}+\frac{1}{2}(1-\frac{1}{n^{2}})R(\theta )\right)</pre>
           </div>
+          <div class="clip lift" role="img" aria-label="Then a part, ½(1 − 1/n²)R(θ), copied from the right-click menu as Mathematica.">
+            <div class="clip-head"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Copied as Mathematica<kbd>⌃⌘C</kbd></div>
+            <pre aria-hidden="true">1/2 (1 - 1/n^2) R[\[Theta]]</pre>
+          </div>
+          <div class="ctx" aria-hidden="true"><div>Copy</div><div>Search Google for “½(1 − 1/n²)R(θ)”</div><div>Print…</div><hr><div class="m"><svg><use href="#eps"/></svg>Copy as Mathematica</div><hr><div>Inspect</div></div>
+          <span class="ripple" aria-hidden="true"></span>
+          <svg class="pointer" viewBox="0 0 24 28" aria-hidden="true"><path d="M3 2 L3 22 L8.5 17 L12 25.5 L15.5 24 L12 15.8 L19.5 15.8 Z" fill="#1f1f1f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
         </div>
       </div>
     </div>
@@ -1091,30 +1119,54 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 
   // 3. copy: a press just left of the { of {e^{i\theta},\tau} in (3.31), a drag to the right: the selection the
   //    extension drew as it went (it takes {...} whole, then +, the fraction whole, (1-1/n^2) whole, R, (\theta), and at
-  //    the big ) the whole bracket, \left( ... \right)); Cmd+C, and what it copied
+  //    the big ) the whole bracket, \left( ... \right)); Cmd+C, and what it copied. Then a drag over the part that
+  //    reads in Mathematica, \frac{1}{2}(1-1/n^2)R(\theta) (the {,} would be a list), a right-click on it, Chrome's
+  //    menu, its Copy as Mathematica clicked (Ctrl+Cmd+C), and what that copied
   {
     const el = $("#copy-demo");
     const BOXES = [[],[[50.88,33.62,12.22,28.18]],[[50.88,33.62,15.88,28.18]],[[50.88,23.08,18.93,54.74]],[[50.88,23.08,33.07,54.74]],[[50.88,23.08,35.85,54.74]],[[50.88,23.08,40.55,54.74]],[[48.19,20.99,45.94,59.41]]];
     const STEPS = [[52.4,1],[65.3,2],[68.5,3],[70.9,4],[85.4,5],[87.4,6],[92.7,7]];   // (from this x on, those boxes)
     const X0 = 51.6, X1 = 94.3, Y = 49.8;
-    const layer = $(".layer", el), beam = $(".ibeam", el), chip = $(".copy-chip", el), clip = $(".clip", el), pre = $(".clip pre", el);
-    // the TeX's commands and delimiters in the blue
+    // (the part: from just left of the 1/2, its boxes as the whole's, from the 1/2's edge; the drag stops short of the big ))
+    const PART = [[],[[67.42,23.08,2.39,54.74]],[[67.42,23.08,16.53,54.74]],[[67.42,23.08,19.31,54.74]],[[67.42,23.08,24.01,54.74]]];
+    const PSTEPS = [[67.9,1],[70.9,2],[85.4,3],[87.4,4]], P0 = 67.3, P1 = 90.9;
+    const layer = $(".layer", el), beam = $(".ibeam", el), chip = $(".copy-chip", el);
+    const [clip, mclip] = el.querySelectorAll(".clip"), pre = $("pre", clip), mpre = $("pre", mclip);
+    const ctx = $(".ctx", el), item = $(".ctx .m", el), ptr = $(".pointer", el), rip = $(".ripple", el);
+    const sheet = $(".sheet", el), paper = $(".paper", el);
+    // the TeX's commands and delimiters in the blue, and Mathematica's named characters
     pre.innerHTML = pre.textContent.replace(/[&<>]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"})[c])
       .replace(/(\\[A-Za-z]+|\\[[\]{}]|\$)/g, "<b>$1</b>");
+    mpre.innerHTML = mpre.textContent.replace(/(\\\[[A-Za-z]+\])/g, "<b>$1</b>");
+    // (a place on the page picture, in px of the plane; the pointer jumps there unseen, or glides)
+    const onPaper = (x, y) => [sheet.offsetLeft + paper.offsetLeft + x / 100 * paper.offsetWidth, sheet.offsetTop + paper.offsetTop + y / 100 * paper.offsetHeight];
+    const go = (p, jump) => {
+      if (jump) ptr.style.transition = "none";
+      ptr.style.left = p[0] + "px"; ptr.style.top = p[1] + "px";
+      if (jump) { void ptr.offsetWidth; ptr.style.transition = ""; }
+    };
+    const press = async p => {
+      ptr.classList.add("down"); rip.style.left = p[0] + "px"; rip.style.top = p[1] + "px";
+      rip.classList.remove("go"); void rip.offsetWidth; rip.classList.add("go");
+      await sleep(150); ptr.classList.remove("down");
+    };
     let shown = -1;
-    const draw = k => { if (k === shown) return; shown = k; layer.innerHTML = BOXES[k].length ? `<div>${BOXES[k].map(box).join("")}</div>` : ""; };
-    const at = x => { beam.style.left = x + "%"; beam.style.top = Y + "%"; draw(STEPS.reduce((k, [sx, sk]) => x >= sx - 0.01 ? sk : k, 0)); };
-    loop(el, async () => {
-      shown = -1; at(X0); layer.classList.remove("out"); clip.classList.remove("on"); chip.className = "chip copy-chip lift";
-      await sleep(600);
-      beam.classList.add("on"); await sleep(600);
-      const T = 3400, t0 = performance.now();
+    const draw = bs => { if (bs === shown) return; shown = bs; layer.innerHTML = bs.length ? `<div>${bs.map(box).join("")}</div>` : ""; };
+    const at = (x, B = BOXES, S = STEPS) => { beam.style.left = x + "%"; beam.style.top = Y + "%"; draw(B[S.reduce((k, [sx, sk]) => x >= sx - 0.01 ? sk : k, 0)]); };
+    const drag = async (x0, x1, T, B, S) => {
+      const t0 = performance.now();
       for (;;) {
         const t = Math.min(1, (performance.now() - t0) / T);
-        at(X0 + (X1 - X0) * t);
-        if (t === 1) break;
+        at(x0 + (x1 - x0) * t, B, S);
+        if (t === 1) return;
         await new Promise(r => requestAnimationFrame(r));
       }
+    };
+    loop(el, async () => {
+      shown = -1; at(X0); layer.classList.remove("out"); clip.classList.remove("on"); mclip.classList.remove("on"); chip.className = "chip copy-chip lift";
+      await sleep(600);
+      beam.classList.add("on"); await sleep(600);
+      await drag(X0, X1, 3400, BOXES, STEPS);
       await sleep(500);
       beam.classList.remove("on"); await sleep(250);
       chip.classList.add("on"); await sleep(550);
@@ -1122,10 +1174,29 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
       chip.classList.remove("press");
       clip.classList.add("on"); await sleep(450);
       chip.classList.remove("on");
+      await sleep(1400);
+      // a new press (the whole's selection gone) and a drag over the part
+      at(P0, PART, PSTEPS); beam.classList.add("on"); await sleep(500);
+      await drag(P0, P1, 2200, PART, PSTEPS);
+      await sleep(400);
+      beam.classList.remove("on"); await sleep(300);
+      // the right-click: the menu opens at the pointer (to its left where the plane ends), the pointer goes to the item
+      const p = onPaper(79, 56); go([p[0] + 60, p[1] + 50], true);
+      ptr.classList.add("on"); go(p); await sleep(1100);
+      await press(p);
+      ctx.style.left = Math.min(p[0], el.offsetWidth - ctx.offsetWidth - 4) + "px"; ctx.style.top = p[1] + "px";
+      ctx.classList.add("on"); await sleep(700);
+      const q = [ctx.offsetLeft + item.offsetLeft + 0.8 * item.offsetWidth, ctx.offsetTop + item.offsetTop + 0.6 * item.offsetHeight];
+      go(q); await sleep(900);
+      item.classList.add("hl"); await sleep(450);
+      await press(q); await sleep(120);
+      ctx.classList.remove("on"); item.classList.remove("hl");
+      mclip.classList.add("on"); await sleep(500);
+      ptr.classList.remove("on");
       await sleep(4200);
-      clip.classList.remove("on"); layer.classList.add("out");
+      clip.classList.remove("on"); mclip.classList.remove("on"); layer.classList.add("out");
       await sleep(1000);
-    }, () => { at(X1); clip.classList.add("on"); });
+    }, () => { at(P1, PART, PSTEPS); clip.classList.add("on"); mclip.classList.add("on"); });
   }
 
   // 4. navigation: the outline's 3.1 clicked (the page jumps there), Back (to the introduction, where it was), the
@@ -1316,7 +1387,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     if (rows.length < 2) continue;
     const base = [...rows[0].children].map(li => li.cloneNode(true)), w0 = rows[0].offsetWidth, dur0 = parseFloat(getComputedStyle(track).animationDuration) || 42;
     const fill = () => {
-      if (!w0) return;
+      if (!w0 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;   // (still, the rows wrap: no filling, it would never end)
       while (rows[0].offsetWidth < mq.clientWidth + 1) for (const r of rows) for (const li of base) r.appendChild(li.cloneNode(true));
       track.style.animationDuration = dur0 * rows[0].offsetWidth / w0 + "s";
     };
