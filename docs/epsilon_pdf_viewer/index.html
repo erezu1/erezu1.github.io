@@ -254,6 +254,9 @@ kbd {
 .grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
 .flip .copy { order: 2; }
 .flip.grid, .flip .grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+/* the sections' titles: links to their part of the Features page, in the title's own look, underlined on hover */
+.h-link { color: inherit; text-decoration: none; }
+.h-link:hover { text-decoration: underline; text-decoration-thickness: 0.06em; text-underline-offset: 0.12em; }
 .num { display: flex; align-items: center; gap: 10px; font: 500 13px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); margin-bottom: 18px; }
 .num::before { content: ""; width: 22px; height: 1.5px; background: var(--blue); }
 .feature h2, .band h2 { font-size: clamp(34px, 4.6vw, 56px); line-height: 1.04; }
@@ -465,7 +468,7 @@ kbd {
 @media (max-width: 860px) { .news { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---- the last call ---- */
-.final { padding: clamp(110px, 16vh, 170px) 0 clamp(100px, 14vh, 150px); text-align: center; }
+.final { padding: clamp(110px, 16vh, 170px) 0 clamp(100px, 14vh, 150px); text-align: center; overflow-x: clip; }   /* (the words' soft glow kept from widening a phone's page) */
 .final h2 { font-size: clamp(38px, 6vw, 72px); line-height: 1.02; }
 .final p { color: var(--text-2); margin-top: 18px; font-size: 18px; }
 .final .cta-row { margin-top: 30px; }
@@ -662,8 +665,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <section class="feature right" id="search" aria-labelledby="f1">
     <div class="wrap grid">
       <div class="copy reveal">
-        <p class="num">01 &nbsp;Search</p>
-        <h2 id="f1">Search formulas, not just words.</h2>
+        <h2 id="f1"><a class="h-link" href="features.html#search">Search formulas, not just words.</a></h2>
         <p>Type a formula into the find bar, in LaTeX (<code>\alpha_1</code>) or plain (<code>alpha_1</code>). Epsilon finds every place it appears, however the authors typed it, and highlights exactly its symbols.</p>
         <ul class="pairs" aria-label="Examples of searches">
           <li><code>psi(t,x)</code><span class="arrow" aria-hidden="true">→</span><span class="m"><svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='2.703em' height='0.996em' fill='currentColor' role='img' aria-label='ψ(t, x)' class='tex' viewBox='-71.711088 -72.000004 27.031058 9.96264'><defs><path id='t1g1-40' d='M3.297634 2.391034C3.297634 2.361146 3.297634 2.34122 3.128269 2.171856C1.882939 .916563 1.564134-.966376 1.564134-2.49066C1.564134-4.224159 1.942715-5.957659 3.16812-7.202989C3.297634-7.32254 3.297634-7.342466 3.297634-7.372354C3.297634-7.442092 3.257783-7.47198 3.198007-7.47198C3.098381-7.47198 2.201743-6.794521 1.613948-5.529265C1.105853-4.433375 .986301-3.327522 .986301-2.49066C.986301-1.713574 1.09589-.508095 1.643836 .617684C2.241594 1.843088 3.098381 2.49066 3.198007 2.49066C3.257783 2.49066 3.297634 2.460772 3.297634 2.391034Z'/><path id='t1g1-41' d='M2.879203-2.49066C2.879203-3.267746 2.769614-4.473225 2.221669-5.599004C1.62391-6.824408 .767123-7.47198 .667497-7.47198C.607721-7.47198 .56787-7.43213 .56787-7.372354C.56787-7.342466 .56787-7.32254 .757161-7.143213C1.733499-6.156912 2.30137-4.572852 2.30137-2.49066C2.30137-.787049 1.932752 .966376 .697385 2.221669C.56787 2.34122 .56787 2.361146 .56787 2.391034C.56787 2.450809 .607721 2.49066 .667497 2.49066C.767123 2.49066 1.663761 1.8132 2.251557 .547945C2.759651-.547945 2.879203-1.653798 2.879203-2.49066Z'/><path id='t1g0-32' d='M4.801993-6.655044C4.811955-6.694894 4.83188-6.75467 4.83188-6.804483C4.83188-6.90411 4.762142-6.914072 4.712329-6.914072C4.612702-6.914072 4.60274-6.894147 4.562889-6.714819L2.909091-.129514C2.15193-.219178 1.77335-.587796 1.77335-1.24533C1.77335-1.444583 1.77335-1.703611 2.311333-3.098381C2.351183-3.217933 2.420922-3.387298 2.420922-3.58655C2.420922-4.034869 2.102117-4.403487 1.603985-4.403487C.657534-4.403487 .288917-2.958904 .288917-2.86924C.288917-2.769614 .388543-2.769614 .408468-2.769614C.508095-2.769614 .518057-2.789539 .56787-2.948941C.836862-3.895392 1.235367-4.184309 1.574097-4.184309C1.653798-4.184309 1.823163-4.184309 1.823163-3.865504C1.823163-3.606476 1.723537-3.35741 1.594022-3.008717C1.115816-1.753425 1.115816-1.494396 1.115816-1.325031C1.115816-.37858 1.892902 .029888 2.849315 .089664C2.769614 .448319 2.769614 .468244 2.630137 .996264C2.600249 1.105853 2.400996 1.912827 2.400996 1.942715C2.400996 1.952677 2.400996 2.042341 2.520548 2.042341C2.540473 2.042341 2.590286 2.042341 2.610212 2.002491C2.6401 1.982565 2.699875 1.733499 2.729763 1.594022L3.108344 .109589C3.476961 .109589 4.353674 .109589 5.290162-.956413C5.69863-1.414695 5.907846-1.853051 6.017435-2.15193C6.107098-2.400996 6.326276-3.267746 6.326276-3.706102C6.326276-4.26401 6.057285-4.403487 5.88792-4.403487C5.638854-4.403487 5.389788-4.144458 5.389788-3.92528C5.389788-3.795766 5.449564-3.73599 5.539228-3.656289C5.648817-3.5467 5.897883-3.287671 5.897883-2.809465C5.897883-2.171856 5.379826-1.354919 5.031133-.996264C4.154421-.109589 3.516812-.109589 3.158157-.109589L4.801993-6.655044Z'/><path id='t1g0-59' d='M2.022416-.009963C2.022416-.667497 1.77335-1.05604 1.384807-1.05604C1.05604-1.05604 .856787-.806974 .856787-.52802C.856787-.259029 1.05604 0 1.384807 0C1.504359 0 1.633873-.039851 1.733499-.129514C1.763387-.14944 1.77335-.159402 1.783313-.159402S1.803238-.14944 1.803238-.009963C1.803238 .727273 1.454545 1.325031 1.125778 1.653798C1.016189 1.763387 1.016189 1.783313 1.016189 1.8132C1.016189 1.882939 1.066002 1.92279 1.115816 1.92279C1.225405 1.92279 2.022416 1.155666 2.022416-.009963Z'/><path id='t1g0-116' d='M2.052304-3.985056H2.988792C3.188045-3.985056 3.287671-3.985056 3.287671-4.184309C3.287671-4.293898 3.188045-4.293898 3.008717-4.293898H2.132005C2.49066-5.708593 2.540473-5.907846 2.540473-5.967621C2.540473-6.136986 2.420922-6.236613 2.251557-6.236613C2.221669-6.236613 1.942715-6.22665 1.853051-5.877958L1.464508-4.293898H.52802C.328767-4.293898 .229141-4.293898 .229141-4.104608C.229141-3.985056 .308842-3.985056 .508095-3.985056H1.384807C.667497-1.155666 .627646-.986301 .627646-.806974C.627646-.268991 1.006227 .109589 1.544209 .109589C2.560399 .109589 3.128269-1.344956 3.128269-1.424658C3.128269-1.524284 3.048568-1.524284 3.008717-1.524284C2.919054-1.524284 2.909091-1.494396 2.859278-1.384807C2.430884-.348692 1.902864-.109589 1.564134-.109589C1.354919-.109589 1.255293-.239103 1.255293-.56787C1.255293-.806974 1.275218-.876712 1.315068-1.046077L2.052304-3.985056Z'/><path id='t1g0-120' d='M3.327522-3.008717C3.387298-3.267746 3.616438-4.184309 4.313823-4.184309C4.363636-4.184309 4.60274-4.184309 4.811955-4.054795C4.533001-4.004981 4.333748-3.755915 4.333748-3.516812C4.333748-3.35741 4.443337-3.16812 4.712329-3.16812C4.931507-3.16812 5.250311-3.347447 5.250311-3.745953C5.250311-4.26401 4.662516-4.403487 4.323786-4.403487C3.745953-4.403487 3.39726-3.875467 3.277709-3.646326C3.028643-4.303861 2.49066-4.403487 2.201743-4.403487C1.165629-4.403487 .597758-3.118306 .597758-2.86924C.597758-2.769614 .697385-2.769614 .71731-2.769614C.797011-2.769614 .826899-2.789539 .846824-2.879203C1.185554-3.935243 1.843088-4.184309 2.181818-4.184309C2.371108-4.184309 2.719801-4.094645 2.719801-3.516812C2.719801-3.20797 2.550436-2.540473 2.181818-1.145704C2.022416-.52802 1.673724-.109589 1.235367-.109589C1.175592-.109589 .946451-.109589 .737235-.239103C.986301-.288917 1.205479-.498132 1.205479-.777086C1.205479-1.046077 .986301-1.125778 .836862-1.125778C.537983-1.125778 .288917-.86675 .288917-.547945C.288917-.089664 .787049 .109589 1.225405 .109589C1.882939 .109589 2.241594-.587796 2.271482-.647572C2.391034-.278954 2.749689 .109589 3.347447 .109589C4.373599 .109589 4.941469-1.175592 4.941469-1.424658C4.941469-1.524284 4.851806-1.524284 4.821918-1.524284C4.732254-1.524284 4.712329-1.484433 4.692403-1.414695C4.363636-.348692 3.686177-.109589 3.367372-.109589C2.978829-.109589 2.819427-.428394 2.819427-.767123C2.819427-.986301 2.879203-1.205479 2.988792-1.643836L3.327522-3.008717Z'/></defs><g id='t1page1'><use x='-72.000004' y='-64.528024' xlink:href='#t1g0-32'/><use x='-65.152981' y='-64.528024' xlink:href='#t1g1-40'/><use x='-61.278607' y='-64.528024' xlink:href='#t1g0-116'/><use x='-57.680972' y='-64.528024' xlink:href='#t1g0-59'/><use x='-53.253164' y='-64.528024' xlink:href='#t1g0-120'/><use x='-47.559232' y='-64.528024' xlink:href='#t1g1-41'/></g></svg></span></li>
@@ -693,8 +695,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <section class="feature wide" id="peek" aria-labelledby="f2">
     <div class="wrap">
       <div class="copy center reveal">
-        <p class="num">02 &nbsp;Peek</p>
-        <h2 id="f2">Peek at any link without losing your place.</h2>
+        <h2 id="f2"><a class="h-link" href="features.html#peek">Peek at any link without losing your place.</a></h2>
         <p>A link to an equation, figure, section or citation opens in a panel below, its target marked. Your page stays where it is.</p>
         <p class="keys"><span><kbd>⌘</kbd>/<kbd>Ctrl</kbd> + click a link to peek</span></p>
       </div>
@@ -717,8 +718,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <section class="feature flip" id="copy" aria-labelledby="f3">
     <div class="wrap grid">
       <div class="copy reveal">
-        <p class="num">03 &nbsp;Copy</p>
-        <h2 id="f3">Select by formula, copy&nbsp;as&nbsp;LaTeX.</h2>
+        <h2 id="f3"><a class="h-link" href="features.html#copy">Select by formula, copy&nbsp;as&nbsp;LaTeX.</a></h2>
         <p>The selection follows the formula's structure: drag into a fraction or a bracket and it is taken whole.</p>
         <p>Copy, and you get LaTeX, ready for your notes or your next paper.</p>
       </div>
@@ -745,8 +745,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <section class="feature wide" id="navigation" aria-labelledby="f4">
     <div class="wrap">
       <div class="copy center reveal">
-        <p class="num">04 &nbsp;Navigation</p>
-        <h2 id="f4">Move through the paper, and back.</h2>
+        <h2 id="f4"><a class="h-link" href="features.html#navigation">Move through the paper, and back.</a></h2>
         <p>The outline shows every section, the one you are reading marked. Jump to any of them; Back takes you to where you were. If a paper has no outline or links of its own, Epsilon makes them for you.</p>
       </div>
       <div class="scene">
@@ -769,7 +768,6 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <div class="art-band"><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/cubist-800.avif 800w, assets/paintings/cubist-1200.avif 1200w, assets/paintings/cubist-1672.avif 1672w, assets/paintings/cubist-2048.avif 2048w, assets/paintings/cubist-2800.avif 2800w" sizes="(max-width: 600px) 1015px, 100vw"><source type="image/webp" srcset="assets/paintings/cubist-800.webp 800w, assets/paintings/cubist-1200.webp 1200w, assets/paintings/cubist-1672.webp 1672w, assets/paintings/cubist-2048.webp 2048w" sizes="(max-width: 600px) 1015px, 100vw"><img src="assets/paintings/cubist-1200.webp" width="1672" height="942" alt="" decoding="async" loading="lazy"></picture></div>
     <div class="wrap">
       <div class="copy center reveal on-art">
-        <p class="num">05 &nbsp;Any journal</p>
         <h2 id="f5">Works with every journal.</h2>
         <p>Whoever the publisher, Epsilon understands the paper and works for you.</p>
       </div>
@@ -806,8 +804,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <section class="band" id="more" aria-labelledby="every">
     <div class="wrap">
       <div class="copy center reveal">
-        <p class="num">And the rest</p>
-        <h2 id="every">Everything you expect from a PDF reader.</h2>
+        <h2 id="every"><a class="h-link" href="features.html#viewer">Everything you expect from a PDF reader.</a></h2>
       </div>
       <ul class="tiles">
         <li><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg><h3>Any PDF</h3><p>On the web or on your computer.</p></li>
@@ -829,8 +826,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <div class="wrap">
       <div class="privacy-box on-art">
         <div class="art-band"><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/cats-800.avif 800w, assets/paintings/cats-1200.avif 1200w, assets/paintings/cats-1671.avif 1671w, assets/paintings/cats-2048.avif 2048w, assets/paintings/cats-2800.avif 2800w" sizes="(max-width: 600px) 1000px, (max-width: 1200px) calc(100vw - 32px), 1160px"><source type="image/webp" srcset="assets/paintings/cats-800.webp 800w, assets/paintings/cats-1200.webp 1200w, assets/paintings/cats-1671.webp 1671w, assets/paintings/cats-2048.webp 2048w" sizes="(max-width: 600px) 1000px, (max-width: 1200px) calc(100vw - 32px), 1160px"><img src="assets/paintings/cats-1200.webp" width="1671" height="942" alt="" decoding="async" loading="lazy"></picture></div>
-        <p class="num" style="justify-content:center">Private by design</p>
-        <h2 id="priv">Your papers stay with you.</h2>
+        <h2 id="priv"><a class="h-link" href="features.html#privacy">Your papers stay with you.</a></h2>
         <ul class="checks">
           <li><span class="ck"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>Formulas read locally</li>
           <li><span class="ck"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>No account</li>
