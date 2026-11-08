@@ -177,10 +177,16 @@ footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .rel-head h2 a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
 .badge { font: 600 12px/1 var(--ui); letter-spacing: 0.02em; padding: 6px 10px; border-radius: 999px; background: var(--tonal); color: var(--on-tonal); }
 .rel .date { margin-top: 12px; }
-.rel h3 { margin: 26px 0 0; font: 600 13px/1.3 var(--ui); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
-.rel ul { margin: 10px 0 0; padding-left: 1.2em; }
-.rel li { margin: 6px 0; line-height: 1.55; }
-.rel li::marker { color: var(--text-3); }
+/* each version's notes as the Features page's lists: a group's name, then its items in a card, one row each, rows
+   parted by a hairline */
+.rel h3 { margin: 28px 0 0; font-size: 18px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.rel ul { list-style: none; margin: 12px 0 0; padding: 4px 24px; border-radius: 16px; background: var(--surface); box-shadow: 0 0 0 1px var(--hair); }
+.rel li { margin: 0; padding: 15px 0; font-size: 16px; line-height: 1.5; color: var(--text-2); }
+.rel li + li { border-top: 1px solid var(--hair); }
+@media (max-width: 680px) {
+  .rel ul { padding: 2px 18px; }
+  .rel li { padding: 14px 0; font-size: 15.5px; }
+}
 
 /* ---- paintings (mockup) ---- */
 .art { display: block; }
@@ -220,6 +226,10 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 .page-band .date { margin-top: 18px; color: var(--text-2); }
 .policy { padding-top: clamp(40px, 7vh, 72px); }
 .notes > .rel:first-of-type { margin-top: 0; border-top: 0; padding-top: 0; }
+/* (the column as wide as the Features page's, the versions parted by space, not a line) */
+.policy.notes { max-width: calc(860px + 2 * var(--gutter)); }
+.page-band .band-in { max-width: calc(860px + 2 * var(--gutter)); }
+.notes > .rel { border-top: 0; padding-top: 0; margin-top: clamp(56px, 8vh, 80px); }
 .policy > .lede:first-child { margin-top: 0; }
 /* the end: the footer is a window onto the page's painting, its text in white */
 .foot-band { position: relative; isolation: isolate; background: rgb(79 51 54); padding-top: clamp(96px, 16vh, 160px); --scrim: 30 10 26; }
