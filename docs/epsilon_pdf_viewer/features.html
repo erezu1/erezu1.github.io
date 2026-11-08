@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RXGX64DC6N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RXGX64DC6N');
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Epsilon PDF viewer features</title>
+<meta name="description" content="The features of Epsilon PDF viewer, a Chrome extension for reading papers: formula search, peek, selection and copy as LaTeX, links, the outline, and how to use each.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1d1d1f" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preload" as="image" type="image/avif" imagesrcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w, assets/paintings/forest-2800.avif 2800w" imagesizes="(max-width: 600px) 600px, 100vw" media="(min-width: 601px)" fetchpriority="high">
+<link rel="preload" as="image" type="image/avif" imagesrcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w" imagesizes="(max-width: 600px) 600px, 100vw" media="(max-width: 600px)" fetchpriority="high">
+<style>html.art-wait body{opacity:0}body{transition:opacity .3s ease-out}@media (prefers-reduced-motion: reduce){body{transition:none}}</style>
+<script>/* the page shows once its top painting is decoded (or after 3 s, or if it fails), so it never paints without it */
+document.documentElement.classList.add("art-wait");addEventListener("DOMContentLoaded",()=>{const d=document.documentElement,i=document.querySelector(".art img"),go=()=>d.classList.remove("art-wait");if(!i)return go();setTimeout(go,3000);i.decode().then(go,go);});</script>
+<style>
+/* Epsilon PDF viewer: the features, every one. The look, tokens and top bar are index.html's (the extension's "Epsilon"
+   skin); here one calm column to read. Everything local: system fonts, the ε drawn inline. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f7f6f3;
+  --bg-2: #ebeae6;
+  --surface: #ffffff;
+  --text: rgb(0 0 0 / 0.86);
+  --text-2: rgb(0 0 0 / 0.62);
+  --text-3: rgb(0 0 0 / 0.5);
+  --line: rgb(0 0 0 / 0.1);
+  --hair: rgb(0 0 0 / 0.07);
+  --blue: #2b7de9;
+  --blue-text: #1a5fc2;
+  --tonal: #dce8fb;
+  --on-tonal: #0b3a7a;
+  --cta: #1d1d1f;
+  --on-cta: #ffffff;
+  --shadow: 0 0 0 1px var(--hair), 0 2px 8px rgb(0 0 0 / 0.07), 0 12px 28px rgb(0 0 0 / 0.08);
+  --ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --display: "New York", "Iowan Old Style", Charter, "Palatino Linotype", Georgia, ui-serif, serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --gutter: clamp(16px, 4vw, 40px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1d1f;
+    --bg-2: #272729;
+    --surface: #2c2c2e;
+    --text: rgb(255 255 255 / 0.9);
+    --text-2: rgb(255 255 255 / 0.62);
+    --text-3: rgb(255 255 255 / 0.5);
+    --line: rgb(255 255 255 / 0.12);
+    --hair: rgb(255 255 255 / 0.09);
+    --blue: #6aa9ff;
+    --blue-text: #8bbcff;
+    --tonal: #1c3a63;
+    --on-tonal: #cfe2ff;
+    --cta: #f5f4f0;
+    --on-cta: #141415;
+    --shadow: 0 0 0 1px var(--hair), 0 2px 8px rgb(0 0 0 / 0.35), 0 12px 28px rgb(0 0 0 / 0.45);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.6 var(--ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+svg { display: block; }
+a { color: inherit; }
+h1, h2, p { margin: 0; }
+h1, h2 { font-family: var(--display); font-weight: 500; letter-spacing: -0.022em; text-wrap: balance; }
+p { text-wrap: pretty; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
+.wrap { max-width: 1200px; margin-inline: auto; padding-inline: var(--gutter); }
+.skip { position: absolute; left: 12px; top: -120px; z-index: 100; background: var(--surface); padding: 10px 14px; border-radius: 10px; box-shadow: var(--shadow); }
+.skip:focus { top: 12px; }
+.icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+/* the ε: one stroke, in the text's colour */
+.eps { fill: none; stroke: currentColor; stroke-width: 40; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* ---- the button ---- */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 26px;
+  border-radius: 999px; background: var(--cta); color: var(--on-cta); white-space: nowrap; flex: none;
+  font: 500 17px/1 var(--ui); text-decoration: none; letter-spacing: -0.01em;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12), 0 8px 24px -8px rgb(0 0 0 / 0.35);
+  transition: transform 160ms var(--ease), box-shadow 160ms var(--ease);
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 2px 4px rgb(0 0 0 / 0.14), 0 14px 30px -10px rgb(0 0 0 / 0.4); }
+.btn:active { transform: translateY(0) scale(0.98); }
+.btn-sm { height: 34px; padding: 0 14px; font-size: 14px; box-shadow: none; gap: 6px; }
+.btn-sm:hover { box-shadow: none; }
+
+/* ---- the nav: a floating glass pill (as index.html) ---- */
+.nav {
+  position: fixed; z-index: 50; top: 14px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 4px; padding: 6px 6px 6px 12px;
+  border-radius: 999px; max-width: calc(100vw - 24px);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: var(--shadow);
+}
+.nav .brand { flex: none; display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 15px; text-decoration: none; padding-right: 8px; border-radius: 999px; }
+.nav .brand .eps { width: 18px; height: 24px; }
+.nav .links { display: flex; align-items: center; gap: 1px; }
+.nav .links a {
+  display: inline-grid; justify-items: center; white-space: nowrap; font-size: 14px; color: var(--text-2); text-decoration: none; padding: 7px 10px; border-radius: 999px;
+  transition: background 140ms, color 140ms;
+}
+.nav .links a::after { content: attr(data-t); font-weight: 650; height: 0; visibility: hidden; overflow: hidden; }
+.nav .links a:hover { background: var(--bg-2); color: var(--text); }
+.nav .links a.on { color: var(--text); font-weight: 650; background: var(--surface); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
+/* (narrow: the name goes, the ε stays; the three tabs and the button a little smaller; below 370px the tabs go) */
+@media (max-width: 500px) {
+  .nav { padding: 5px 5px 5px 10px; gap: 2px; }
+  .nav .brand { padding-right: 2px; }
+  .nav .brand .bt { display: none; }
+  .nav .links a { font-size: 13.5px; padding: 7px 6px; }
+  .nav .btn-sm { padding: 0 10px; font-size: 13.5px; }
+}
+@media (max-width: 385px) {
+  .nav { padding-left: 8px; }
+  .nav .links a { font-size: 13px; padding: 6px 5px; }
+  .nav .btn-sm { padding: 0 9px; font-size: 13px; }
+}
+@media (max-width: 369px) { .nav .links { display: none; } .nav .brand .bt { display: inline; } }
+
+/* ---- the policy: one column ---- */
+.policy { max-width: calc(65ch + 2 * var(--gutter)); margin-inline: auto; padding: clamp(112px, 16vh, 150px) var(--gutter) clamp(72px, 11vh, 120px); }
+.policy h1 { font-size: clamp(36px, 5.4vw, 54px); line-height: 1.04; }
+.date { display: flex; align-items: center; gap: 10px; margin-top: 20px; font: 500 13px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); }
+.date::before { content: ""; width: 22px; height: 1.5px; background: var(--blue); flex: none; }
+.lede { margin-top: 28px; font-size: 19px; line-height: 1.55; color: var(--text-2); }
+
+.summary { list-style: none; margin: 36px 0 8px; padding: 6px 20px; border-radius: 16px; background: var(--surface); box-shadow: 0 0 0 1px var(--hair); }
+.summary li { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; font-size: 16px; line-height: 1.45; }
+.summary li + li { border-top: 1px solid var(--hair); }
+.summary .tick { display: grid; place-items: center; width: 22px; height: 22px; margin-top: -0.5px; border-radius: 50%; background: var(--tonal); color: var(--on-tonal); flex: none; }
+.summary .tick .icon { width: 15px; height: 15px; stroke-width: 2.2; }
+
+.policy section { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); }
+.policy h2 { font-size: clamp(25px, 3vw, 30px); line-height: 1.15; }
+.policy section p { margin-top: 14px; }
+.questions { margin-top: 48px; padding: 18px 20px; border-radius: 14px; background: color-mix(in srgb, var(--bg-2) 60%, transparent); color: var(--text-2); font-size: 15.5px; }
+
+footer { background: var(--bg-2); padding: 36px 0 48px; font-size: 14px; color: var(--text-2); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px 40px; align-items: flex-start; }
+footer .who { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 600; }
+footer .who .eps { width: 17px; height: 23px; }
+footer p { max-width: 52ch; margin-top: 10px; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+footer nav a { font: 500 12.5px/1.8 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); text-decoration: none; }
+footer nav a:hover, footer nav a[aria-current] { color: var(--text); }
+footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- paintings (mockup) ---- */
+.art { display: block; }
+.art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.art-band { position: absolute; z-index: -1; inset: 0 0 auto 0; overflow: hidden; }
+.art-band > .art { position: absolute; inset: 0; }
+/* the scrim: the painting's own dark, deeper at the top (the nav) and under the title */
+.art-band::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgb(var(--scrim) / 0.42), rgb(var(--scrim) / 0.16) 34%, rgb(var(--scrim) / 0.3) 68%, rgb(var(--scrim) / 0.58)); }
+.on-art { --text: rgb(255 255 255 / 0.95); --text-2: rgb(255 255 255 / 0.8); --eps: #fff; --blue-text: #fff; --cta: #f5f4f0; --on-cta: #141415; color: var(--text); }
+.on-art h1, .on-art h2, .on-art .eps-name, .on-art .date { text-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 30px rgb(0 0 0 / 0.4); }
+.on-art .link { border-bottom-color: rgb(255 255 255 / 0.5); }
+.on-art .date::before { background: #fff; }
+/* a window onto a painting far away: the script below moves the painting more slowly than the page (a translateY
+   at a fraction of the scroll), in a box taller than the window by its travel; with reduced motion it stays still */
+.art-band.win > .art { backface-visibility: hidden; }
+@keyframes win-pan { from { transform: translateY(var(--t0)); } to { transform: translateY(var(--t1)); } }
+@media (prefers-reduced-motion: no-preference) {
+  .art-band.sd > .art { animation: win-pan linear both; animation-timeline: scroll(root block); animation-range: 0px var(--maxy); }
+}
+.on-art .num::before { background: #fff; }
+footer.on-art { background: transparent; }
+footer.on-art .who, footer.on-art p, footer.on-art nav a { text-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 1px 16px rgb(0 0 0 / 0.3); }
+/* the footer's overlay: the painting's own dark, deepest under the text at the foot */
+footer.on-art .art-band::after, .end .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.18), rgb(var(--scrim) / 0.42) 45%, rgb(var(--scrim) / 0.78)); }
+
+.page-band { position: relative; isolation: isolate; display: flex; align-items: flex-end; min-height: clamp(320px, 48vh, 480px); }
+/* (the title's soft shadow reaches past the window's sides on a phone: cut there, so the page never scrolls sideways) */
+.page-band { overflow-x: clip; }
+.page-band .art-band { inset: 0; background: rgb(87 83 58); --scrim: 6 18 10; }
+.page-band .art-band img { object-position: 50% 30%; }
+/* the forest is busy: a deeper scrim where the title sits */
+.page-band .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.45), rgb(var(--scrim) / 0.2) 30%, rgb(var(--scrim) / 0.5) 62%, rgb(var(--scrim) / 0.72)); }
+@media (max-width: 600px) { .page-band { min-height: 340px; } .page-band .art-band img { object-position: 86% 34%; } }
+.page-band .band-in { width: 100%; max-width: calc(65ch + 2 * var(--gutter)); margin-inline: auto; padding: 0 var(--gutter) clamp(28px, 5vh, 52px); }
+.page-band h1 { font-size: clamp(40px, 6.2vw, 72px); line-height: 1.02; }
+.page-band .date { margin-top: 18px; color: var(--text-2); }
+.policy { padding-top: clamp(40px, 7vh, 72px); }
+.notes > .rel:first-of-type { margin-top: 0; border-top: 0; padding-top: 0; }
+.policy > .lede:first-child { margin-top: 0; }
+/* the end: the footer is a window onto the page's painting, its text in white */
+.foot-band { position: relative; isolation: isolate; background: rgb(87 83 58); padding-top: clamp(96px, 16vh, 160px); --scrim: 6 18 10; }
+.foot-band .art-band { inset: 0; }
+.foot-band .art-band img { object-position: 50% 80%; }
+
+/* (6 Nov: the paintings shown with less shade; the words given a large, blurred, barely there shadow centred behind
+   them, as the journals' band has; the footer's dark kept at its foot, where its text is) */
+.art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.24), rgb(var(--scrim) / 0.06) 34%, rgb(var(--scrim) / 0.12) 68%, rgb(var(--scrim) / 0.3)); }
+footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.06), rgb(var(--scrim) / 0.16) 45%, rgb(var(--scrim) / 0.74)); }
+.end .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.1), rgb(var(--scrim) / 0.16) 55%, rgb(var(--scrim) / 0.74)); }
+.page-band .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.26), rgb(var(--scrim) / 0.06) 30%, rgb(var(--scrim) / 0.14) 62%, rgb(var(--scrim) / 0.36)); }
+.privacy-box .art-band::after { background: radial-gradient(ellipse 75% 60% at 50% 50%, rgb(var(--scrim) / 0.3), rgb(var(--scrim) / 0.1)); }
+.hero h1, .final h2, .page-band .band-in, .privacy-box h2 { position: relative; }
+.hero h1::before, .final h2::before, .page-band .band-in::before, .privacy-box h2::before { content: ""; position: absolute; z-index: -1;
+  inset: -30% -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.32), rgb(0 0 0 / 0.16) 55%, rgb(0 0 0 / 0));
+  filter: blur(24px); pointer-events: none; }
+
+/* ---- the features: an index of the categories, then each category a card of rows (a name, one sentence) ---- */
+code, kbd { font-family: var(--mono); }
+code { font-size: 0.86em; background: var(--bg-2); border-radius: 6px; padding: 0.1em 0.4em; white-space: nowrap; }
+kbd {
+  display: inline-grid; place-items: center; min-width: 1.7em; height: 1.7em; padding: 0 0.4em;
+  font: 500 0.8em/1 var(--ui); color: var(--text);
+  background: var(--surface); border-radius: 7px; box-shadow: 0 0 0 1px var(--hair), 0 1px 0 1px var(--line);
+  vertical-align: 0.08em;
+}
+.link { color: var(--blue-text); font-weight: 500; text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--blue-text) 35%, transparent); padding-bottom: 1px; }
+.link:hover { border-bottom-color: var(--blue-text); }
+.badge { display: inline-block; vertical-align: 0.12em; margin-left: 6px; font: 600 11.5px/1 var(--ui); letter-spacing: 0.02em; padding: 5px 9px; border-radius: 999px; background: var(--tonal); color: var(--on-tonal); white-space: nowrap; }
+.page-band .band-in { max-width: calc(860px + 2 * var(--gutter)); }   /* (the title over the column below) */
+.feats { max-width: calc(860px + 2 * var(--gutter)); margin-inline: auto; padding: clamp(40px, 7vh, 72px) var(--gutter) clamp(72px, 11vh, 120px); }
+.cat { margin-top: clamp(56px, 8vh, 80px); scroll-margin-top: 96px; }
+.cat:first-child { margin-top: 0; }
+.cat-lead { margin-top: 12px; }
+.cat h2 { font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; }
+.list { list-style: none; margin: 24px 0 0; padding: 4px 24px; border-radius: 16px; background: var(--surface); box-shadow: 0 0 0 1px var(--hair); }
+.list li { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 4px 28px; padding: 15px 0; }
+.list li + li { border-top: 1px solid var(--hair); }
+.list h3 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.5; letter-spacing: -0.01em; }
+.list p { font-size: 16px; line-height: 1.5; color: var(--text-2); }
+@media (max-width: 680px) {
+  .list { padding: 2px 18px; }
+  .list li { grid-template-columns: minmax(0, 1fr); padding: 14px 0; }
+  .list p { font-size: 15.5px; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <!-- the ε: its bounds x 176..337, y 143.9..380, with room for the stroke -->
+  <symbol id="eps" viewBox="152 120 210 284"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8"/></symbol>
+  </svg>
+
+<header class="nav" aria-label="Site">
+  <a class="brand" href="index.html" aria-label="Epsilon PDF viewer, home"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg><span class="bt">Epsilon</span></a>
+  <nav class="links" aria-label="Sections">
+    <a class="on" href="features.html" data-t="Features" aria-current="page">Features</a>
+    <a href="privacy.html" data-t="Privacy">Privacy</a>
+    <a href="releases.html" data-t="What's new">What's new</a>
+  </nav>
+  <a class="btn btn-sm" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
+</header>
+
+<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w, assets/paintings/forest-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/forest-800.webp 800w, assets/paintings/forest-1200.webp 1200w, assets/paintings/forest-1536.webp 1536w, assets/paintings/forest-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/forest-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Features</h1><p class="date">Version 1.4.5, November 2026</p></div></header>
+<main id="main" class="feats">
+  <section class="cat" id="search" aria-labelledby="h-search">
+    <h2 id="h-search">Search</h2>
+    <ul class="list">
+      <li><h3>Formula search</h3><p>Open the search with <kbd>⌘</kbd> <kbd>F</kbd> (<kbd>Ctrl</kbd> <kbd>F</kbd> on Windows and Linux) and type TeX, e.g. <code>\alpha_1</code>, to find every formula that contains it.</p></li>
+      <li><h3>Plain queries</h3><p>Input without backslashes is read as a formula too, e.g. <code>alpha_1</code>, <code>psi(t,x)</code>, <code>n -&gt; \infty</code>, <code>1/2 m v^2</code>, <code>O(N^-1)</code>.</p></li>
+      <li><h3>Equivalent spellings</h3><p>Spellings that draw the same thing match each other, e.g. <code>\sqrt t</code> and <code>\sqrt{t}</code>, <code>\to</code> and <code>\rightarrow</code>, <code>\rm</code> and <code>\mathrm</code>.</p></li>
+      <li><h3>Words and symbols</h3><p>A symbol's name finds the word and the symbol, e.g. <code>phi</code> finds "phi" and φ, <code>log</code> the word and the operator; in <code>$…$</code>, e.g. <code>$phi$</code>, only formulas are searched.</p></li>
+      <li><h3>Text and formulas together</h3><p>A query mixing words and formulas finds the sentence, e.g. "C is a cylinder" finds "<i>C</i> is a cylinder", as does a copied passage with <code>$…$</code> formulas.</p></li>
+      <li><h3>Fonts and accents</h3><p>A plain letter also finds its other fonts and accented forms, e.g. <code>B</code> finds 𝓑, B̄ and B′, while <code>\mathcal{B}</code> finds only 𝓑.</p></li>
+      <li><h3>Script positions</h3><p>A query without <code>_</code> or <code>^</code> ignores position, e.g. <code>q3</code> finds q₃, q³ and q3.</p></li>
+      <li><h3>Hyphenated words</h3><p>A word also finds its forms hyphenated at a line end or with a hyphen, e.g. electromagnetic finds electro-magnetic.</p></li>
+      <li><h3>Citation numbers</h3><p>A number in brackets, e.g. <code>[23]</code>, finds each citation of that reference, also inside groups (<code>[4, 23, 31]</code>) and ranges (<code>[20–25]</code>), and its entry in the bibliography.</p></li>
+      <li><h3>Equation numbers</h3><p>A number in parentheses, e.g. <code>(2.1)</code>, finds that equation, marked on its number.</p></li>
+      <li><h3>Highlights</h3><p>Only the matching symbols are highlighted, not the whole equation.</p></li>
+      <li><h3>Next and previous match</h3><p><kbd>⌘</kbd> <kbd>G</kbd> and <kbd>Shift</kbd> <kbd>⌘</kbd> <kbd>G</kbd>, or <kbd>Enter</kbd> and <kbd>Shift</kbd> <kbd>Enter</kbd> in the search box.</p></li>
+      <li><h3>Search a selection</h3><p>Select text or part of a formula and press <kbd>⌘</kbd> <kbd>F</kbd> to search for it.</p></li>
+    </ul>
+  </section>
+
+  <section class="cat" id="peek" aria-labelledby="h-peek">
+    <h2 id="h-peek">Peek</h2>
+    <ul class="list">
+      <li><h3>Open</h3><p><kbd>⌘</kbd> + click a link, or right-click it and choose "Open in peek", to show its target in a panel at the bottom while the page above stays where it is.</p></li>
+      <li><h3>Target mark</h3><p>The target is marked: an equation with its number, a figure or table with its caption; a figure is shown whole.</p></li>
+      <li><h3>Zoom</h3><p>The peek opens at the page's zoom; its own − and + buttons, pinch, or <kbd>⌘</kbd> <kbd>+</kbd>/<kbd>−</kbd> with the pointer over it zoom the peek alone, and <kbd>⌘</kbd> <kbd>0</kbd> returns it to the page's zoom.</p></li>
+      <li><h3>Resize and expand</h3><p>Drag its top edge to resize it; drag it up to the toolbar, or click Expand, to move the main view to the target and close the peek (Back returns).</p></li>
+      <li><h3>Links in the peek</h3><p>A click moves the peek to the link's target; <kbd>⌘</kbd> + click opens the target in the main view.</p></li>
+      <li><h3>Close</h3><p><kbd>Esc</kbd>, its ✕ button, or Back.</p></li>
+    </ul>
+  </section>
+
+  <section class="cat" id="copy" aria-labelledby="h-copy">
+    <h2 id="h-copy">Select and copy</h2>
+    <ul class="list">
+      <li><h3>Select by formula</h3><p>In a formula a selection takes whole elements, e.g. a fraction or bracket entered from outside, and what is highlighted is what is copied; "Select as text" in the ⋮ menu switches to Chrome's own selection.</p></li>
+      <li><h3>Copy as LaTeX</h3><p><kbd>⌘</kbd> <kbd>C</kbd> copies inline formulas as <code>$…$</code>, displayed equations as <code>\[…\]</code>, and part of a formula as the TeX of that part.</p></li>
+      <li><h3>Copied TeX</h3><p>Symbols copy as their commands, e.g. α as <code>\alpha</code>, matrices and cases as environments, and text inside formulas as <code>\text{…}</code>.</p></li>
+      <li><h3>Copy as Mathematica <span class="badge">Coming in 1.4.6</span></h3><p>Right-click a formula (with nothing selected) and choose "Copy as Mathematica" to copy it as Mathematica input; the item appears only on formulas it can convert.</p></li>
+      <li><h3>Keyboard</h3><p>With a selection, <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> extends it by one element (a letter with its scripts, a whole fraction), <kbd>⌥</kbd> <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> (<kbd>Ctrl</kbd> <kbd>Shift</kbd> on Windows and Linux) by a word, and <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> by a line.</p></li>
+      <li><h3>Triple click</h3><p>Selects the sentence, across lines; on a displayed formula, the whole formula with all its rows, without its number.</p></li>
+      <li><h3>Submatrix</h3><p>Drag from one matrix entry to another to select the block between them, copied as <code>\begin{matrix}…\end{matrix}</code>.</p></li>
+      <li><h3>Scanned papers</h3><p>A scan with a text layer (OCR) can be selected and copied, also when the scan is tilted.</p></li>
+    </ul>
+  </section>
+
+  <section class="cat" id="links" aria-labelledby="h-links">
+    <h2 id="h-links">Links</h2>
+    <ul class="list">
+      <li><h3>Generated links</h3><p>In a PDF without internal links, references to sections, equations, figures, tables, theorems, footnotes and citations, and table of contents entries, become links; a PDF with its own links is left as it is.</p></li>
+      <li><h3>Follow and return</h3><p>A click goes to the target; Back returns.</p></li>
+      <li><h3>Link tooltip</h3><p>Hovering a link shows its target and the key to peek it, e.g. "Eq. (2.3) (page 12) · ⌘+click to peek".</p></li>
+    </ul>
+  </section>
+
+  <section class="cat" id="navigation" aria-labelledby="h-nav">
+    <h2 id="h-nav">Outline and navigation</h2>
+    <ul class="list">
+      <li><h3>Outline</h3><p>The sidebar lists the sections and marks the one in view; a click goes there; its menu also shows the pages as thumbnails.</p></li>
+      <li><h3>Outline on hover</h3><p>Hovering the sidebar button shows the outline over the page; a click docks it beside the page.</p></li>
+      <li><h3>Generated outline</h3><p>A PDF without an outline gets one from its numbered headings (chapters for books), with TeX in titles typeset, e.g. <code>\alpha'</code> as α′.</p></li>
+      <li><h3>Remembered state</h3><p>Each PDF reopens at the last position read, with the sidebar open or closed as left.</p></li>
+      <li><h3>Narrow windows</h3><p>In a narrow window the outline opens over the page and closes once a section is chosen.</p></li>
+      <li><h3>Navigate in viewer <span class="badge">Coming in 1.4.6</span></h3><p>An option in the ⋮ menu, off by default: jumps from links, the outline and search go into the viewer's own history, with Back and Forward buttons left of the search and <kbd>⌘</kbd> <kbd>[</kbd>/<kbd>]</kbd> (<kbd>Alt</kbd> + <kbd>←</kbd>/<kbd>→</kbd> on Windows and Linux), and Chrome's Back leaves the PDF.</p></li>
+      <li><h3>First and last page</h3><p><kbd>Home</kbd> and <kbd>End</kbd>.</p></li>
+    </ul>
+  </section>
+
+  <section class="cat" id="viewer" aria-labelledby="h-viewer">
+    <h2 id="h-viewer">Viewer</h2>
+    <ul class="list">
+      <li><h3>PDFs</h3><p>Opens PDFs from the web, and local files once "Allow access to file URLs" is on for the extension in chrome://extensions.</p></li>
+      <li><h3>Zoom</h3><p>The toolbar's − and + or <kbd>⌘</kbd> <kbd>+</kbd>/<kbd>−</kbd> zoom about the middle of the view, pinch and <kbd>Ctrl</kbd> + scroll about the pointer, and two buttons fit the page or its width.</p></li>
+      <li><h3>Page layout</h3><p>⋮ menu: "Two pages side by side" or "Single pages", rotate clockwise or counterclockwise, and the hand tool to drag the page.</p></li>
+      <li><h3>Tab title</h3><p>The tab shows the paper's title, read from its first page when the PDF names none.</p></li>
+      <li><h3>Copy link to page</h3><p>⋮ menu: copies a link that opens the PDF at the current page.</p></li>
+      <li><h3>Tabs restored</h3><p>PDF tabs that Chrome closes when the extension updates reopen at their page.</p></li>
+      <li><h3>Presentation mode</h3><p>⋮ menu: full screen, one page at a time; <kbd>Esc</kbd> leaves it.</p></li>
+      <li><h3>Print and save</h3><p>The toolbar's print and save buttons, or <kbd>⌘</kbd> <kbd>P</kbd> and <kbd>⌘</kbd> <kbd>S</kbd>.</p></li>
+    </ul>
+  </section>
+
+  <section class="cat" id="annotate" aria-labelledby="h-annotate">
+    <h2 id="h-annotate">Annotate and sign</h2>
+    <ul class="list">
+      <li><h3>Highlight</h3><p>Select text and click the highlighter in the toolbar, or right-click the selection and choose "Highlight selection"; five colours.</p></li>
+      <li><h3>Text</h3><p>The toolbar's text tool adds a text box anywhere on a page.</p></li>
+      <li><h3>Draw</h3><p>The toolbar's draw tool: freehand ink, with colour, thickness and opacity.</p></li>
+      <li><h3>Sign</h3><p>The toolbar's signature tool: type, draw or upload a signature and place it on the page; up to five are kept.</p></li>
+      <li><h3>Forms</h3><p>Fill in a PDF's form fields.</p></li>
+      <li><h3>Keeping annotations</h3><p>Highlights, text, drawings, signatures and filled forms stay only in a saved copy of the PDF (<kbd>⌘</kbd> <kbd>S</kbd>); the viewer does not keep them.</p></li>
+    </ul>
+  </section>
+
+  <section class="cat" id="settings" aria-labelledby="h-settings">
+    <h2 id="h-settings">Settings</h2>
+    <ul class="list">
+      <li><h3>Settings page</h3><p>Click the ε in Chrome's toolbar; it also sets the default zoom and the sidebar's state on opening.</p></li>
+      <li><h3>Look and theme</h3><p>Look: Epsilon's or Chrome's; Theme: light, dark, or as the system is set.</p></li>
+      <li><h3>Link borders</h3><p>Off by default; on, it draws the coloured boxes some PDFs put round their links.</p></li>
+      <li><h3>Signatures</h3><p>Turns the signature tool off or on.</p></li>
+      <li><h3>Sync</h3><p>With Chrome Sync on, settings are copied to your other computers.</p></li>
+    </ul>
+  </section>
+
+  <section class="cat" id="privacy" aria-labelledby="h-privacy">
+    <h2 id="h-privacy">Privacy</h2>
+    <p class="cat-lead"><a class="link" href="privacy.html">Privacy policy</a></p>
+    <ul class="list">
+      <li><h3>Local</h3><p>Formulas are read in your browser; PDFs, searches and browsing are sent nowhere, and the extension has no account and no analytics.</p></li>
+      <li><h3>Stored</h3><p>Settings, each PDF's last position and saved signatures stay in Chrome's storage, and go when the extension is removed.</p></li>
+    </ul>
+  </section>
+
+  <p class="questions">⌘ in the keys above is Ctrl on Windows and Linux. Changes in each version: the <a href="releases.html">release notes</a>.</p>
+</main>
+
+<footer class="foot-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w, assets/paintings/forest-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/forest-800.webp 800w, assets/paintings/forest-1200.webp 1200w, assets/paintings/forest-1536.webp 1536w, assets/paintings/forest-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/forest-1200.webp" width="1536" height="1024" alt="" decoding="async" loading="lazy"></picture></div>
+  <div class="wrap">
+    <div>
+      <div class="who"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg>Epsilon PDF viewer</div>
+      <p>Built on <a href="https://mozilla.github.io/pdf.js/">PDF.js</a> (Apache License 2.0). Not made by or affiliated with Mozilla.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="privacy.html">Privacy policy</a>
+      <a href="features.html" aria-current="page">Features</a>
+      <a href="releases.html">Release notes</a>
+      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Chrome Web Store</a>
+    </nav>
+  </div>
+</footer>
+<script>
+/* the bands are windows onto paintings far away: each painting moves more slowly than the page, its offset in the
+   band (1 - speed) times the scroll, a plain translateY. Its box is the least that keeps the part of the band in view
+   covered at every scroll position (sampled every 2 px): a band at the top of the page, which only leaves upward, and
+   a footer band at the page's end need no height beyond their own; a band crossing the whole viewport needs more.
+   Where the browser has scroll-driven animations the offset is a CSS animation on the page's scroll, moved with the
+   scroll itself (no frame of lag); elsewhere a requestAnimationFrame sets it. With reduced motion: still. */
+(() => {
+  const SPEED = 0.6;      // the painting's speed, as a fraction of the page's (a band's data-speed sets its own)
+  const mq = matchMedia("(prefers-reduced-motion: reduce)"), sd = CSS.supports("animation-timeline: scroll()");
+  const wins = [...document.querySelectorAll(".art-band")].map(b => ({b, art: b.querySelector(".art"), img: b.querySelector("img")})).filter(w => w.art && w.img);
+  let geo = [], on = false, queued = false, pending = false;
+  const reset = () => wins.forEach(({b, art}) => { b.classList.remove("win", "sd"); art.style.top = art.style.height = art.style.bottom = art.style.transform = ""; });
+  const measure = () => {
+    pending = false;
+    if (!on) return;
+    const vh = VH, dpr = devicePixelRatio || 1, maxY = Math.max(0, document.documentElement.scrollHeight - vh);
+    document.documentElement.style.setProperty("--maxy", maxY + "px");
+    geo = wins.map(({b, art, img}) => {
+      b.classList.remove("sd"); art.style.transform = "";
+      const r = b.getBoundingClientRect(), top = r.top + scrollY, H = r.height, W = r.width;
+      const srcW = +img.getAttribute("width"), aspect = srcW / +img.getAttribute("height");
+      const yc = top + H / 2 - vh / 2;   // the scroll at which the band's middle is the view's middle: offset 0 there
+      const box = f => { let lo = Infinity, hi = -Infinity;
+        for (let y = 0; ; y = Math.min(y + 2, maxY)) {
+          const vt = Math.max(0, y - top), vb = Math.min(H, y + vh - top);
+          if (vb > vt) { const T = f * (y - yc); lo = Math.min(lo, vt - T); hi = Math.max(hi, vb - T); }
+          if (y >= maxY) break;
+        }
+        return lo === Infinity ? [0, H] : [lo - 1, hi - lo + 2]; };
+      // data-far: a view farther off, whose speed comes before its pixels (no cap on the box); the others are never
+      // drawn larger than their pixels allow, or 10% beyond what the band alone needs
+      const speed = +b.dataset.speed || SPEED, far = "far" in b.dataset;
+      const maxBox = far ? Infinity : Math.max(srcW / dpr, Math.max(W, H * aspect) * 1.1) / aspect;
+      let f = 1 - speed, [boxTop, boxH] = box(f);
+      if (boxH > maxBox) { let a = 0, z = f; for (let k = 0; k < 18; k++) { const m = (a + z) / 2; if (box(m)[1] > maxBox) z = m; else a = m; } f = a; [boxTop, boxH] = box(f); }
+      art.style.top = boxTop + "px"; art.style.bottom = "auto"; art.style.height = boxH + "px";
+      art.style.setProperty("--t0", -f * yc + "px"); art.style.setProperty("--t1", f * (maxY - yc) + "px");
+      b.classList.add("win");
+      if (sd && maxY > 0) b.classList.add("sd");
+      return {art, f, yc, css: sd && maxY > 0};
+    });
+    frame();
+  };
+  const frame = () => {
+    queued = false;
+    const y = scrollY, dpr = devicePixelRatio || 1;
+    for (const g of geo) if (!g.css) g.art.style.transform = "translateY(" + Math.round(g.f * (y - g.yc) * dpr) / dpr + "px)";
+  };
+  const later = () => { if (on && !pending) { pending = true; requestAnimationFrame(measure); } };
+  const onScroll = () => { if (on && !queued && geo.some(g => !g.css)) { queued = true; requestAnimationFrame(frame); } };
+  const set = () => { on = !mq.matches; if (on) measure(); else { geo = []; reset(); } };
+  addEventListener("scroll", onScroll, {passive: true});
+  // (a phone's toolbar shows and hides as a scroll ends, a resize of the height only: not measured again, or every
+  // painting would jump as the hand lets go; the height kept from the last change of width)
+  let VH = innerHeight, lastW = innerWidth;
+  addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; VH = innerHeight; later(); });
+  addEventListener("load", later);
+  new ResizeObserver(later).observe(document.body);
+  mq.addEventListener("change", set);
+  set();
+})();
+</script>
+</body>
+</html>

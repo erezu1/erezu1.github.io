@@ -185,6 +185,8 @@ footer.on-art .who, footer.on-art p, footer.on-art nav a { text-shadow: 0 1px 2p
 footer.on-art .art-band::after, .end .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.18), rgb(var(--scrim) / 0.42) 45%, rgb(var(--scrim) / 0.78)); }
 
 .page-band { position: relative; isolation: isolate; display: flex; align-items: flex-end; min-height: clamp(320px, 48vh, 480px); }
+/* (the title's soft shadow reaches past the window's sides on a phone: cut there, so the page never scrolls sideways) */
+.page-band { overflow-x: clip; }
 .page-band .art-band { inset: 0; background: rgb(131 90 118); --scrim: 34 14 40; }
 .page-band .art-band img { object-position: 50% 30%; }
 /* cats and terracotta are lighter than the night sky: a deeper scrim where the title sits */
@@ -226,7 +228,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 <header class="nav" aria-label="Site">
   <a class="brand" href="index.html" aria-label="Epsilon PDF viewer, home"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg><span class="bt">Epsilon</span></a>
   <nav class="links" aria-label="Sections">
-    <a href="index.html#search" data-t="Features">Features</a>
+    <a href="features.html" data-t="Features">Features</a>
     <a class="on" href="privacy.html" data-t="Privacy" aria-current="page">Privacy</a>
     <a href="releases.html" data-t="What's new">What's new</a>
   </nav>
@@ -253,7 +255,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 
   <section aria-labelledby="site">
     <h2 id="site">This website</h2>
-    <p>This website's home page counts its visits with Google Analytics, which Google runs under its own privacy policy.
+    <p>This website's pages (all but this one) count their visits with Google Analytics, which Google runs under its own privacy policy.
     That concerns this website only: the extension itself sends nothing, as above.</p>
   </section>
 
@@ -283,7 +285,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     </div>
     <nav aria-label="Footer">
       <a href="privacy.html" aria-current="page">Privacy policy</a>
-      <a href="index.html#search">Features</a>
+      <a href="features.html">Features</a>
       <a href="releases.html">Release notes</a>
       <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Chrome Web Store</a>
     </nav>

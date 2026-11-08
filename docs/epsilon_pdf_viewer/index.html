@@ -429,6 +429,7 @@ kbd {
 .tiles .icon { width: 24px; height: 24px; color: var(--text); margin-bottom: 16px; }
 .tiles h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
 .tiles p { font-size: 14.5px; color: var(--text-2); margin-top: 4px; line-height: 1.45; }
+.all-feats { margin-top: clamp(28px, 4vw, 40px); text-align: center; }
 @media (max-width: 760px) { .tiles { grid-template-columns: 1fr 1fr; } .tiles li:last-child:nth-child(odd) { grid-column: span 2; } }
 @media (max-width: 520px) { .tiles { grid-template-columns: 1fr 1fr; gap: 10px; } .tiles li { padding: 16px; } .tiles p { font-size: 13.5px; } }
 
@@ -819,6 +820,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
         <li><svg class="icon" aria-hidden="true"><use href="#i-present"/></svg><h3>Presentation mode</h3><p>Full screen, page by page.</p></li>
         <li><svg class="icon" aria-hidden="true"><use href="#i-palette"/></svg><h3>Your look</h3><p>Epsilon's or Chrome's, in light or dark.</p></li>
       </ul>
+      <p class="all-feats"><a class="link" href="features.html">All features <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a></p>
     </div>
   </section>
 
@@ -885,6 +887,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <nav aria-label="Footer">
       <a href="privacy.html">Privacy policy</a>
       <a href="#search">Features</a>
+      <a href="features.html">All features</a>
       <a href="#new">What's new</a>
       <a href="releases.html">Release notes</a>
       <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome Web Store</a>
