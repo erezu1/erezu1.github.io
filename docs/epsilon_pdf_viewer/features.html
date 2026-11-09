@@ -126,11 +126,10 @@ p { text-wrap: pretty; }
 .nav .links a::after { content: attr(data-t); font-weight: 650; height: 0; visibility: hidden; overflow: hidden; }
 .nav .links a:hover { background: var(--bg-2); color: var(--text); }
 .nav .links a.on { color: var(--text); font-weight: 650; background: var(--surface); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
-/* (narrow: the name goes, the ε stays; the three tabs and the button a little smaller; below 370px the tabs go) */
+/* (narrow: the three tabs and the button a little smaller; below 370px the tabs go) */
 @media (max-width: 500px) {
   .nav { padding: 5px 5px 5px 10px; gap: 2px; }
   .nav .brand { padding-right: 2px; }
-  .nav .brand .bt { display: none; }
   .nav .links a { font-size: 13.5px; padding: 7px 6px; }
   .nav .btn-sm { padding: 0 10px; font-size: 13.5px; }
 }
@@ -139,7 +138,7 @@ p { text-wrap: pretty; }
   .nav .links a { font-size: 13px; padding: 6px 5px; }
   .nav .btn-sm { padding: 0 9px; font-size: 13px; }
 }
-@media (max-width: 369px) { .nav .links { display: none; } .nav .brand .bt { display: inline; } }
+@media (max-width: 369px) { .nav .links { display: none; } }
 
 /* ---- the policy: one column ---- */
 .policy { max-width: calc(65ch + 2 * var(--gutter)); margin-inline: auto; padding: clamp(112px, 16vh, 150px) var(--gutter) clamp(72px, 11vh, 120px); }
@@ -264,7 +263,7 @@ kbd {
   </svg>
 
 <header class="nav" aria-label="Site">
-  <a class="brand" href="index.html" aria-label="Epsilon PDF viewer, home"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg><span class="bt">Epsilon</span></a>
+  <a class="brand" href="index.html" aria-label="Epsilon PDF viewer, home"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg></a>
   <nav class="links" aria-label="Sections">
     <a class="on" href="features.html" data-t="Features" aria-current="page">Features</a>
     <a href="privacy.html" data-t="Privacy">Privacy</a>
