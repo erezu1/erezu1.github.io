@@ -404,6 +404,14 @@ kbd {
 .nav-demo .vw { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 .nav-demo .vw.fr { opacity: 0; transition: opacity 140ms linear; }
 .nav-demo .vw.fr.on { opacity: 1; }
+.nav-demo .set { position: absolute; inset: 0; transition: opacity 420ms linear; }
+.nav-demo .set[data-v="in"] { opacity: 0; }
+.nav-demo[data-v="in"] .set[data-v="in"] { opacity: 1; }
+/* (the two ways Back works: a segmented pair under the window, as the hero's steps; the pressed one the white pill) */
+.nav-modes { width: max-content; max-width: 100%; margin: 22px auto 0; padding: 3px; gap: 2px; border-radius: 999px; background: var(--bg-2); box-shadow: inset 0 0 0 0.5px var(--hair); }
+.nav-modes button:hover { background: none; }
+.nav-modes button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
+@media (prefers-reduced-motion: reduce) { .nav-demo .set, .nav-demo .vw.fr { transition: none; } }
 @media (max-width: 600px) {
   /* (the view's x 0..920 of 1280, the outline and the page: a crop of its own, captured at 3x) */
   .nav-demo > .shot { aspect-ratio: 920 / 800; }
@@ -761,19 +769,27 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <div class="wrap">
       <div class="copy center reveal">
         <h2 id="f4"><a class="h-link" href="features.html#navigation">Move through the paper, and back.</a></h2>
-        <p>The outline shows every section, the one you are reading marked. Jump to any of them; Back takes you to where you were. If a paper has no outline or links of its own, Epsilon makes them for you.</p>
+        <p>Use the outline to jump through the paper. Use Chrome's buttons to navigate, or the viewer's. If a paper has no outline or links of its own, Epsilon makes them for you!</p>
       </div>
       <div class="scene">
-        <figure class="plane window nav-demo" id="nav-demo" style="margin:0" role="img" aria-label="Reading the introduction: a click on section 3.1 in the outline jumps there, Back returns to the introduction, a click on section 2.2 jumps there, and Back returns again.">
+        <figure class="plane window nav-demo" id="nav-demo" data-v="chrome" style="margin:0" role="img" aria-label="Reading the introduction: a click on section 3.1 in the outline jumps there, Chrome's Back returns to the introduction, a click on section 2.2 jumps there, and Back returns again." data-in="Navigate in viewer on: a click on section 3.1 in the outline jumps there, the viewer's own Back button, left of the search, returns to the introduction, a click on section 2.2 jumps there, and Back returns again.">
           <div class="shot" aria-hidden="true"><div class="stage">
-            <picture><source media="(max-width: 600px)" srcset="assets/nav-a-m.webp"><img class="vw" src="assets/nav-a.webp" srcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" sizes="1120px" width="1920" height="1200" loading="lazy" decoding="async" alt=""></picture>
-            <picture><source media="(max-width: 600px)" srcset="assets/nav-b-m.webp"><img class="vw fr" data-k="b" src="assets/nav-b.webp" srcset="assets/nav-b-960.webp 960w, assets/nav-b.webp 1920w" sizes="1120px" width="1920" height="1200" loading="lazy" decoding="async" alt=""></picture>
-            <picture><source media="(max-width: 600px)" srcset="assets/nav-c-m.webp"><img class="vw fr" data-k="c" src="assets/nav-c.webp" srcset="assets/nav-c-960.webp 960w, assets/nav-c.webp 1920w" sizes="1120px" width="1920" height="1200" loading="lazy" decoding="async" alt=""></picture>
+            <div class="set" data-v="chrome">
+              <picture><source media="(max-width: 600px)" srcset="assets/nav-a-m.webp"><img class="vw" src="assets/nav-a.webp" srcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" sizes="1120px" width="1920" height="1200" loading="lazy" decoding="async" alt=""></picture>
+              <picture><source media="(max-width: 600px)" srcset="assets/nav-b-m.webp"><img class="vw fr" data-k="b" src="assets/nav-b.webp" srcset="assets/nav-b-960.webp 960w, assets/nav-b.webp 1920w" sizes="1120px" width="1920" height="1200" loading="lazy" decoding="async" alt=""></picture>
+              <picture><source media="(max-width: 600px)" srcset="assets/nav-c-m.webp"><img class="vw fr" data-k="c" src="assets/nav-c.webp" srcset="assets/nav-c-960.webp 960w, assets/nav-c.webp 1920w" sizes="1120px" width="1920" height="1200" loading="lazy" decoding="async" alt=""></picture>
+            </div>
+            <div class="set" data-v="in">
+              <picture><source media="(max-width: 600px)" srcset="assets/navin-a-m.webp"><img class="vw" src="assets/navin-a.webp" srcset="assets/navin-a-960.webp 960w, assets/navin-a.webp 1920w" sizes="1120px" width="1920" height="1200" loading="lazy" decoding="async" alt=""></picture>
+              <picture><source media="(max-width: 600px)" srcset="assets/navin-b-m.webp"><img class="vw fr" data-k="b" src="assets/navin-b.webp" srcset="assets/navin-b-960.webp 960w, assets/navin-b.webp 1920w" sizes="1120px" width="1920" height="1200" loading="lazy" decoding="async" alt=""></picture>
+              <picture><source media="(max-width: 600px)" srcset="assets/navin-c-m.webp"><img class="vw fr" data-k="c" src="assets/navin-c.webp" srcset="assets/navin-c-960.webp 960w, assets/navin-c.webp 1920w" sizes="1120px" width="1920" height="1200" loading="lazy" decoding="async" alt=""></picture>
+            </div>
           </div></div>
           <span class="chip back-chip" aria-hidden="true"><svg class="icon"><use href="#i-back"/></svg>Back</span>
           <span class="ripple" aria-hidden="true"></span>
           <svg class="pointer" viewBox="0 0 24 28" aria-hidden="true"><path d="M3 2 L3 22 L8.5 17 L12 25.5 L15.5 24 L12 15.8 L19.5 15.8 Z" fill="#1f1f1f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
         </figure>
+        <div class="tour-steps nav-modes" role="group" aria-label="How Back works in the demo"><button type="button" data-v="chrome" aria-pressed="true">native</button><button type="button" data-v="in" aria-pressed="false">viewer</button></div>
       </div>
     </div>
   </section>
@@ -1188,35 +1204,62 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 
   // 4. navigation: the outline's 3.1 clicked (the page jumps there), Back (to the introduction, where it was), the
   //    outline's 2.2, Back again: round to the start. The three views are the extension's, Back returning exactly.
+  //    Two versions, chosen by the buttons under the window: Back is Chrome's (a chip standing over the window), or,
+  //    with Navigate in viewer on, the viewer's own Back button left of the search (frames navin-*: store/nav-frames.mjs)
   {
     const el = $("#nav-demo");
     const ptr = $(".pointer", el), rip = $(".ripple", el), back = $(".back-chip", el);
-    const fr = {b: $('.fr[data-k="b"]', el), c: $('.fr[data-k="c"]', el)};
+    const frs = k => [...el.querySelectorAll(`.fr[data-k="${k}"]`)];
+    const fr = {b: frs("b"), c: frs("c")};
     const T1 = [3.75, 63.5], T2 = [3.75, 50.4];          // (the outline's entries, where they were clicked: % of the view)
-    const stage = $(".stage", el);
+    const BACK = [23.02, 2.75];                          // (the viewer's own Back button, navin-*: % of the view)
+    const stage = $(".stage", el), modes = [...document.querySelectorAll(".nav-modes button")];
+    const label = {chrome: el.getAttribute("aria-label"), in: el.dataset.in};
+    let mode = "chrome";
     // (the view's places in the stage's %, the pointer on the window: on a phone the stage is cropped)
     const fig = p => [(stage.offsetLeft + p[0] / 100 * stage.offsetWidth) / el.offsetWidth * 100, (stage.offsetTop + p[1] / 100 * stage.offsetHeight) / el.offsetHeight * 100];
     const backAt = () => [(back.offsetLeft + back.offsetWidth * 0.32) / el.offsetWidth * 100, (back.offsetTop + back.offsetHeight * 0.55) / el.offsetHeight * 100];
     const go = p => { ptr.style.left = p[0] + "%"; ptr.style.top = p[1] + "%"; };
-    const view = k => { fr.b.classList.toggle("on", k === "b"); fr.c.classList.toggle("on", k === "c"); };
+    const view = k => { fr.b.forEach(f => f.classList.toggle("on", k === "b")); fr.c.forEach(f => f.classList.toggle("on", k === "c")); };
+    // (a switch of version cuts the round in play at its next wait; the loop then starts the new one from the top)
+    const ABORT = {};
+    let cut, cutP;
+    const arm = () => { cutP = new Promise((_, r) => cut = r); cutP.catch(() => {}); };
+    arm();
+    const w = ms => Promise.race([sleep(ms), cutP]);
     const click = async p => {
       ptr.classList.add("down"); rip.style.left = p[0] + "%"; rip.style.top = p[1] + "%";
       rip.classList.remove("go"); void rip.offsetWidth; rip.classList.add("go");
-      await sleep(150); ptr.classList.remove("down");
+      await w(150); ptr.classList.remove("down");
     };
-    const jump = async (t, k) => { const p = fig(t); go(p); await sleep(1150); await click(p); view(k); await sleep(2000); };
-    // (Back shows only for its click: it comes, is pressed, and goes)
+    const jump = async (t, k) => { const p = fig(t); go(p); await w(1150); await click(p); view(k); await w(2000); };
+    // (Chrome's Back shows only for its click: it comes, is pressed, and goes; the viewer's is in its toolbar)
     const home = async () => {
-      const p = backAt(); back.classList.add("on"); go(p); await sleep(1150);
+      if (mode === "in") { const p = fig(BACK); go(p); await w(1150); await click(p); view("a"); await w(1300); return; }
+      const p = backAt(); back.classList.add("on"); go(p); await w(1150);
       back.classList.add("press"); await click(p); back.classList.remove("press"); view("a");
-      await sleep(350); back.classList.remove("on"); await sleep(950);
+      await w(350); back.classList.remove("on"); await w(950);
     };
-    let first = true;
-    loop(el, async () => {
-      if (first) { first = false; ptr.style.transition = "none"; go(fig([30, 30])); void ptr.offsetWidth; ptr.style.transition = ""; ptr.classList.add("on"); await sleep(600); }
+    let fresh = true;
+    const round = async () => {
+      if (fresh) { fresh = false; ptr.style.transition = "none"; go(fig([30, 30])); void ptr.offsetWidth; ptr.style.transition = ""; ptr.classList.add("on"); await w(600); }
       await jump(T1, "b"); await home();
       await jump(T2, "c"); await home();
-    }, () => { view("b"); go(fig(T1)); ptr.classList.add("on"); });
+    };
+    const last = () => { view("b"); go(fig(T1)); ptr.classList.add("on"); };
+    loop(el, async () => { try { await round(); } catch (e) { if (e !== ABORT) throw e; } }, last);
+    // the buttons: the other version crossfades in at the round's start (the reader at the introduction, the pointer
+    // gone and back at its place), and its round plays from there
+    modes.forEach(b => b.addEventListener("click", () => {
+      const m = b.dataset.v;
+      if (m === mode) return;
+      mode = m; el.dataset.v = m; el.setAttribute("aria-label", label[m]);
+      modes.forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      if (still) return;
+      cut(ABORT); arm();
+      ptr.classList.remove("on", "down"); rip.classList.remove("go"); back.classList.remove("on", "press"); view("a");
+      fresh = true;
+    }));
   }
 
   // the nav: the tab whose sections hold the line 40% down the window marked (Features: Search to the tiles)
