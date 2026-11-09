@@ -253,6 +253,9 @@ kbd {
   .list p { font-size: 15.5px; }
 }
 </style>
+<style>html:not(.pc) .pc, html.pc .mac { display: none; }</style>
+<script>/* the keys as on the reader's machine: ⌘ on a Mac, an iPhone, an iPad, a phone; Ctrl on Windows, Linux, ChromeOS */
+(function () { var u = navigator.userAgent; if (/Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u)) document.documentElement.classList.add("pc"); })();</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -272,12 +275,12 @@ kbd {
   <a class="btn btn-sm" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
 </header>
 
-<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w, assets/paintings/forest-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/forest-800.webp 800w, assets/paintings/forest-1200.webp 1200w, assets/paintings/forest-1536.webp 1536w, assets/paintings/forest-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/forest-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Features</h1><p class="date">Version 1.4.5, November 2026</p></div></header>
+<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w, assets/paintings/forest-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/forest-800.webp 800w, assets/paintings/forest-1200.webp 1200w, assets/paintings/forest-1536.webp 1536w, assets/paintings/forest-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/forest-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Features</h1><p class="date">Version 1.4.6, November 2026</p></div></header>
 <main id="main" class="feats">
   <section class="cat" id="search" aria-labelledby="h-search">
     <h2 id="h-search">Search</h2>
     <ul class="list">
-      <li><h3>Formula search</h3><p>Open the search with <kbd>⌘</kbd> <kbd>F</kbd> (<kbd>Ctrl</kbd> <kbd>F</kbd> on Windows and Linux) and type TeX, e.g. <code>\alpha_1</code>, to find every formula that contains it.</p></li>
+      <li><h3>Formula search</h3><p>Open the search with <kbd>⌘</kbd> <kbd>F</kbd> and type TeX, e.g. <code>\alpha_1</code>, to find every formula that contains it.</p></li>
       <li><h3>Plain queries</h3><p>Input without backslashes is read as a formula too, e.g. <code>alpha_1</code>, <code>psi(t,x)</code>, <code>n -&gt; \infty</code>, <code>1/2 m v^2</code>, <code>O(N^-1)</code>.</p></li>
       <li><h3>Equivalent spellings</h3><p>Spellings that draw the same thing match each other, e.g. <code>\sqrt t</code> and <code>\sqrt{t}</code>, <code>\to</code> and <code>\rightarrow</code>, <code>\rm</code> and <code>\mathrm</code>.</p></li>
       <li><h3>Words and symbols</h3><p>A symbol's name finds the word and the symbol, e.g. <code>phi</code> finds "phi" and φ, <code>log</code> the word and the operator; in <code>$…$</code>, e.g. <code>$phi$</code>, only formulas are searched.</p></li>
@@ -311,8 +314,8 @@ kbd {
       <li><h3>Select by formula</h3><p>In a formula a selection takes whole elements, e.g. a fraction or bracket entered from outside, and what is highlighted is what is copied; "Select as text" in the ⋮ menu switches to Chrome's own selection.</p></li>
       <li><h3>Copy as LaTeX</h3><p><kbd>⌘</kbd> <kbd>C</kbd> copies inline formulas as <code>$…$</code>, displayed equations as <code>\[…\]</code>, and part of a formula as the TeX of that part.</p></li>
       <li><h3>Copied TeX</h3><p>Symbols copy as their commands, e.g. α as <code>\alpha</code>, matrices and cases as environments, and text inside formulas as <code>\text{…}</code>.</p></li>
-      <li><h3>Copy as Mathematica <span class="badge">Coming in 1.4.6</span></h3><p><kbd>Ctrl</kbd> <kbd>⌘</kbd> <kbd>C</kbd> (<kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>C</kbd> on Windows and Linux), or "Copy as Mathematica" in the right-click menu, copies the selected formula, or the one under the pointer, as Mathematica input; an ordinary copy where it cannot convert.</p></li>
-      <li><h3>Keyboard</h3><p>With a selection, <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> extends it by one element (a letter with its scripts, a whole fraction), <kbd>⌥</kbd> <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> (<kbd>Ctrl</kbd> <kbd>Shift</kbd> on Windows and Linux) by a word, and <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> by a line.</p></li>
+      <li><h3>Copy as Mathematica <span class="badge">New in 1.4.6</span></h3><p><span class="mac"><kbd>Ctrl</kbd> <kbd>⌘</kbd> <kbd>C</kbd></span><span class="pc"><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>C</kbd></span>, or "Copy as Mathematica" in the right-click menu, copies the selected formula, or the one under the pointer, as Mathematica input; an ordinary copy where it cannot convert.</p></li>
+      <li><h3>Keyboard</h3><p>With a selection, <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> extends it by one element (a letter with its scripts, a whole fraction), <span class="mac"><kbd>⌥</kbd></span><span class="pc"><kbd>Ctrl</kbd></span> <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> by a word, and <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> by a line.</p></li>
       <li><h3>Triple click</h3><p>Selects the sentence, across lines; on a displayed formula, the whole formula with all its rows, without its number.</p></li>
       <li><h3>Submatrix</h3><p>Drag from one matrix entry to another to select the block between them, copied as <code>\begin{matrix}…\end{matrix}</code>.</p></li>
       <li><h3>Scanned papers</h3><p>A scan with a text layer (OCR) can be selected and copied, also when the scan is tilted.</p></li>
@@ -336,7 +339,7 @@ kbd {
       <li><h3>Generated outline</h3><p>A PDF without an outline gets one from its numbered headings (chapters for books), with TeX in titles typeset, e.g. <code>\alpha'</code> as α′.</p></li>
       <li><h3>Remembered state</h3><p>Each PDF reopens at the last position read, with the sidebar open or closed as left.</p></li>
       <li><h3>Narrow windows</h3><p>In a narrow window the outline opens over the page and closes once a section is chosen.</p></li>
-      <li><h3>Navigate in viewer <span class="badge">Coming in 1.4.6</span></h3><p>An option in the ⋮ menu, off by default: jumps from links, the outline and search go into the viewer's own history, with Back and Forward buttons left of the search and <kbd>⌘</kbd> <kbd>[</kbd>/<kbd>]</kbd> (<kbd>Alt</kbd> + <kbd>←</kbd>/<kbd>→</kbd> on Windows and Linux), and Chrome's Back leaves the PDF.</p></li>
+      <li><h3>Navigate in viewer <span class="badge">New in 1.4.6</span></h3><p>An option in the ⋮ menu, off by default: jumps from links, the outline and search go into the viewer's own history, with Back and Forward buttons left of the search and <span class="mac"><kbd>⌘</kbd> <kbd>[</kbd>/<kbd>]</kbd></span><span class="pc"><kbd>Alt</kbd> + <kbd>←</kbd>/<kbd>→</kbd></span>, and Chrome's Back leaves the PDF.</p></li>
       <li><h3>First and last page</h3><p><kbd>Home</kbd> and <kbd>End</kbd>.</p></li>
     </ul>
   </section>
@@ -370,7 +373,7 @@ kbd {
   <section class="cat" id="settings" aria-labelledby="h-settings">
     <h2 id="h-settings">Settings</h2>
     <ul class="list">
-      <li><h3>Settings page</h3><p>Click the ε in Chrome's toolbar; it also sets the default zoom and the sidebar's state on opening.</p></li>
+      <li><h3>Settings page <span class="badge">New in 1.4.6</span></h3><p>Click the ε in Chrome's toolbar, or Settings at the end of the ⋮ menu; it also sets the default zoom and the sidebar's state on opening.</p></li>
       <li><h3>Look and theme</h3><p>Look: Epsilon's or Chrome's; Theme: light, dark, or as the system is set.</p></li>
       <li><h3>Link borders</h3><p>Off by default; on, it draws the coloured boxes some PDFs put round their links.</p></li>
       <li><h3>Signatures</h3><p>Turns the signature tool off or on.</p></li>
@@ -400,7 +403,7 @@ kbd {
     <p class="cat-lead">For more information, see our <a class="link" href="privacy.html">privacy policy</a>.</p>
   </section>
 
-  <p class="questions">⌘ in the keys above is Ctrl on Windows and Linux. Changes in each version: the <a href="releases.html">release notes</a>.</p>
+  <p class="questions">Changes in each version: the <a href="releases.html">release notes</a>.</p>
 </main>
 
 <footer class="foot-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w, assets/paintings/forest-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/forest-800.webp 800w, assets/paintings/forest-1200.webp 1200w, assets/paintings/forest-1536.webp 1536w, assets/paintings/forest-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/forest-1200.webp" width="1536" height="1024" alt="" decoding="async" loading="lazy"></picture></div>
@@ -480,5 +483,7 @@ kbd {
   set();
 })();
 </script>
+<script>/* (a lone ⌘ key is Ctrl off the Mac; keys that differ otherwise are written both ways, .mac and .pc) */
+if (document.documentElement.classList.contains("pc")) document.querySelectorAll("kbd").forEach(function (k) { if (k.textContent === "⌘" && !k.closest(".mac")) k.textContent = "Ctrl"; });</script>
 </body>
 </html>

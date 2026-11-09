@@ -613,6 +613,9 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   inset: -30% -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.32), rgb(0 0 0 / 0.16) 55%, rgb(0 0 0 / 0));
   filter: blur(24px); pointer-events: none; }
 </style>
+<style>html:not(.pc) .pc, html.pc .mac { display: none; }</style>
+<script>/* the keys as on the reader's machine: ⌘ on a Mac, an iPhone, an iPad, a phone; Ctrl on Windows, Linux, ChromeOS */
+(function () { var u = navigator.userAgent; if (/Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u)) document.documentElement.classList.add("pc"); })();</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -714,7 +717,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
       <div class="copy center reveal">
         <h2 id="f2"><a class="h-link" href="features.html#peek">Peek at any link without losing your place.</a></h2>
         <p>A link to an equation, figure, section or citation opens in a panel below, its target marked. Your page stays where it is.</p>
-        <p class="keys"><span><kbd>⌘</kbd>/<kbd>Ctrl</kbd> + click a link to peek</span></p>
+        <p class="keys"><span><kbd>⌘</kbd> + click a link to peek</span></p>
       </div>
       <div class="scene">
         <figure class="plane window" style="margin:0">
@@ -736,7 +739,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <div class="wrap grid">
       <div class="copy reveal">
         <h2 id="f3"><a class="h-link" href="features.html#copy">Copy as LaTeX or&nbsp;Mathematica.</a></h2>
-        <p>The selection follows the formula's structure: drag into a fraction or a bracket and it is taken whole. Copy, and you get LaTeX, ready for your notes. Or copy it as Mathematica <span class="nw">(<kbd>Ctrl</kbd>+<kbd>⌘</kbd>+<kbd>C</kbd>).</span></p>
+        <p>The selection follows the formula's structure: drag into a fraction or a bracket and it is taken whole. Copy, and you get LaTeX, ready for your notes. Or copy it as Mathematica <span class="nw">(<span class="mac"><kbd>Ctrl</kbd>+<kbd>⌘</kbd>+<kbd>C</kbd></span><span class="pc"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd></span>).</span></p>
       </div>
       <div class="scene">
         <div class="plane copy-demo" id="copy-demo">
@@ -874,18 +877,18 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <div class="wrap news">
       <div class="copy reveal">
         <p class="num">What's new</p>
-        <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Every journal's math, read as it is set.</h2>
-        <p class="ver">Version 1.4.5</p>
+        <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Copy any formula into Mathematica.</h2>
+        <p class="ver">Version 1.4.6</p>
         <a class="link news-all" href="releases.html">All release notes <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a>
       </div>
       <ul>
-        <li>New in 1.4.5: fraction bars, roots and overlines read by the fonts' own layout rules, about 20% fewer equations missed. APS journals and matplotlib figure labels read as they are set, and equations with words in them read whole.</li>
+        <li>New in 1.4.6: copy a formula as Mathematica input, from the right-click menu or <span class="mac">Ctrl+⌘+C</span><span class="pc">Ctrl+Alt+C</span>; a selection with several formulas copies each one, a line apiece.</li>
+        <li>Navigate in viewer, an option in the ⋮ menu: links, the outline and search keep their jumps in the viewer, with its own Back and Forward. Scripts, limits and fractions in text read right in more papers.</li>
+        <li>In 1.4.5, fraction bars, roots and overlines read by the fonts' own layout rules, about 20% fewer equations missed. APS journals and matplotlib figure labels read as they are set, and equations with words in them read whole.</li>
         <li>Accents and bars over letters read right in more fonts, and accented words copy as they read (Kähler). Books get their chapters in the outline, and a figure link opens with the whole figure in view.</li>
         <li>In 1.4.4, text selects as in Chrome, and Epsilon steps in only at formulas. Displays with words read whole, and older plain TeX papers read better.</li>
         <li>In 1.4.3, papers without links get them: sections, equations, figures, citations and the contents. Click to go there, Cmd or Ctrl+click to peek.</li>
-        <li>Papers without an outline get one from their numbered headings, and the tab shows the paper's title.</li>
         <li>Cases, wide accents and integral limits read right, so almost every copy compiles. Earlier, in 1.4.2: copy part of a matrix, and every standard symbol read as its LaTeX command.</li>
-        <li>In 1.4 and 1.4.1: select by formula, what you see selected is what is copied; a triple click on a formula takes the whole formula.</li>
       </ul>
     </div>
   </section>
@@ -1427,5 +1430,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   }
 })();
 </script>
+<script>/* (a lone ⌘ key is Ctrl off the Mac; keys that differ otherwise are written both ways, .mac and .pc) */
+if (document.documentElement.classList.contains("pc")) document.querySelectorAll("kbd").forEach(function (k) { if (k.textContent === "⌘" && !k.closest(".mac")) k.textContent = "Ctrl"; });</script>
 </body>
 </html>

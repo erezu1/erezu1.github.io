@@ -247,6 +247,9 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   inset: -30% -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.32), rgb(0 0 0 / 0.16) 55%, rgb(0 0 0 / 0));
   filter: blur(24px); pointer-events: none; }
 </style>
+<style>html:not(.pc) .pc, html.pc .mac { display: none; }</style>
+<script>/* the keys as on the reader's machine: ⌘ on a Mac, an iPhone, an iPad, a phone; Ctrl on Windows, Linux, ChromeOS */
+(function () { var u = navigator.userAgent; if (/Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u)) document.documentElement.classList.add("pc"); })();</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -267,13 +270,42 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <a class="btn btn-sm" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
 </header>
 
-<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w, assets/paintings/garden-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/garden-800.webp 800w, assets/paintings/garden-1200.webp 1200w, assets/paintings/garden-1672.webp 1672w, assets/paintings/garden-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/garden-1200.webp" width="1672" height="942" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Release notes</h1><p class="date">Updated November 6, 2026</p></div></header>
+<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w, assets/paintings/garden-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/garden-800.webp 800w, assets/paintings/garden-1200.webp 1200w, assets/paintings/garden-1672.webp 1672w, assets/paintings/garden-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/garden-1200.webp" width="1672" height="942" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Release notes</h1><p class="date">Updated November 9, 2026</p></div></header>
 <main id="main" class="policy notes">
 
 
+  <section class="rel" id="v1.4.6" aria-labelledby="h1.4.6">
+    <header class="rel-head">
+      <h2 id="h1.4.6"><a href="#v1.4.6">Version 1.4.6</a> <span class="badge">Latest</span></h2>
+      <p class="date"><time datetime="2026-11-09">November 9, 2026</time></p>
+    </header>
+    <div class="rel-body">
+      <h3>Copy as Mathematica</h3>
+      <ul>
+        <li><span class="mac">Ctrl+⌘+C</span><span class="pc">Ctrl+Alt+C</span>, or Copy as Mathematica in the right-click menu on a formula, copies the selected formula, or the one under the pointer, as Mathematica input: fractions, roots, sums and integrals, derivatives, special functions (\Gamma(z) as Gamma[z]) and definitions (\equiv as :=).</li>
+        <li>A selection of text with formulas in it copies each formula converted, one a line. Where a formula cannot be written in Mathematica, you get the ordinary copy.</li>
+      </ul>
+      <h3>Navigate in viewer</h3>
+      <ul>
+        <li>An option in the ⋮ menu, off by default: links, the outline and search keep their jumps in the viewer's own history, with Back and Forward buttons left of the search and <span class="mac">⌘+[ and ⌘+]</span><span class="pc">Alt+← and Alt+→</span>. Chrome's Back leaves the PDF at once.</li>
+        <li>Their tooltips name the place they go to, as the paper abbreviates it: Eq. (2.3), Sec. 3, Fig. 2.</li>
+      </ul>
+      <h3>Reading</h3>
+      <ul>
+        <li>Scripts on scripted groups, limits over and under operators (\substack too), and labels set over arrows read as TeX places them.</li>
+        <li>Fractions inside text rows, \atop, binomials in scripts and under roots, and matrices of small fractions read right.</li>
+        <li>An equation's own boundaries found more often: its number, a list item, rows set apart as a block.</li>
+      </ul>
+      <h3>Search and outline</h3>
+      <ul>
+        <li>More spellings found as the same formula: \AA as \mathring{A}, a typeset apostrophe as '. The highlight over a root sits on the root.</li>
+        <li>A generated outline with math in its titles appears once, finished. Settings now also open from the end of the ⋮ menu.</li>
+      </ul>
+    </div>
+  </section>
   <section class="rel" id="v1.4.5" aria-labelledby="h1.4.5">
     <header class="rel-head">
-      <h2 id="h1.4.5"><a href="#v1.4.5">Version 1.4.5</a> <span class="badge">Latest</span></h2>
+      <h2 id="h1.4.5"><a href="#v1.4.5">Version 1.4.5</a></h2>
       <p class="date"><time datetime="2026-11-06">November 6, 2026</time></p>
     </header>
     <div class="rel-body">
