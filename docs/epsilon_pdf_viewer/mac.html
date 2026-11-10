@@ -303,6 +303,8 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 
   <section aria-labelledby="default">
     <h2 id="default">Make it your PDF app</h2>
+    <p>The first time it opens, Epsilon PDF asks whether to become your PDF app; Settings &rsaquo; General has the same
+    <b>Make Default</b> button. Or by hand:</p>
     <ol>
       <li>In Finder, select any PDF and choose File &rsaquo; Get Info (<kbd>⌘</kbd> <kbd>I</kbd>).</li>
       <li>Under <b>Open with</b>, choose Epsilon PDF, then click <b>Change All&hellip;</b> and <b>Continue</b>.</li>
@@ -390,10 +392,17 @@ let g:vimtex_view_general_options = '-g @line @pdf @tex'</code></pre>
   <section aria-labelledby="updates">
     <h2 id="updates">Updates and removal</h2>
     <p>Once a day the app checks this website for a new version, downloads it in the background and installs it when
-    you quit; Epsilon PDF &rsaquo; Check for Updates&hellip; checks at once. To remove it, quit it and drag it to the Trash
-    (if it is your PDF app, choose another first). Its settings are in
-    <code>~/Library/Preferences/nl.uva.epsilon.pdfapp.plist</code> and its saved signatures in
-    <code>~/Library/WebKit/nl.uva.epsilon.pdfapp</code>.</p>
+    you quit; Epsilon PDF &rsaquo; Check for Updates&hellip; checks at once.</p>
+    <p>To remove it:</p>
+    <ol>
+      <li>If it is your PDF app, choose another first (above, choosing Preview).</li>
+      <li>Quit Epsilon PDF (<kbd>⌘</kbd> <kbd>Q</kbd>).</li>
+      <li>Drag <b>Epsilon PDF</b> from your Applications folder to the Trash.</li>
+      <li>To remove what it keeps too (its settings and your place in each file, saved signatures, the updater's
+      cache), run in Terminal:
+<pre><code>defaults delete nl.uva.epsilon.pdfapp
+rm -rf ~/Library/WebKit/nl.uva.epsilon.pdfapp ~/Library/Caches/nl.uva.epsilon.pdfapp ~/Library/HTTPStorages/nl.uva.epsilon.pdfapp</code></pre></li>
+    </ol>
   </section>
 
   <section aria-labelledby="private">
