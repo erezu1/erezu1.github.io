@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RXGX64DC6N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RXGX64DC6N');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Epsilon PDF for Mac</title>
+<meta name="description" content="Epsilon PDF for Mac: the Epsilon PDF viewer as a Mac app for local PDFs, with reload on recompile and SyncTeX for LaTeX. How to install it, set it as your PDF app, and what it keeps.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1d1d1f" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preload" as="image" type="image/avif" imagesrcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w, assets/paintings/rapids-2800.avif 2800w" imagesizes="(max-width: 600px) 600px, 100vw" media="(min-width: 601px)" fetchpriority="high">
+<link rel="preload" as="image" type="image/avif" imagesrcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w" imagesizes="(max-width: 600px) 600px, 100vw" media="(max-width: 600px)" fetchpriority="high">
+<style>html.art-wait body{opacity:0}body{transition:opacity .3s ease-out}@media (prefers-reduced-motion: reduce){body{transition:none}}code, kbd { font-family: var(--mono); }
+code { font-size: 0.86em; background: var(--bg-2); border-radius: 6px; padding: 0.1em 0.4em; overflow-wrap: anywhere; }
+kbd {
+  display: inline-grid; place-items: center; min-width: 1.7em; height: 1.7em; padding: 0 0.4em;
+  font: 500 0.8em/1 var(--ui); color: var(--text);
+  background: var(--surface); border-radius: 7px; box-shadow: 0 0 0 1px var(--hair), 0 1px 0 1px var(--line);
+  vertical-align: 0.08em;
+}
+.policy h3 { margin-top: 26px; font-size: 18px; line-height: 1.3; }
+.policy section ol, .policy section ul.plain { margin-top: 14px; padding-left: 1.3em; }
+.policy section li { margin-top: 8px; line-height: 1.55; }
+.policy section li::marker { color: var(--text-2); }
+.keys { margin-top: 16px; width: 100%; border-collapse: collapse; font-size: 15.5px; }
+.keys td { padding: 9px 0; border-top: 1px solid var(--hair); vertical-align: top; }
+.keys td:first-child { width: 44%; padding-right: 16px; white-space: nowrap; }
+.keys tr:first-child td { border-top: none; }
+@media (max-width: 600px) { .keys td:first-child { width: auto; white-space: normal; } }
+.link { color: var(--blue-text); font-weight: 500; text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--blue-text) 35%, transparent); padding-bottom: 1px; }
+.link:hover { border-bottom-color: var(--blue-text); }
+pre { margin-top: 10px; padding: 14px 16px; border-radius: 12px; background: var(--bg-2); overflow-x: auto; font-size: 13.5px; line-height: 1.55; }
+pre code { background: none; padding: 0; font-size: inherit; overflow-wrap: normal; white-space: pre; }
+.policy p.ed { margin-top: 22px; font-weight: 500; }
+.note { margin-top: 18px; padding: 14px 18px; border-radius: 14px; background: color-mix(in srgb, var(--bg-2) 60%, transparent); color: var(--text-2); font-size: 15.5px; line-height: 1.5; }
+</style>
+<script>/* the page shows once its top painting is decoded (or after 3 s, or if it fails), so it never paints without it */
+document.documentElement.classList.add("art-wait");addEventListener("DOMContentLoaded",()=>{const d=document.documentElement,i=document.querySelector(".art img"),go=()=>d.classList.remove("art-wait");if(!i)return go();setTimeout(go,3000);i.decode().then(go,go);});</script>
+<style>
+/* Epsilon PDF viewer: the privacy page. The look, tokens and top bar are index.html's (the extension's "Epsilon"
+   skin); here one calm column to read. Everything local: system fonts, the ε drawn inline. */
+
+:root {
+  color-scheme: light dark;
+  --bg: #f7f6f3;
+  --bg-2: #ebeae6;
+  --surface: #ffffff;
+  --text: rgb(0 0 0 / 0.86);
+  --text-2: rgb(0 0 0 / 0.62);
+  --text-3: rgb(0 0 0 / 0.5);
+  --line: rgb(0 0 0 / 0.1);
+  --hair: rgb(0 0 0 / 0.07);
+  --blue: #2b7de9;
+  --blue-text: #1a5fc2;
+  --tonal: #dce8fb;
+  --on-tonal: #0b3a7a;
+  --cta: #1d1d1f;
+  --on-cta: #ffffff;
+  --shadow: 0 0 0 1px var(--hair), 0 2px 8px rgb(0 0 0 / 0.07), 0 12px 28px rgb(0 0 0 / 0.08);
+  --ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --display: "New York", "Iowan Old Style", Charter, "Palatino Linotype", Georgia, ui-serif, serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --gutter: clamp(16px, 4vw, 40px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1d1f;
+    --bg-2: #272729;
+    --surface: #2c2c2e;
+    --text: rgb(255 255 255 / 0.9);
+    --text-2: rgb(255 255 255 / 0.62);
+    --text-3: rgb(255 255 255 / 0.5);
+    --line: rgb(255 255 255 / 0.12);
+    --hair: rgb(255 255 255 / 0.09);
+    --blue: #6aa9ff;
+    --blue-text: #8bbcff;
+    --tonal: #1c3a63;
+    --on-tonal: #cfe2ff;
+    --cta: #f5f4f0;
+    --on-cta: #141415;
+    --shadow: 0 0 0 1px var(--hair), 0 2px 8px rgb(0 0 0 / 0.35), 0 12px 28px rgb(0 0 0 / 0.45);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.6 var(--ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+svg { display: block; }
+a { color: inherit; }
+h1, h2, p { margin: 0; }
+h1, h2 { font-family: var(--display); font-weight: 500; letter-spacing: -0.022em; text-wrap: balance; }
+p { text-wrap: pretty; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
+.wrap { max-width: 1200px; margin-inline: auto; padding-inline: var(--gutter); }
+.skip { position: absolute; left: 12px; top: -120px; z-index: 100; background: var(--surface); padding: 10px 14px; border-radius: 10px; box-shadow: var(--shadow); }
+.skip:focus { top: 12px; }
+.icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+/* the ε: one stroke, in the text's colour */
+.eps { fill: none; stroke: currentColor; stroke-width: 40; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* ---- the button ---- */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 26px;
+  border-radius: 999px; background: var(--cta); color: var(--on-cta); white-space: nowrap; flex: none;
+  font: 500 17px/1 var(--ui); text-decoration: none; letter-spacing: -0.01em;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12), 0 8px 24px -8px rgb(0 0 0 / 0.35);
+  transition: transform 160ms var(--ease), box-shadow 160ms var(--ease);
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 2px 4px rgb(0 0 0 / 0.14), 0 14px 30px -10px rgb(0 0 0 / 0.4); }
+.btn:active { transform: translateY(0) scale(0.98); }
+.btn-sm { height: 34px; padding: 0 14px; font-size: 14px; box-shadow: none; gap: 6px; }
+.btn-sm:hover { box-shadow: none; }
+
+/* ---- the nav: a floating glass pill (as index.html) ---- */
+.nav {
+  position: fixed; z-index: 50; top: 14px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 4px; padding: 6px 6px 6px 12px;
+  border-radius: 999px; max-width: calc(100vw - 24px);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: var(--shadow);
+}
+.nav .brand { flex: none; display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 15px; text-decoration: none; padding-right: 8px; border-radius: 999px; }
+.nav .brand .eps { width: 18px; height: 24px; }
+.nav .links { display: flex; align-items: center; gap: 1px; }
+.nav .links a {
+  display: inline-grid; justify-items: center; white-space: nowrap; font-size: 14px; color: var(--text-2); text-decoration: none; padding: 7px 10px; border-radius: 999px;
+  transition: background 140ms, color 140ms;
+}
+.nav .links a::after { content: attr(data-t); font-weight: 650; height: 0; visibility: hidden; overflow: hidden; }
+.nav .links a:hover { background: var(--bg-2); color: var(--text); }
+.nav .links a.on { color: var(--text); font-weight: 650; background: var(--surface); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
+/* (narrow: the three tabs and the button a little smaller; below 370px the tabs go) */
+@media (max-width: 500px) {
+  .nav { padding: 5px 5px 5px 10px; gap: 2px; }
+  .nav .brand { padding-right: 2px; }
+  .nav .links a { font-size: 13.5px; padding: 7px 6px; }
+  .nav .btn-sm { padding: 0 10px; font-size: 13.5px; }
+}
+@media (max-width: 385px) {
+  .nav { padding-left: 8px; }
+  .nav .links a { font-size: 13px; padding: 6px 5px; }
+  .nav .btn-sm { padding: 0 9px; font-size: 13px; }
+}
+@media (max-width: 369px) { .nav .links { display: none; } }
+
+/* ---- the policy: one column ---- */
+.policy { max-width: calc(65ch + 2 * var(--gutter)); margin-inline: auto; padding: clamp(112px, 16vh, 150px) var(--gutter) clamp(72px, 11vh, 120px); }
+.policy h1 { font-size: clamp(36px, 5.4vw, 54px); line-height: 1.04; }
+.date { display: flex; align-items: center; gap: 10px; margin-top: 20px; font: 500 13px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); }
+.date::before { content: ""; width: 22px; height: 1.5px; background: var(--blue); flex: none; }
+.lede { margin-top: 28px; font-size: 19px; line-height: 1.55; color: var(--text-2); }
+
+.summary { list-style: none; margin: 36px 0 8px; padding: 6px 20px; border-radius: 16px; background: var(--surface); box-shadow: 0 0 0 1px var(--hair); }
+.summary li { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; font-size: 16px; line-height: 1.45; }
+.summary li + li { border-top: 1px solid var(--hair); }
+.get { margin: 28px 0 4px; }
+.summary .tick { display: grid; place-items: center; width: 22px; height: 22px; margin-top: -0.5px; border-radius: 50%; background: var(--tonal); color: var(--on-tonal); flex: none; }
+.summary .tick .icon { width: 15px; height: 15px; stroke-width: 2.2; }
+
+.policy section { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); }
+.policy h2 { font-size: clamp(25px, 3vw, 30px); line-height: 1.15; }
+.policy section p { margin-top: 14px; }
+.questions { margin-top: 48px; padding: 18px 20px; border-radius: 14px; background: color-mix(in srgb, var(--bg-2) 60%, transparent); color: var(--text-2); font-size: 15.5px; }
+
+footer { background: var(--bg-2); padding: 36px 0 48px; font-size: 14px; color: var(--text-2); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px 40px; align-items: flex-start; }
+footer .who { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 600; }
+footer .who .eps { width: 17px; height: 23px; }
+footer p { max-width: 52ch; margin-top: 10px; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+footer nav a { font: 500 12.5px/1.8 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); text-decoration: none; }
+footer nav a:hover, footer nav a[aria-current] { color: var(--text); }
+footer nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- paintings (mockup) ---- */
+.art { display: block; }
+.art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.art-band { position: absolute; z-index: -1; inset: 0 0 auto 0; overflow: hidden; }
+.art-band > .art { position: absolute; inset: 0; }
+/* the scrim: the painting's own dark, deeper at the top (the nav) and under the title */
+.art-band::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgb(var(--scrim) / 0.42), rgb(var(--scrim) / 0.16) 34%, rgb(var(--scrim) / 0.3) 68%, rgb(var(--scrim) / 0.58)); }
+.on-art { --text: rgb(255 255 255 / 0.95); --text-2: rgb(255 255 255 / 0.8); --eps: #fff; --blue-text: #fff; --cta: #f5f4f0; --on-cta: #141415; color: var(--text); }
+.on-art h1, .on-art h2, .on-art .eps-name, .on-art .date { text-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 30px rgb(0 0 0 / 0.4); }
+.on-art .link { border-bottom-color: rgb(255 255 255 / 0.5); }
+.on-art .date::before { background: #fff; }
+/* a window onto a painting far away: the script below moves the painting more slowly than the page (a translateY
+   at a fraction of the scroll), in a box taller than the window by its travel; with reduced motion it stays still */
+.art-band.win > .art { backface-visibility: hidden; }
+@keyframes win-pan { from { transform: translateY(var(--t0)); } to { transform: translateY(var(--t1)); } }
+@media (prefers-reduced-motion: no-preference) {
+  .art-band.sd > .art { animation: win-pan linear both; animation-timeline: scroll(root block); animation-range: 0px var(--maxy); }
+}
+.on-art .num::before { background: #fff; }
+footer.on-art { background: transparent; }
+footer.on-art .who, footer.on-art p, footer.on-art nav a { text-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 1px 16px rgb(0 0 0 / 0.3); }
+/* the footer's overlay: the painting's own dark, deepest under the text at the foot */
+footer.on-art .art-band::after, .end .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.18), rgb(var(--scrim) / 0.42) 45%, rgb(var(--scrim) / 0.78)); }
+
+.page-band { position: relative; isolation: isolate; display: flex; align-items: flex-end; min-height: clamp(320px, 48vh, 480px); }
+/* (the title's soft shadow reaches past the window's sides on a phone: cut there, so the page never scrolls sideways) */
+.page-band { overflow-x: clip; }
+.page-band .art-band { inset: 0; background: rgb(131 90 118); --scrim: 34 14 40; }
+.page-band .art-band img { object-position: 50% 30%; }
+/* cats and terracotta are lighter than the night sky: a deeper scrim where the title sits */
+.page-band .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.45), rgb(var(--scrim) / 0.2) 30%, rgb(var(--scrim) / 0.5) 62%, rgb(var(--scrim) / 0.72)); }
+@media (max-width: 600px) { .page-band { min-height: 340px; } .page-band .art-band img { object-position: 86% 34%; } }
+.page-band .band-in { width: 100%; max-width: calc(65ch + 2 * var(--gutter)); margin-inline: auto; padding: 0 var(--gutter) clamp(28px, 5vh, 52px); }
+.page-band h1 { font-size: clamp(40px, 6.2vw, 72px); line-height: 1.02; }
+.page-band .date { margin-top: 18px; color: var(--text-2); }
+.policy { padding-top: clamp(40px, 7vh, 72px); }
+.notes > .rel:first-of-type { margin-top: 0; border-top: 0; padding-top: 0; }
+.policy > .lede:first-child { margin-top: 0; }
+/* the end: the footer is a window onto the page's painting, its text in white */
+.foot-band { position: relative; isolation: isolate; background: rgb(131 90 118); padding-top: clamp(96px, 16vh, 160px); --scrim: 34 14 40; }
+.foot-band .art-band { inset: 0; }
+.foot-band .art-band img { object-position: 50% 80%; }
+
+/* (6 Nov: the paintings shown with less shade; the words given a large, blurred, barely there shadow centred behind
+   them, as the journals' band has; the footer's dark kept at its foot, where its text is) */
+.art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.24), rgb(var(--scrim) / 0.06) 34%, rgb(var(--scrim) / 0.12) 68%, rgb(var(--scrim) / 0.3)); }
+footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.06), rgb(var(--scrim) / 0.16) 45%, rgb(var(--scrim) / 0.74)); }
+.end .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.1), rgb(var(--scrim) / 0.16) 55%, rgb(var(--scrim) / 0.74)); }
+.page-band .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.26), rgb(var(--scrim) / 0.06) 30%, rgb(var(--scrim) / 0.14) 62%, rgb(var(--scrim) / 0.36)); }
+.privacy-box .art-band::after { background: radial-gradient(ellipse 75% 60% at 50% 50%, rgb(var(--scrim) / 0.3), rgb(var(--scrim) / 0.1)); }
+.hero h1, .final h2, .page-band .band-in, .privacy-box h2 { position: relative; }
+.hero h1::before, .final h2::before, .page-band .band-in::before, .privacy-box h2::before { content: ""; position: absolute; z-index: -1;
+  inset: -30% -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.32), rgb(0 0 0 / 0.16) 55%, rgb(0 0 0 / 0));
+  filter: blur(24px); pointer-events: none; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <!-- the ε: its bounds x 176..337, y 143.9..380, with room for the stroke -->
+  <symbol id="eps" viewBox="152 120 210 284"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5.5 12.5 4.2 4.2 8.8-9.2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4.5v10.5M7.5 10.5 12 15l4.5-4.5M5.5 19h13"/></symbol>
+</svg>
+
+<header class="nav" aria-label="Site">
+  <a class="brand" href="index.html" aria-label="Epsilon PDF viewer, home"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg></a>
+  <nav class="links" aria-label="Sections">
+    <a href="features.html" data-t="Features">Features</a>
+    <a href="privacy.html" data-t="Privacy">Privacy</a>
+    <a href="releases.html" data-t="What's new">What's new</a>
+  </nav>
+  <a class="btn btn-sm" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
+</header>
+
+<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w, assets/paintings/rapids-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/rapids-800.webp 800w, assets/paintings/rapids-1200.webp 1200w, assets/paintings/rapids-1536.webp 1536w, assets/paintings/rapids-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/rapids-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Epsilon for Mac</h1><p class="date">Version 1.4.6, November 2026</p></div></header>
+<main id="main" class="policy">
+  <p class="lede">Epsilon PDF is the Epsilon PDF viewer as a Mac app: the same formula search, copy as LaTeX or
+  Mathematica, outline and peek, for the PDFs on your Mac. It reloads a PDF in place when LaTeX writes it again,
+  and goes from the PDF to your source and back with SyncTeX.</p>
+
+  <ul class="summary" aria-label="In short">
+    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>macOS 13 Ventura or later, on Apple silicon and Intel.</li>
+    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Local PDFs open from Finder, each in its own window.</li>
+    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Free, and it keeps itself up to date.</li>
+  </ul>
+
+  <p class="get"><a class="btn" href="mac/Epsilon-PDF.zip" download>Download for Mac <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a></p>
+
+  <section aria-labelledby="install">
+    <h2 id="install">Install</h2>
+    <ol>
+      <li>Unzip the download and drag <b>Epsilon PDF</b> to your Applications folder.</li>
+      <li>Open it. The app is not notarized by Apple yet, so macOS blocks its first launch once.</li>
+    </ol>
+    <h3>macOS 15 Sequoia and later</h3>
+    <ol>
+      <li>Double-click the app. macOS says &ldquo;Epsilon PDF&rdquo; Not Opened; click <b>Done</b>.</li>
+      <li>Open System Settings &rsaquo; Privacy &amp; Security. Under Security, next to &ldquo;Epsilon PDF&rdquo; was blocked to protect your Mac, click <b>Open Anyway</b>.</li>
+      <li>Enter your password or use Touch ID, then click <b>Open Anyway</b> again.</li>
+    </ol>
+    <h3>macOS 13 Ventura and 14 Sonoma</h3>
+    <ol>
+      <li>Control-click the app, choose <b>Open</b>, then <b>Open</b> again.</li>
+    </ol>
+    <p>After that it opens like any other app.</p>
+  </section>
+
+  <section aria-labelledby="default">
+    <h2 id="default">Make it your PDF app</h2>
+    <ol>
+      <li>In Finder, select any PDF and choose File &rsaquo; Get Info (<kbd>⌘</kbd> <kbd>I</kbd>).</li>
+      <li>Under <b>Open with</b>, choose Epsilon PDF, then click <b>Change All&hellip;</b> and <b>Continue</b>.</li>
+    </ol>
+    <p>To go back, do the same and choose Preview.</p>
+  </section>
+
+  <section aria-labelledby="latex">
+    <h2 id="latex">Writing LaTeX</h2>
+    <p>When the PDF changes on disk, after a LaTeX run, it is replaced in place: the page, zoom, sidebar and outline
+    stay where they were. File &rsaquo; Reload from Disk (<kbd>⌘</kbd> <kbd>R</kbd>) does it by hand.</p>
+    <p>With a PDF built with <code>-synctex=1</code>, <kbd>⌥</kbd>-click, <kbd>⇧</kbd> <kbd>⌘</kbd>-click or right-click &rsaquo;
+    Show in Editor opens that line of the source in your editor, even when the PDF's window is behind it. The editor is
+    the app that opens <code>.tex</code> files, or the one chosen in Settings &rsaquo; LaTeX: Sublime Text, VS Code,
+    Cursor, VSCodium, Zed, TextMate, BBEdit or a command of your own. From the editor back to the PDF, the editor runs
+    <code>displayline</code>, with Skim's arguments: the PDF scrolls to the line and marks it in blue.</p>
+    <p>Inside beamer frames and <code>align</code>, <code>gather</code>, <code>multline</code> or <code>split</code>,
+    SyncTeX files the first lines under the last, so a line near the start can land just before it. Skim does the same.</p>
+    <h3>Set up your editor</h3>
+    <p>Your editor finds the line in the PDF through <code>displayline</code>, inside the app; <code style="white-space:nowrap">-g</code>
+    keeps the PDF behind the editor. Build with <code>latexmk -pdf -synctex=1</code>, or your editor's own build, which
+    usually has SyncTeX on.</p>
+    <p class="ed">VS Code (LaTeX Workshop), in settings.json:</p>
+<pre><code>"latex-workshop.view.pdf.viewer": "external",
+"latex-workshop.view.pdf.external.synctex.command":
+  "/Applications/Epsilon PDF.app/Contents/Resources/displayline",
+"latex-workshop.view.pdf.external.synctex.args": ["-g", "%LINE%", "%PDF%", "%TEX%"]</code></pre>
+    <p class="ed">Sublime Text (LaTeXTools), in LaTeXTools.sublime-settings:</p>
+<pre><code>"viewer": "command",
+"viewer_settings": {"osx": {
+  "forward_sync_command": ["/Applications/Epsilon PDF.app/Contents/Resources/displayline",
+                           "-g", "$line", "$pdf_file", "$src_file"],
+  "view_command": ["open", "-a", "Epsilon PDF", "$pdf_file"]
+}}</code></pre>
+    <p class="ed">Vim (vimtex):</p>
+<pre><code>let g:vimtex_view_method = 'general'
+let g:vimtex_view_general_viewer = '/Applications/Epsilon PDF.app/Contents/Resources/displayline'
+let g:vimtex_view_general_options = '-g @line @pdf @tex'</code></pre>
+    <p class="ed">Emacs (AUCTeX): an entry in <code>TeX-view-program-list</code> that runs <code>displayline -g %n %o %b</code>.</p>
+  </section>
+
+  <section aria-labelledby="mac">
+    <h2 id="mac">On the Mac</h2>
+    <ul class="plain">
+      <li>Open Recent, and PDFs dragged onto the Dock icon or a window.</li>
+      <li>The Mac's print panel, and Save a Copy.</li>
+      <li>Settings in their own window (<kbd>⌘</kbd> <kbd>,</kbd>).</li>
+      <li>Trackpad pinch that follows your fingers.</li>
+      <li>Back and forward inside the PDF always on (<kbd>⌘</kbd> <kbd>[</kbd> and <kbd>⌘</kbd> <kbd>]</kbd>).</li>
+      <li>Your place in each file kept; leaving presentation mode returns to the page you ended on.</li>
+      <li>Copy, Copy as LaTeX and Copy as Mathematica in the Edit menu and the right-click menu.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="keys">
+    <h2 id="keys">Keys</h2>
+    <table class="keys">
+      <tr><td><kbd>⌘</kbd> <kbd>F</kbd>, <kbd>⌘</kbd> <kbd>G</kbd>, <kbd>⇧</kbd> <kbd>⌘</kbd> <kbd>G</kbd></td><td>Search formulas, next, previous</td></tr>
+      <tr><td><kbd>⌘</kbd> <kbd>C</kbd></td><td>Copy as LaTeX</td></tr>
+      <tr><td><kbd>⌃</kbd> <kbd>⌘</kbd> <kbd>C</kbd></td><td>Copy as Mathematica</td></tr>
+      <tr><td><kbd>⌘</kbd>-click a link</td><td>Peek at its target</td></tr>
+      <tr><td><kbd>⌥</kbd>-click, <kbd>⇧</kbd> <kbd>⌘</kbd>-click</td><td>Show the line in your LaTeX editor</td></tr>
+      <tr><td><kbd>⌘</kbd> <kbd>[</kbd>, <kbd>⌘</kbd> <kbd>]</kbd></td><td>Back, forward</td></tr>
+      <tr><td><kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>G</kbd></td><td>Go to page</td></tr>
+      <tr><td><kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>↑</kbd>, <kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>↓</kbd></td><td>Previous page, next page</td></tr>
+      <tr><td><kbd>⌘</kbd> <kbd>+</kbd>, <kbd>⌘</kbd> <kbd>−</kbd>, <kbd>⌘</kbd> <kbd>0</kbd></td><td>Zoom in, out, actual size</td></tr>
+      <tr><td><kbd>⌘</kbd> <kbd>R</kbd></td><td>Reload from disk</td></tr>
+      <tr><td><kbd>⌘</kbd> <kbd>S</kbd>, <kbd>⌘</kbd> <kbd>P</kbd></td><td>Save a copy, print</td></tr>
+      <tr><td><kbd>⌃</kbd> <kbd>⌘</kbd> <kbd>F</kbd></td><td>Full screen</td></tr>
+    </table>
+  </section>
+
+  <section aria-labelledby="notyet">
+    <h2 id="notyet">Not yet</h2>
+    <ul class="plain">
+      <li>Page editing: rotate, delete, reorder, combine, crop.</li>
+      <li>Saving in place: highlights and notes are kept only with Save a Copy, and are lost when the window closes or the file changes.</li>
+      <li>Preview's own markup tools; the viewer's highlight, text, drawing and signature tools are there.</li>
+      <li>Tabs, Share and AppleScript.</li>
+    </ul>
+    <p class="note">PDFs downloaded from the web carry macOS's quarantine mark, and Finder won't open them in an app
+    that isn't notarized. Open them with File &rsaquo; Open, or drag them onto an open window.</p>
+  </section>
+
+  <section aria-labelledby="updates">
+    <h2 id="updates">Updates and removal</h2>
+    <p>Once a day the app checks this website for a new version, downloads it in the background and installs it when
+    you quit; Epsilon PDF &rsaquo; Check for Updates&hellip; checks at once. To remove it, quit it and drag it to the Trash
+    (if it is your PDF app, choose another first). Its settings are in
+    <code>~/Library/Preferences/nl.uva.epsilon.pdfapp.plist</code> and its saved signatures in
+    <code>~/Library/WebKit/nl.uva.epsilon.pdfapp</code>.</p>
+  </section>
+
+  <section aria-labelledby="private">
+    <h2 id="private">Privacy</h2>
+    <p>Everything stays on your Mac: settings, your place in each file and saved signatures. The app reads your PDFs
+    from disk and sends them nowhere. Its only network request is the daily update check to this website, which sends
+    nothing about you or your Mac. Links in a PDF open in your browser. See also the <a class="link" href="privacy.html">privacy policy</a>.</p>
+  </section>
+</main>
+
+<footer class="foot-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w, assets/paintings/rapids-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/rapids-800.webp 800w, assets/paintings/rapids-1200.webp 1200w, assets/paintings/rapids-1536.webp 1536w, assets/paintings/rapids-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/rapids-1200.webp" width="1536" height="1024" alt="" decoding="async" loading="lazy"></picture></div>
+  <div class="wrap">
+    <div>
+      <div class="who"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg>Epsilon PDF viewer</div>
+      <p>Built on <a href="https://mozilla.github.io/pdf.js/">PDF.js</a> (Apache License 2.0). Not made by or affiliated with Mozilla.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="privacy.html">Privacy policy</a>
+      <a href="features.html">Features</a>
+      <a href="releases.html">Release notes</a>
+      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Chrome Web Store</a>
+    </nav>
+  </div>
+</footer>
+<script>
+/* the bands are windows onto paintings far away: each painting moves more slowly than the page, its offset in the
+   band (1 - speed) times the scroll, a plain translateY. Its box is the least that keeps the part of the band in view
+   covered at every scroll position (sampled every 2 px): a band at the top of the page, which only leaves upward, and
+   a footer band at the page's end need no height beyond their own; a band crossing the whole viewport needs more.
+   Where the browser has scroll-driven animations the offset is a CSS animation on the page's scroll, moved with the
+   scroll itself (no frame of lag); elsewhere a requestAnimationFrame sets it. With reduced motion: still. */
+(() => {
+  const SPEED = 0.6;      // the painting's speed, as a fraction of the page's (a band's data-speed sets its own)
+  const mq = matchMedia("(prefers-reduced-motion: reduce)"), sd = CSS.supports("animation-timeline: scroll()");
+  const wins = [...document.querySelectorAll(".art-band")].map(b => ({b, art: b.querySelector(".art"), img: b.querySelector("img")})).filter(w => w.art && w.img);
+  let geo = [], on = false, queued = false, pending = false;
+  const reset = () => wins.forEach(({b, art}) => { b.classList.remove("win", "sd"); art.style.top = art.style.height = art.style.bottom = art.style.transform = ""; });
+  const measure = () => {
+    pending = false;
+    if (!on) return;
+    const vh = VH, dpr = devicePixelRatio || 1, maxY = Math.max(0, document.documentElement.scrollHeight - vh);
+    document.documentElement.style.setProperty("--maxy", maxY + "px");
+    geo = wins.map(({b, art, img}) => {
+      b.classList.remove("sd"); art.style.transform = "";
+      const r = b.getBoundingClientRect(), top = r.top + scrollY, H = r.height, W = r.width;
+      const srcW = +img.getAttribute("width"), aspect = srcW / +img.getAttribute("height");
+      const yc = top + H / 2 - vh / 2;   // the scroll at which the band's middle is the view's middle: offset 0 there
+      const box = f => { let lo = Infinity, hi = -Infinity;
+        for (let y = 0; ; y = Math.min(y + 2, maxY)) {
+          const vt = Math.max(0, y - top), vb = Math.min(H, y + vh - top);
+          if (vb > vt) { const T = f * (y - yc); lo = Math.min(lo, vt - T); hi = Math.max(hi, vb - T); }
+          if (y >= maxY) break;
+        }
+        return lo === Infinity ? [0, H] : [lo - 1, hi - lo + 2]; };
+      // data-far: a view farther off, whose speed comes before its pixels (no cap on the box); the others are never
+      // drawn larger than their pixels allow, or 10% beyond what the band alone needs
+      const speed = +b.dataset.speed || SPEED, far = "far" in b.dataset;
+      const maxBox = far ? Infinity : Math.max(srcW / dpr, Math.max(W, H * aspect) * 1.1) / aspect;
+      let f = 1 - speed, [boxTop, boxH] = box(f);
+      if (boxH > maxBox) { let a = 0, z = f; for (let k = 0; k < 18; k++) { const m = (a + z) / 2; if (box(m)[1] > maxBox) z = m; else a = m; } f = a; [boxTop, boxH] = box(f); }
+      art.style.top = boxTop + "px"; art.style.bottom = "auto"; art.style.height = boxH + "px";
+      art.style.setProperty("--t0", -f * yc + "px"); art.style.setProperty("--t1", f * (maxY - yc) + "px");
+      b.classList.add("win");
+      if (sd && maxY > 0) b.classList.add("sd");
+      return {art, f, yc, css: sd && maxY > 0};
+    });
+    frame();
+  };
+  const frame = () => {
+    queued = false;
+    const y = scrollY, dpr = devicePixelRatio || 1;
+    for (const g of geo) if (!g.css) g.art.style.transform = "translateY(" + Math.round(g.f * (y - g.yc) * dpr) / dpr + "px)";
+  };
+  const later = () => { if (on && !pending) { pending = true; requestAnimationFrame(measure); } };
+  const onScroll = () => { if (on && !queued && geo.some(g => !g.css)) { queued = true; requestAnimationFrame(frame); } };
+  const set = () => { on = !mq.matches; if (on) measure(); else { geo = []; reset(); } };
+  addEventListener("scroll", onScroll, {passive: true});
+  // (a phone's toolbar shows and hides as a scroll ends, a resize of the height only: not measured again, or every
+  // painting would jump as the hand lets go; the height kept from the last change of width)
+  let VH = innerHeight, lastW = innerWidth;
+  addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; VH = innerHeight; later(); });
+  addEventListener("load", later);
+  new ResizeObserver(later).observe(document.body);
+  mq.addEventListener("change", set);
+  set();
+})();
+</script>
+</body>
+</html>
