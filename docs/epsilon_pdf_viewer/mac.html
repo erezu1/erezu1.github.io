@@ -179,7 +179,9 @@ p { text-wrap: pretty; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary h3 { margin: 0; font-size: 17px; }
 .faq summary .icon { width: 20px; height: 20px; flex: none; color: var(--text-2); transition: transform .2s; }
-.faq[open] summary .icon { transform: rotate(180deg); }
+.faq.on summary .icon { transform: rotate(180deg); }
+.faq summary .icon { transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+.faq { overflow: hidden; }
 .faq .ans { padding: 0 20px 18px; }
 .faq .ans > :first-child { margin-top: 0; }
 .faq pre { max-width: 100%; }
@@ -488,6 +490,24 @@ rm -rf ~/Library/WebKit/nl.uva.epsilon.pdfapp ~/Library/Caches/nl.uva.epsilon.pd
   mq.addEventListener("change", set);
   set();
 })();
+</script>
+<script>/* FAQ cards open and close with the same motion: the card's height eases between its summary's and its full one */
+for (const d of document.querySelectorAll(".faq")) {
+  const sum = d.querySelector("summary"); let anim = null;
+  if (d.open) d.classList.add("on");
+  sum.addEventListener("click", e => {
+    e.preventDefault();
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const opening = !d.classList.contains("on"), from = d.offsetHeight;
+    if (anim) anim.cancel();
+    d.classList.toggle("on", opening);
+    if (opening) d.open = true;
+    const to = opening ? d.scrollHeight : sum.offsetHeight;
+    if (reduce) { if (!opening) d.open = false; return; }
+    anim = d.animate({height: [from + "px", to + "px"]}, {duration: 300, easing: "cubic-bezier(.2,.7,.2,1)"});
+    anim.onfinish = () => { anim = null; if (!opening) d.open = false; };
+  });
+}
 </script>
 </body>
 </html>
