@@ -430,8 +430,6 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     the app that opens <code>.tex</code> files, or the one chosen in Settings &rsaquo; LaTeX: Sublime Text, VS Code,
     Cursor, VSCodium, Zed, TextMate, BBEdit or a command of your own. From the editor back to the PDF, the editor runs
     <code>displayline</code>, with Skim's arguments: the PDF scrolls to the line and marks it in blue.</p>
-    <p>Inside beamer frames and <code>align</code>, <code>gather</code>, <code>multline</code> or <code>split</code>,
-    SyncTeX files the first lines under the last, so a line near the start can land just before it. Skim does the same.</p>
     <h3>Set up your editor</h3>
     <p>Your editor finds the line in the PDF through <code>displayline</code>, inside the app; <code style="white-space:nowrap">-g</code>
     keeps the PDF behind the editor. Build with <code>latexmk -pdf -synctex=1</code>, or your editor's own build, which
