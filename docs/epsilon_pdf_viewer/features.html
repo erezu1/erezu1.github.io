@@ -299,7 +299,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
   <a class="btn btn-sm" data-get="both" href="./#get">Get Epsilon</a>
 </header>
 
-<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w, assets/paintings/prism-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/prism-800.webp 800w, assets/paintings/prism-1200.webp 1200w, assets/paintings/prism-1536.webp 1536w, assets/paintings/prism-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/prism-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Features</h1><p class="date">Version 1.4.6, November 2026</p></div></header>
+<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w, assets/paintings/prism-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/prism-800.webp 800w, assets/paintings/prism-1200.webp 1200w, assets/paintings/prism-1536.webp 1536w, assets/paintings/prism-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/prism-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Features</h1><p class="date">Version 1.4.7, November 2026</p></div></header>
 <main id="main" class="feats">
   <div class="plat-filter" role="group" aria-label="Show the features of">
     <div class="seg"><button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="chrome" aria-pressed="false">Chrome extension</button><button type="button" data-f="mac" aria-pressed="false">Mac app</button></div>
@@ -325,8 +325,8 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
   <section class="cat" id="peek" aria-labelledby="h-peek">
     <h2 id="h-peek">Peek</h2>
     <ul class="list">
-      <li><h3>Open</h3><p><kbd>⌘</kbd> + click a link, or right-click it and choose "Open in peek", to show its target in a panel at the bottom while the page above stays where it is.</p></li>
-      <li><h3>Target mark</h3><p>The target is marked: an equation with its number, a figure or table with its caption; a figure is shown whole.</p></li>
+      <li><h3>Open <span class="badge">New in 1.4.7</span></h3><p>Click a link, or right-click it and choose "Open in peek", to show its target in a panel at the bottom while the page above stays where it is. <kbd>⌘</kbd> + click goes to the target instead. The Peek on click setting swaps the two.</p></li>
+      <li><h3>Target mark</h3><p>The target is marked: an equation with its number, a figure or table with its caption; a figure is shown whole; a footnote, its number and its lines.</p></li>
       <li><h3>Zoom</h3><p>The peek opens at the page's zoom; its own − and + buttons, pinch, or <kbd>⌘</kbd> <kbd>+</kbd>/<kbd>−</kbd> with the pointer over it zoom the peek alone, and <kbd>⌘</kbd> <kbd>0</kbd> returns it to the page's zoom.</p></li>
       <li><h3>Resize and expand</h3><p>Drag its top edge to resize it; drag it up to the toolbar, or click Expand, to move the main view to the target and close the peek (Back returns).</p></li>
       <li><h3>Links in the peek</h3><p>A click moves the peek to the link's target; <kbd>⌘</kbd> + click opens the target in the main view.</p></li>
@@ -339,10 +339,11 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <li><h3>Select by formula</h3><p>In a formula a selection takes whole elements, e.g. a fraction or bracket entered from outside, and what is highlighted is what is copied; "Select as text" in the ⋮ menu switches to Chrome's own selection.</p></li>
       <li><h3>Copy as LaTeX</h3><p><kbd>⌘</kbd> <kbd>C</kbd> copies inline formulas as <code>$…$</code>, displayed equations as <code>\[…\]</code>, and part of a formula as the TeX of that part.</p></li>
       <li><h3>Copied TeX</h3><p>Symbols copy as their commands, e.g. α as <code>\alpha</code>, matrices and cases as environments, and text inside formulas as <code>\text{…}</code>.</p></li>
-      <li><h3>Copy as Mathematica <span class="badge">New in 1.4.6</span></h3><p><span class="mac"><kbd>Ctrl</kbd> <kbd>⌘</kbd> <kbd>C</kbd></span><span class="pc"><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>C</kbd></span>, or "Copy as Mathematica" in the right-click menu, copies the selected formula, or the one under the pointer, as Mathematica input; an ordinary copy where it cannot convert.</p></li>
+      <li><h3>Copy as Mathematica</h3><p><span class="mac"><kbd>Ctrl</kbd> <kbd>⌘</kbd> <kbd>C</kbd></span><span class="pc"><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>C</kbd></span>, or "Copy as Mathematica" in the right-click menu, copies the selected formula, or the one under the pointer, as Mathematica input; an ordinary copy where it cannot convert.</p></li>
       <li><h3>Keyboard</h3><p>With a selection, <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> extends it by one element (a letter with its scripts, a whole fraction), <span class="mac"><kbd>⌥</kbd></span><span class="pc"><kbd>Ctrl</kbd></span> <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> by a word, and <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> by a line.</p></li>
       <li><h3>Triple click</h3><p>Selects the sentence, across lines; on a displayed formula, the whole formula with all its rows, without its number.</p></li>
       <li><h3>Submatrix</h3><p>Drag from one matrix entry to another to select the block between them, copied as <code>\begin{matrix}…\end{matrix}</code>.</p></li>
+      <li><h3>Table block <span class="badge">New in 1.4.7</span></h3><p>Drag from one cell of a table to another to select the block of cells between them, copied as <code>\begin{tabular}…\end{tabular}</code>.</p></li>
       <li><h3>Scanned papers</h3><p>A scan with a text layer (OCR) can be selected and copied, also when the scan is tilted.</p></li>
     </ul>
   </section>
@@ -351,7 +352,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     <h2 id="h-links">Links</h2>
     <ul class="list">
       <li><h3>Generated links</h3><p>In a PDF without internal links, references to sections, equations, figures, tables, theorems, footnotes and citations, and table of contents entries, become links; a PDF with its own links is left as it is.</p></li>
-      <li><h3>Link tooltip</h3><p>Hovering a link shows its target and the key to peek it, e.g. "Eq. (2.3) (page 12) · ⌘+click to peek".</p></li>
+      <li><h3>Link tooltip</h3><p>Hovering a link shows its target and the key to go there, e.g. "Eq. (2.3) (page 12) · ⌘+click to go there"; with Peek on click off, the key to peek.</p></li>
     </ul>
   </section>
 
@@ -361,7 +362,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <li><h3>Outline on hover</h3><p>Hovering the sidebar button shows the outline over the page; a click docks it beside the page.</p></li>
       <li><h3>Generated outline</h3><p>A PDF without an outline gets one from its numbered headings (chapters for books), with TeX in titles typeset, e.g. <code>\alpha'</code> as α′.</p></li>
       <li><h3>Remembered state</h3><p>Each PDF reopens at the last position read, with the sidebar open or closed as left.</p></li>
-      <li><h3>Navigate in viewer <span class="badge">New in 1.4.6</span></h3><p>An option in the ⋮ menu, off by default: jumps from links, the outline and search go into the viewer's own history, with Back and Forward buttons left of the search and <span class="mac"><kbd>⌘</kbd> <kbd>[</kbd>/<kbd>]</kbd></span><span class="pc"><kbd>Alt</kbd> + <kbd>←</kbd>/<kbd>→</kbd></span>, and Chrome's Back leaves the PDF. In the Mac app it is always on.</p></li>
+      <li><h3>Navigate in viewer</h3><p>An option in the ⋮ menu, off by default: jumps from links, the outline and search go into the viewer's own history, with Back and Forward buttons left of the search and <span class="mac"><kbd>⌘</kbd> <kbd>[</kbd>/<kbd>]</kbd></span><span class="pc"><kbd>Alt</kbd> + <kbd>←</kbd>/<kbd>→</kbd></span>, and Chrome's Back leaves the PDF. In the Mac app it is always on.</p></li>
     </ul>
   </section>
 
@@ -387,6 +388,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     <ul class="list">
       <li><h3>Look and theme</h3><p>Look: Epsilon's or Chrome's; Theme: light, dark, or as the system is set.</p></li>
       <li><h3>Link borders</h3><p>Off by default; on, it draws the colored boxes some PDFs put around their links.</p></li>
+      <li><h3>Peek on click <span class="badge">New in 1.4.7</span></h3><p>On by default: a click on a link opens its target in the peek, and <kbd>⌘</kbd> + click goes there. Off, a click goes to the target and <kbd>⌘</kbd> + click peeks.</p></li>
       <li data-plat="chrome"><h3>Sync <span class="badge plat">Chrome</span></h3><p>With Chrome Sync on, settings are copied to your other computers.</p></li>
     </ul>
   </section>

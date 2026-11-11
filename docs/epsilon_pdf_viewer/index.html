@@ -222,7 +222,6 @@ kbd {
 .tour .peek-panel { z-index: 3; }
 .tour .ibeam { height: 2.4cqw; min-height: 12px; margin: -1.2cqw 0 0 -5.5px; }
 .tour .stage .chip { font-size: clamp(9px, 1.1cqw, 15px); z-index: 4; }
-.t-peek { left: 53.2%; top: 22.6%; }
 .t-copy { left: 75%; top: 21.8%; }
 .tclip {
   position: absolute; z-index: 4; text-align: left; left: 50.5%; top: 32%; width: 38%; padding: 1cqw 1.2cqw 1.1cqw; border-radius: 0.9cqw;
@@ -349,7 +348,7 @@ kbd {
   .find-demo .zoom { -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 84%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 84%, transparent); }
 }
 
-/* peek: the reading view, the pointer and the key; a click on (2.8), and the peek comes up from the foot */
+/* peek: the reading view and the pointer; a click on (2.8), and the peek comes up from the foot */
 .shot { position: relative; overflow: hidden; container-type: inline-size; isolation: isolate; }
 .shot > img { width: 100%; height: 100%; }
 .peek-panel {
@@ -385,7 +384,6 @@ kbd {
 .chip kbd { font-size: 1.05em; background: var(--bg-2); box-shadow: none; height: 1.9em; min-width: 1.9em; border-radius: 8px; transition: transform 100ms, background 100ms; }
 .chip.on { opacity: 1; transform: none; }
 .chip.press kbd { transform: translateY(1px) scale(0.94); background: var(--tonal); color: var(--on-tonal); }
-.peek-chip { left: 49%; top: 37.6%; }
 .keys { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; margin-top: 26px; color: var(--text-2); font-size: 15px; }
 .keys span { display: inline-flex; align-items: center; gap: 8px; }
 
@@ -717,7 +715,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
         <a class="link" data-get="chrome" href="#search">See what it does <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-down"/></svg></a>
       </div></div>
       <div class="scene hero-scene">
-        <figure class="plane window tour" id="tour" style="margin:0" role="img" aria-label="One reading session in Epsilon on a physics paper: a click on section 3.5 in the outline jumps there; \phi_r typed in the find bar marks every φ_r on the page; a Cmd+click on the reference (2.8) brings up a peek of that equation from below; a drag into equation (3.31) selects the whole bracket, Cmd+C copies it as LaTeX; and Back returns to where the reading started.">
+        <figure class="plane window tour" id="tour" style="margin:0" role="img" aria-label="One reading session in Epsilon on a physics paper: a click on section 3.5 in the outline jumps there; \phi_r typed in the find bar marks every φ_r on the page; a click on the reference (2.8) brings up a peek of that equation from below; a drag into equation (3.31) selects the whole bracket, Cmd+C copies it as LaTeX; and Back returns to where the reading started.">
           <div class="shot" aria-hidden="true"><div class="stage">
             <picture><img class="vw" src="assets/navin-a.webp" srcset="assets/navin-a-960.webp 960w, assets/navin-a.webp 1920w" sizes="(max-width: 600px) 100vw, 1120px" width="1920" height="1200" fetchpriority="high" decoding="async" alt=""></picture>
             <picture><img class="vw fr" data-k="v" src="assets/tour-v.webp" srcset="assets/tour-v-960.webp 960w, assets/tour-v.webp 1920w" sizes="(max-width: 600px) 100vw, 1120px" width="1920" height="1200" decoding="async" alt=""></picture>
@@ -728,7 +726,6 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
             <div class="layer sel"></div>
             <div class="peek-panel"><img src="assets/tour-peek.webp" srcset="assets/tour-peek-770.webp 770w, assets/tour-peek.webp 1539w" sizes="(max-width: 600px) 120vw, 900px" width="1539" height="535" decoding="async" alt=""><div class="pk-body"><img src="assets/tour-peek-strip.webp" srcset="assets/tour-peek-strip-770.webp 770w, assets/tour-peek-strip.webp 1539w" sizes="(max-width: 600px) 120vw, 900px" width="1539" height="865" decoding="async" alt=""></div></div>
             <svg class="ibeam" viewBox="0 0 11 24"><path d="M1.5 1.5c2 0 3 .6 4 1.6 1-1 2-1.6 4-1.6M5.5 3.1v17.8M1.5 22.5c2 0 3-.6 4-1.6 1 1 2 1.6 4 1.6M3 12h5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M1.5 1.5c2 0 3 .6 4 1.6 1-1 2-1.6 4-1.6M5.5 3.1v17.8M1.5 22.5c2 0 3-.6 4-1.6 1 1 2 1.6 4 1.6M3 12h5" fill="none" stroke="#111" stroke-width="1.2" stroke-linecap="round"/></svg>
-            <span class="chip t-peek"><kbd>⌘</kbd>+ click</span>
             <span class="chip t-copy"><kbd>⌘</kbd><kbd>C</kbd></span>
             <div class="tclip"><div class="clip-head"><svg class="icon"><use href="#i-check"/></svg>Copied as LaTeX</div><pre>\left(\{e^{i\theta },\tau \}+\frac{1}{2}(1-\frac{1}{n^{2}})R(\theta )\right)</pre></div>
           </div></div>
@@ -771,17 +768,16 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <div class="copy center reveal">
         <h2 id="f2"><a class="h-link" href="features#peek">Peek at any link without losing your place.</a></h2>
         <p>A link to an equation, figure, section or citation opens in a panel below, its target marked. Your page stays where it is.</p>
-        <p class="keys"><span><kbd>⌘</kbd> + click a link to peek</span></p>
+        <p class="keys"><span>Click a link to peek</span><span><kbd>⌘</kbd> + click to go there</span></p>
       </div>
       <div class="scene">
         <figure class="plane window" style="margin:0">
-          <div class="shot" id="peek-demo" role="img" aria-label="Reading page 20 of a paper: a Cmd+click on the link (2.8), and a panel comes up from below showing equation (2.8) on page 16, marked in blue, while page 20 stays where it was.">
+          <div class="shot" id="peek-demo" role="img" aria-label="Reading page 20 of a paper: a click on the link (2.8), and a panel comes up from below showing equation (2.8) on page 16, marked in blue, while page 20 stays where it was.">
             <img src="assets/peek-base.webp" srcset="assets/peek-base-960.webp 960w, assets/peek-base.webp 1920w" sizes="(max-width: 700px) 92vw, 1120px"
               width="1920" height="1200" loading="lazy" decoding="async" alt="">
             <div class="peek-panel" aria-hidden="true"><img src="assets/peek-panel.webp" srcset="assets/peek-panel-770.webp 770w, assets/peek-panel.webp 1539w" sizes="(max-width: 700px) 74vw, 900px" width="1539" height="535" loading="lazy" decoding="async" alt=""><div class="pk-body"><img src="assets/peek-strip.webp" srcset="assets/peek-strip-770.webp 770w, assets/peek-strip.webp 1539w" sizes="(max-width: 700px) 74vw, 900px" width="1539" height="865" loading="lazy" decoding="async" alt=""></div></div>
             <span class="ripple" aria-hidden="true"></span>
             <svg class="pointer" viewBox="0 0 24 28" aria-hidden="true"><path d="M3 2 L3 22 L8.5 17 L12 25.5 L15.5 24 L12 15.8 L19.5 15.8 Z" fill="#1f1f1f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
-            <span class="chip peek-chip" aria-hidden="true"><kbd>⌘</kbd>+ click</span>
           </div>
         </figure>
       </div>
@@ -966,17 +962,17 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     <div class="wrap news">
       <div class="copy reveal">
         <p class="num">What's new</p>
-        <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Copy any formula into Mathematica.</h2>
-        <p class="ver">Version 1.4.6</p>
+        <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Click a reference to peek at it.</h2>
+        <p class="ver">Version 1.4.7</p>
         <a class="link news-all" href="releases">All release notes <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a>
       </div>
       <ul>
-        <li>New in 1.4.6: copy a formula as Mathematica input, from the right-click menu or <span class="mac">Ctrl+⌘+C</span><span class="pc">Ctrl+Alt+C</span>; a selection with several formulas copies each one, a line apiece.</li>
-        <li>Navigate in viewer, an option in the ⋮ menu: links, the outline and search keep their jumps in the viewer, with its own Back and Forward. Scripts, limits and fractions in text read right in more papers.</li>
+        <li>New in 1.4.7: a click on a reference opens it in the peek, and <span class="mac">⌘+click</span><span class="pc">Ctrl+click</span> goes there; "Peek on click" in Settings switches back. Drag across a table's cells to copy the block as a LaTeX tabular.</li>
+        <li>Footnotes open marked exactly, REVTeX tables and outlines read right, and search marks only the matching formula. In 1.4.6, copy a formula as Mathematica input, and Navigate in viewer.</li>
         <li>In 1.4.5, fraction bars, roots and overlines read by the fonts' own layout rules, about 20% fewer equations missed. APS journals and matplotlib figure labels read as they are set, and equations with words in them read whole.</li>
         <li>Accents and bars over letters read right in more fonts, and accented words copy as they read (Kähler). Books get their chapters in the outline, and a figure link opens with the whole figure in view.</li>
         <li>In 1.4.4, text selects as in Chrome, and Epsilon steps in only at formulas. Displays with words read whole, and older plain TeX papers read better.</li>
-        <li>In 1.4.3, papers without links get them: sections, equations, figures, citations and the contents. Click to go there, Cmd or Ctrl+click to peek.</li>
+        <li>In 1.4.3, papers without links get them: sections, equations, figures, citations and the contents.</li>
         <li>Cases, wide accents and integral limits read right, so almost every copy compiles. Earlier, in 1.4.2: copy part of a matrix, and every standard symbol read as its LaTeX command.</li>
       </ul>
     </div>
@@ -1059,7 +1055,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
   };
 
   // 0. the hero: one session, round and round. The outline's 3.5 Entropy clicked (the page jumps there); \phi_r typed
-  //    (the find bar as it was at each key, the marks the extension drew); a Cmd+click on (2.8), the peek up and away;
+  //    (the find bar as it was at each key, the marks the extension drew); a click on (2.8), the peek up and away;
   //    a drag into (3.31), the boxes as drawn, Cmd+C and what was copied; the viewer's own Back (Navigate in viewer
   //    on, its Back and Forward left of the search), to the start. All recorded in one session of the extension on
   //    1911.12333 at 105%, in % of its 1280x800 view.
@@ -1068,7 +1064,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     const V = $('.fr[data-k="v"]', el), strips = $(".strips", el), strip = [...strips.children];
     const fl = $(".layer.find", el), sl = $(".layer.sel", el);
     const ptr = $(".pointer", el), rip = $(".ripple", el), beam = $(".ibeam", el);
-    const cPeek = $(".t-peek", el), cCopy = $(".t-copy", el), card = $(".tclip", el), pre = $(".tclip pre", el);
+    const cCopy = $(".t-copy", el), card = $(".tclip", el), pre = $(".tclip pre", el);
     const pk = $(".pk-body", el), pkStrip = $(".pk-body img", el);
     const steps = [...document.querySelectorAll(".tour-steps li")];
     pre.innerHTML = pre.textContent.replace(/[&<>]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"})[c])
@@ -1106,12 +1102,12 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     const w = ms => Promise.race([sleep(ms), cutP]);
     const wGlide = (...a) => Promise.race([glide(...a), cutP]);
     const clean = k => {   // the window as it is when step k begins
-      const all = [ptr, rip, beam, V, strips, fl, sl, pk, cPeek, cCopy, card, ...strip];
+      const all = [ptr, rip, beam, V, strips, fl, sl, pk, cCopy, card, ...strip];
       all.forEach(x => x.style.transition = "none");
       ptr.classList.remove("on", "down"); rip.classList.remove("go"); beam.classList.remove("on");
       strips.classList.remove("on"); strip.forEach(im => im.classList.remove("on")); fl.innerHTML = ""; fl.classList.remove("out");
       sl.innerHTML = ""; sl.classList.remove("out"); shown = -1; pk.classList.remove("on"); pkStrip.style.transform = "";
-      el.classList.remove("peeking"); cPeek.classList.remove("on", "press"); cCopy.classList.remove("on", "press"); card.classList.remove("on");
+      el.classList.remove("peeking"); cCopy.classList.remove("on", "press"); card.classList.remove("on");
       V.classList.toggle("on", k > 0); go(fig(REST), false); label(ORDER[k]);
       void el.offsetWidth; all.forEach(x => x.style.transition = "");
     };
@@ -1128,9 +1124,9 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
         strips.classList.remove("on"); fl.classList.add("out"); await w(400); fl.innerHTML = ""; fl.classList.remove("out");
       }
       if (k <= 2) {   // peek
-        label("peek"); go(fig(LINK)); await w(1000);
-        cPeek.classList.add("on"); await w(450); cPeek.classList.add("press"); await click(fig(LINK));
-        el.classList.add("peeking"); await w(450); cPeek.classList.remove("on", "press"); ptr.classList.remove("on");
+        label("peek"); go(fig(LINK)); await w(1450);
+        await click(fig(LINK));
+        el.classList.add("peeking"); await w(450); ptr.classList.remove("on");
         await w(600); pk.classList.add("on"); await w(400);
         await wGlide(pkStrip, 0, PEEK_DOWN, 1400); await w(300); await wGlide(pkStrip, PEEK_DOWN, 0, 1400); await w(300);
         el.classList.remove("peeking"); await w(700); pk.classList.remove("on"); pkStrip.style.transform = "";
@@ -1189,32 +1185,31 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     }, () => show(Q.length));
   }
 
-  // 2. peek: the pointer to (2.8), Cmd+click, the panel up from the foot; read in (its body scrolled down and back);
+  // 2. peek: the pointer to (2.8), a click, the panel up from the foot; read in (its body scrolled down and back);
   //    and down again
   {
     const el = $("#peek-demo");
-    const ptr = $(".pointer", el), rip = $(".ripple", el), chip = $(".peek-chip", el), pk = $(".pk-body", el), strip = $(".pk-body img", el);
+    const ptr = $(".pointer", el), rip = $(".ripple", el), pk = $(".pk-body", el), strip = $(".pk-body img", el);
     loop(el, async () => {
-      el.classList.remove("peeking"); ptr.className.baseVal = "pointer"; chip.className = "chip peek-chip";
+      el.classList.remove("peeking"); ptr.className.baseVal = "pointer";
       pk.classList.remove("on"); strip.style.transform = "";
       await sleep(700);
       ptr.classList.add("on"); await sleep(250);
-      ptr.classList.add("at"); await sleep(1150);
-      chip.classList.add("on"); await sleep(650);
-      chip.classList.add("press"); ptr.classList.add("down");
+      ptr.classList.add("at"); await sleep(1800);
+      ptr.classList.add("down");
       rip.classList.remove("go"); void rip.offsetWidth; rip.classList.add("go");
       await sleep(160);
       ptr.classList.remove("down");
       el.classList.add("peeking");
       await sleep(500);
-      chip.classList.remove("on", "press"); ptr.classList.remove("on");
+      ptr.classList.remove("on");
       await sleep(1100);
       pk.classList.add("on"); await sleep(500);                 // (the target's mark gone, as it goes)
       await glide(strip, 0, PEEK_DOWN, 1800); await sleep(800);
       await glide(strip, PEEK_DOWN, 0, 1800); await sleep(600);
       el.classList.remove("peeking");
       await sleep(1300);
-    }, () => { el.classList.add("peeking"); ptr.classList.add("on", "at"); chip.classList.add("on"); });
+    }, () => { el.classList.add("peeking"); ptr.classList.add("on", "at"); });
   }
 
   // 3. copy: a press just left of the { of {e^{i\theta},\tau} in (3.31), a drag to the right: the selection the
