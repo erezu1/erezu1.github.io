@@ -13,6 +13,21 @@
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Epsilon PDF for Mac</title>
+<style>html:not(.pc) .pc, html.pc .mac { display: none; }
+html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([data-get~=mac]), html.get-chrome [data-get]:not([data-get~=chrome]) { display: none !important; }
+@media (max-width: 600px) { .nav .links a[href="mac"] { display: none; } .nav .btn-sm .long { display: none; } }</style>
+<script>/* the platform: .pc writes keys as Ctrl; get-both (a Mac with Chrome or another Chromium browser), get-mac (a Mac
+   with Safari or Firefox) or get-chrome (anything else) choose how the page offers Epsilon. ?as=mac-chrome, mac-safari
+   or win-chrome previews one (kept for the visit) */
+(function () {
+  var d = document.documentElement, u = navigator.userAgent, as = null, q = /[?&]as=([a-z-]+)/.exec(location.search);
+  try { if (q) sessionStorage.epsAs = q[1]; as = sessionStorage.epsAs || null; } catch (e) {}
+  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), chromium = /Chrome\/\d/.test(u) && !/Mobile|Android/.test(u),
+      pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
+  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); pc = /^win/.test(as); }
+  if (pc) d.classList.add("pc");
+  d.classList.add(mac ? (chromium ? "get-both" : "get-mac") : "get-chrome");
+})();</script>
 <meta name="description" content="Epsilon PDF for Mac: the Epsilon PDF viewer as a Mac app for local PDFs, with reload on recompile and SyncTeX for LaTeX. How to install it, set it as your PDF app, and what it keeps.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
@@ -137,7 +152,12 @@ p { text-wrap: pretty; }
   background: color-mix(in srgb, var(--bg) 78%, transparent);
   -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
   box-shadow: var(--shadow);
+  transition: opacity 260ms ease, transform 360ms var(--ease), visibility 0s;
 }
+/* the bar away while the hero's name and its Add to Chrome are in view; in once they scroll past */
+.nav.away { opacity: 0; transform: translate(-50%, -18px); visibility: hidden; pointer-events: none;
+  transition: opacity 200ms ease, transform 300ms var(--ease), visibility 0s 300ms; }
+@media (prefers-reduced-motion: reduce) { .nav, .nav.away { transform: translateX(-50%); } }
 .nav .brand { flex: none; display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 15px; text-decoration: none; padding-right: 8px; border-radius: 999px; }
 .nav .brand .eps { width: 18px; height: 24px; }
 .nav .links { display: flex; align-items: center; gap: 1px; }
@@ -173,6 +193,15 @@ p { text-wrap: pretty; }
 .summary li { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; font-size: 16px; line-height: 1.45; }
 .summary li + li { border-top: 1px solid var(--hair); }
 .get { margin: 28px 0 4px; text-align: center; }
+.app-shot { position: relative; z-index: 1; left: 50%; translate: -50% 0; width: min(1040px, calc(100vw - 2 * var(--gutter))); margin: calc(-1 * clamp(40px, 7vh, 72px) - clamp(20px, 3vw, 40px)) 0 clamp(36px, 5vw, 56px); }
+main.policy > .summary:first-child { margin-top: 0; }
+.req { margin-top: 12px; text-align: center; font-size: 14px; color: var(--text-2); }
+#install, .faq { scroll-margin-top: 90px; }
+.app-shot img { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.18), 0 2px 6px rgb(0 0 0 / 0.08), 0 30px 80px -28px rgb(0 0 0 / 0.45); }
+@media (max-width: 600px) { .app-shot img { border-radius: 8px; } }
+.started, .elsewhere { margin-top: 20px; padding: 14px 18px; border-radius: 14px; background: var(--tonal); color: var(--on-tonal); font-size: 15.5px; line-height: 1.5; text-align: center; }
+.started .link, .elsewhere .link { color: inherit; }
+.summary kbd { font-size: 0.85em; }
 .faq { margin-top: 12px; border-radius: 16px; background: var(--surface); box-shadow: 0 0 0 1px var(--hair); }
 .faq:first-of-type { margin-top: 20px; }
 .faq summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; cursor: pointer; list-style: none; }
@@ -258,6 +287,27 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 .hero h1::before, .final h2::before, .page-band .band-in::before, .privacy-box h2::before { content: ""; position: absolute; z-index: -1;
   inset: -30% -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.32), rgb(0 0 0 / 0.16) 55%, rgb(0 0 0 / 0));
   filter: blur(24px); pointer-events: none; }
+
+/* the top, as the home page's hero: the painting behind the name, the line and Download, and the app over its lower edge */
+.mac-hero { position: relative; isolation: isolate; overflow-x: clip; text-align: center; padding: clamp(96px, 14vh, 140px) var(--gutter) 0;
+  --shot: calc(min(1040px, 100vw - 2 * var(--gutter)) * 0.625); }
+.mac-hero .art-band { height: calc(100% - var(--shot) * 0.55); background: rgb(70 92 110); --scrim: 10 22 40; }
+.mac-hero .art-band img { object-position: 50% 40%; }
+.eps-name { display: inline-grid; grid-template-columns: auto auto; column-gap: 0.43em; align-items: start; text-align: left;
+  font: 600 40px/1.1 var(--ui); letter-spacing: -0.012em; color: var(--text); }
+.eps-name .eps-e { width: 1.67em; height: 2.3em; margin-top: 0.1em; fill: currentColor; }
+.eps-name .eps-sub { font-size: 0.45em; font-weight: 400; line-height: 1.3; letter-spacing: 0; color: var(--text-2); margin-top: 0.3em; }
+.hero-name { font-size: clamp(30px, 3.4vw, 40px); margin: 0 auto clamp(28px, min(7vh, 5vw), 72px); }
+.mac-hero h1 { font-size: clamp(40px, 6vw, 80px); line-height: 1.0; max-width: 14ch; margin-inline: auto; }
+.mac-hero .cta-row { display: flex; justify-content: center; margin-top: 36px; }
+.mac-hero .req { margin-top: 14px; color: var(--text); text-shadow: 0 1px 2px rgb(0 0 0 / 0.45), 0 2px 18px rgb(0 0 0 / 0.5); }
+.mac-hero h1, .mac-hero .hero-name, .mac-hero .cta-row { position: relative; }
+.mac-hero h1::before, .mac-hero .hero-name::before, .mac-hero .cta-row::before { content: ""; position: absolute; z-index: -1;
+  inset: -30% -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.32), rgb(0 0 0 / 0.16) 55%, rgb(0 0 0 / 0));
+  filter: blur(24px); pointer-events: none; }
+.mac-hero .app-shot { margin: clamp(48px, 6vw, 80px) 0 0; }
+.mac-hero + main.policy { padding-top: clamp(40px, 6vh, 64px); }
+@media (max-width: 600px) { .mac-hero { padding-top: 88px; } .mac-hero .art-band img { object-position: 70% 40%; } }
 </style>
 </head>
 <body>
@@ -271,32 +321,47 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4.5v10.5M7.5 10.5 12 15l4.5-4.5M5.5 19h13"/></symbol>
 </svg>
 
-<header class="nav" aria-label="Site">
+<header class="nav away" aria-label="Site">
   <a class="brand" href="./" aria-label="Epsilon PDF viewer, home"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg></a>
   <nav class="links" aria-label="Sections">
     <a href="features" data-t="Features">Features</a>
     <a href="privacy" data-t="Privacy">Privacy</a>
     <a href="releases" data-t="What's new">What's new</a>
+    <a class="on" aria-current="page" href="mac" data-t="Mac">Mac</a>
   </nav>
-  <a class="btn btn-sm" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
+  <a class="btn btn-sm" href="mac?download">Download<span class="long"> for Mac</span></a>
 </header>
 
-<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w, assets/paintings/rapids-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/rapids-800.webp 800w, assets/paintings/rapids-1200.webp 1200w, assets/paintings/rapids-1536.webp 1536w, assets/paintings/rapids-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/rapids-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Epsilon for Mac</h1><p class="date">Version 1.4.6, November 2026</p></div></header>
+<header class="mac-hero">
+  <div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w, assets/paintings/rapids-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/rapids-800.webp 800w, assets/paintings/rapids-1200.webp 1200w, assets/paintings/rapids-1536.webp 1536w, assets/paintings/rapids-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/rapids-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div>
+  <div class="hero-in">
+    <div class="on-art">
+      <div class="eps-name hero-name" role="img" aria-label="Epsilon PDF viewer for Mac"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span><span></span><span class="eps-sub">for Mac</span></div>
+      <h1>The PDF reader made for writing papers.</h1>
+      <div class="cta-row"><a class="btn" href="mac/Epsilon-PDF.zip" download>Download for Mac <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a></div>
+      <p class="req">macOS 13 Ventura or later, Apple silicon or Intel</p>
+    </div>
+    <figure class="app-shot">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" type="image/avif" srcset="assets/mac-fig1-dark-800.avif 800w, assets/mac-fig1-dark-1280.avif 1280w, assets/mac-fig1-dark-2560.avif 2560w" sizes="(max-width: 1120px) calc(100vw - 32px), 1040px">
+        <source media="(prefers-color-scheme: dark)" type="image/webp" srcset="assets/mac-fig1-dark-800.webp 800w, assets/mac-fig1-dark-1280.webp 1280w, assets/mac-fig1-dark-2560.webp 2560w" sizes="(max-width: 1120px) calc(100vw - 32px), 1040px">
+        <source type="image/avif" srcset="assets/mac-fig1-light-800.avif 800w, assets/mac-fig1-light-1280.avif 1280w, assets/mac-fig1-light-2560.avif 2560w" sizes="(max-width: 1120px) calc(100vw - 32px), 1040px">
+        <img src="assets/mac-fig1-light-1280.webp" srcset="assets/mac-fig1-light-800.webp 800w, assets/mac-fig1-light-1280.webp 1280w, assets/mac-fig1-light-2560.webp 2560w" sizes="(max-width: 1120px) calc(100vw - 32px), 1040px" width="2560" height="1600" decoding="async" alt="Epsilon PDF on a Mac: page 4 of a physics paper, its Figure 1 with the caption, and the outline docked at the left.">
+      </picture>
+    </figure>
+  </div>
+</header>
 <main id="main" class="policy">
-  <p class="lede">Epsilon PDF is the Epsilon PDF viewer as a Mac app: the same formula search, copy as LaTeX or
-  Mathematica, outline and peek, for the PDFs on your Mac. It reloads a PDF in place when LaTeX writes it again,
-  and goes from the PDF to your source and back with SyncTeX.</p>
 
   <ul class="summary" aria-label="In short">
-    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>macOS 13 Ventura or later, on Apple silicon and Intel.</li>
-    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Local PDFs open from Finder, each in its own window.</li>
-    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Free, and it keeps itself up to date.</li>
+    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Free</li>
+    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Automatic updates</li>
+    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span><span><kbd>⌥</kbd>-click the PDF to go to the line in your LaTeX editor</span></li>
   </ul>
-
-  <p class="get"><a class="btn" href="mac/Epsilon-PDF.zip" download>Download for Mac <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a></p>
 
   <section aria-labelledby="install">
     <h2 id="install">Install</h2>
+    <p class="started" role="status" hidden>Your download has started. Didn't start? <a class="link" href="mac/Epsilon-PDF.zip" download>Download again</a></p>
     <ol>
       <li>Unzip the download and drag <b>Epsilon PDF</b> to your Applications folder.</li>
       <li>Open it. The app is not notarized by Apple yet, so macOS blocks its first launch once.</li>
@@ -424,7 +489,6 @@ rm -rf ~/Library/WebKit/nl.uva.epsilon.pdfapp ~/Library/Caches/nl.uva.epsilon.pd
       <a href="privacy">Privacy policy</a>
       <a href="features">Features</a>
       <a href="releases">Release notes</a>
-      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Chrome Web Store</a>
     </nav>
   </div>
 </footer>
@@ -492,6 +556,10 @@ rm -rf ~/Library/WebKit/nl.uva.epsilon.pdfapp ~/Library/Caches/nl.uva.epsilon.pd
 })();
 </script>
 <script>/* FAQ cards open and close with the same motion: the card's height eases between its summary's and its full one */
+/* a link to a question (mac#latex) opens it */
+const fromHash = () => { const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.classList.contains("faq")) { d.open = true; d.classList.add("on"); d.scrollIntoView(); } };
+addEventListener("hashchange", fromHash);
 for (const d of document.querySelectorAll(".faq")) {
   const sum = d.querySelector("summary"); let anim = null;
   if (d.open) d.classList.add("on");
@@ -508,6 +576,29 @@ for (const d of document.querySelectorAll(".faq")) {
     anim.onfinish = () => { anim = null; if (!opening) d.open = false; };
   });
 }
+fromHash(); addEventListener("load", fromHash, {once: true});
+</script>
+<script>/* from a "Download for Mac" button (mac?download): the download starts here; the page goes to Install, which says so */
+(function () {
+  if (!/[?&]download\b/.test(location.search)) return;
+  var a = document.createElement("a"); a.href = "mac/Epsilon-PDF.zip"; a.download = ""; document.body.appendChild(a); a.click(); a.remove();
+  document.querySelector(".started").hidden = false;
+  history.replaceState(null, "", location.pathname + "#install");
+  var go = function () { document.getElementById("install").scrollIntoView(); };
+  go(); addEventListener("load", go, {once: true});
+})();
+</script>
+<noscript><style>.nav.away { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%); }</style></noscript>
+<script>
+// the tab bar in once the top's Download has scrolled up past the bar's place, away again when it comes back (as the home page)
+(() => {
+  const nav = document.querySelector(".nav"), cta = document.querySelector(".mac-hero .cta-row");
+  if (!nav || !cta) { nav && nav.classList.remove("away"); return; }
+  const set = () => { const away = cta.getBoundingClientRect().bottom > 0; nav.classList.toggle("away", away); nav.inert = away; };
+  new IntersectionObserver(set, {threshold: [0, 1]}).observe(cta);
+  addEventListener("scroll", set, {passive: true});
+  set();
+})();
 </script>
 </body>
 </html>

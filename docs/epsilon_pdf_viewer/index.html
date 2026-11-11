@@ -21,7 +21,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preload" as="image" type="image/avif" imagesrcset="assets/paintings/milkyway-800.avif 800w, assets/paintings/milkyway-1200.avif 1200w, assets/paintings/milkyway-1672.avif 1672w, assets/paintings/milkyway-2048.avif 2048w, assets/paintings/milkyway-2800.avif 2800w" imagesizes="(max-width: 600px) 1010px, 119vw" fetchpriority="high">
-<link rel="preload" as="image" href="assets/nav-a.webp" imagesrcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" imagesizes="(max-width: 600px) 100vw, 1120px" fetchpriority="high">
+<link rel="preload" as="image" href="assets/navin-a.webp" imagesrcset="assets/navin-a-960.webp 960w, assets/navin-a.webp 1920w" imagesizes="(max-width: 600px) 100vw, 1120px" fetchpriority="high">
 <style>html.art-wait body{opacity:0}body{transition:opacity .3s ease-out}@media (prefers-reduced-motion: reduce){body{transition:none}}</style>
 <script>/* the page shows once its top painting is decoded (or after 3 s, or if it fails), so it never paints without it */
 document.documentElement.classList.add("art-wait");addEventListener("DOMContentLoaded",()=>{const d=document.documentElement,i=document.querySelector(".art img"),go=()=>d.classList.remove("art-wait");if(!i)return go();setTimeout(go,3000);i.decode().then(go,go);});</script>
@@ -190,6 +190,9 @@ kbd {
 .eps-name .eps-sub { font-size: 0.45em; font-weight: 400; line-height: 1.3; letter-spacing: 0; color: var(--text-2); margin-top: 0.3em; }
 .hero-name { font-size: clamp(30px, 3.4vw, 40px); margin: 0 auto clamp(28px, min(9vh, 6vw), 104px); }
 .hero h1 { font-size: clamp(42px, 6.6vw, 86px); line-height: 1.0; max-width: 16ch; margin-inline: auto; }
+.get-both .cta-row .btn, .get-mac .cta-row .btn { min-width: 232px; justify-content: center; }
+.also { position: relative; margin-top: 18px; font-size: 15px; color: var(--text-2); text-align: center; }
+.also .link { margin-left: 4px; }
 .cta-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 22px; margin-top: 36px; }
 
 /* ---- 3D staging: a scene gives depth, its plane tilts back while it comes in, lies flat at the middle of the
@@ -211,7 +214,7 @@ kbd {
 .tour .vw { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 .tour .vw.fr { opacity: 0; transition: opacity 160ms linear; }
 .tour .vw.fr.on { opacity: 1; }
-.tour .strips { position: absolute; left: 17.8125%; top: 0; width: 36.094%; height: 11.5%; z-index: 2; opacity: 0; transition: opacity 180ms linear; }
+.tour .strips { position: absolute; left: 17.8125%; top: 0; width: 41.719%; height: 11.5%; z-index: 2; opacity: 0; transition: opacity 180ms linear; }
 .tour .strips.on { opacity: 1; }
 .tour .strips img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
 .tour .strips img.on { opacity: 1; }
@@ -233,7 +236,6 @@ kbd {
 .tclip pre b { font-weight: 400; color: var(--blue-text); }
 .tour .pointer { z-index: 6; transition: left 900ms var(--ease), top 900ms var(--ease), opacity 260ms linear, transform 120ms ease-out; }
 .tour .ripple { z-index: 5; }
-.tour .back-chip { z-index: 5; }
 .tour-steps { display: flex; justify-content: center; gap: 6px; margin: 22px 0 0; padding: 0; list-style: none; }
 .tour-steps button { appearance: none; border: 0; background: none; margin: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; outline: none; font: 600 13px/1 var(--ui); color: var(--text-3); padding: 7px 12px; border-radius: 999px; transition: background 260ms var(--ease), color 260ms var(--ease); }
 /* as the bar's own links: grey on hover, the white pill when on; no click rectangle, a pill-shaped ring for the keyboard */
@@ -247,6 +249,41 @@ kbd {
   /* (the phone shows the whole window, as on a computer: the outline click and the find bar stay in view) */
   .tclip { left: 30%; width: 62%; }
 }
+
+/* the Mac app's section: a click in the PDF opens the source at its line */
+.plat { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font: 600 11.5px/1 var(--ui); letter-spacing: 0.02em; text-transform: none; color: var(--text); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.num:has(.plat)::before { display: none; }
+.copy p.go { margin-top: 22px; }
+.sync-demo { position: relative; display: grid; grid-template-columns: 1fr; gap: 0; }
+.sync-demo .win { border-radius: 12px; overflow: hidden; background: var(--surface); box-shadow: 0 0 0 0.5px var(--hair), 0 24px 60px -24px rgb(0 0 0 / 0.35); }
+.sync-demo .bar { display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; background: var(--bg-2); font: 500 12px/1 var(--ui); color: var(--text-2); }
+.sync-demo .bar i { width: 10px; height: 10px; border-radius: 50%; background: color-mix(in srgb, var(--text-2) 35%, transparent); }
+.sync-demo .bar span { margin-left: 8px; }
+.sync-demo .page { position: relative; padding: 26px 30px 30px; font: 17px/1.55 "Latin Modern Roman", "CMU Serif", Georgia, serif; color: #1d1d1f; }
+.sync-demo .page p { margin: 0; }
+.sync-demo .eq { display: flex; justify-content: center; align-items: baseline; margin: 12px 0 !important; white-space: nowrap; }
+.sync-demo .eq .no { margin-left: auto; padding-left: 12px; }
+.sync-demo .eq > .hit { margin-left: auto; padding: 2px 4px; border-radius: 4px; }
+.sync-demo .op { font-size: 1.25em; }
+.sync-demo sub, .sync-demo sup { font-size: 0.68em; }
+.sync-demo .ed { position: relative; width: 92%; margin: -18px 0 0 auto; background: #1f2023; z-index: 1; }
+.sync-demo .ed .bar { background: #2b2c30; color: #a1a1a6; }
+.sync-demo pre { margin: 0; padding: 14px 0 16px; font: 12.5px/1.75 var(--mono); color: #d7d7db; overflow: hidden; white-space: pre; }
+.sync-demo pre b { color: #ff8170; font-weight: 400; }
+.sync-demo .ln { display: inline-block; width: 3.2em; padding-right: 1.2em; text-align: right; color: #6c6c70; }
+.sync-demo .cur { display: block; }
+.sync-demo .ss { display: inline-flex; flex-direction: column; vertical-align: 0.42em; line-height: 1; margin-right: 1px; }
+.sync-demo .ss sup, .sync-demo .ss sub { position: static; line-height: 1.05; }
+.sync-demo .chip.opt { left: 0; top: 0; z-index: 4; }
+.sync-demo .pointer { --pw: 20px; left: 70%; top: 85%; z-index: 6; }
+.sync-demo .ripple { width: 44px; margin: -22px 0 0 -22px; z-index: 5; }
+.sync-demo .hit { transition: background 220ms linear; }
+.sync-demo .hit.on { background: color-mix(in srgb, var(--blue) 22%, transparent); }
+.sync-demo .ed { opacity: 0; transform: translateY(18px) scale(0.98); transition: opacity 320ms linear, transform 520ms var(--ease); }
+.sync-demo .ed.on { opacity: 1; transform: none; }
+.sync-demo .cur { transition: background 260ms linear, box-shadow 260ms linear; }
+.sync-demo .cur.on { background: rgb(255 214 10 / 0.18); box-shadow: inset 3px 0 0 #ffd60a; }
+@media (max-width: 600px) { .sync-demo .page { padding: 16px 16px 20px; font-size: 14px; } .sync-demo pre { font-size: 10.5px; } .sync-demo .ed { width: 100%; } }
 
 /* ---- feature sections ---- */
 .feature { padding-block: clamp(64px, 11vh, 120px); }
@@ -613,9 +650,21 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   inset: -30% -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / 0.32), rgb(0 0 0 / 0.16) 55%, rgb(0 0 0 / 0));
   filter: blur(24px); pointer-events: none; }
 </style>
-<style>html:not(.pc) .pc, html.pc .mac { display: none; }</style>
-<script>/* the keys as on the reader's machine: ⌘ on a Mac, an iPhone, an iPad, a phone; Ctrl on Windows, Linux, ChromeOS */
-(function () { var u = navigator.userAgent; if (/Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u)) document.documentElement.classList.add("pc"); })();</script>
+<style>html:not(.pc) .pc, html.pc .mac { display: none; }
+html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([data-get~=mac]), html.get-chrome [data-get]:not([data-get~=chrome]) { display: none !important; }
+@media (max-width: 600px) { .nav .links a[href="mac"] { display: none; } .nav .btn-sm .long { display: none; } }</style>
+<script>/* the platform: .pc writes keys as Ctrl; get-both (a Mac with Chrome or another Chromium browser), get-mac (a Mac
+   with Safari or Firefox) or get-chrome (anything else) choose how the page offers Epsilon. ?as=mac-chrome, mac-safari
+   or win-chrome previews one (kept for the visit) */
+(function () {
+  var d = document.documentElement, u = navigator.userAgent, as = null, q = /[?&]as=([a-z-]+)/.exec(location.search);
+  try { if (q) sessionStorage.epsAs = q[1]; as = sessionStorage.epsAs || null; } catch (e) {}
+  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), chromium = /Chrome\/\d/.test(u) && !/Mobile|Android/.test(u),
+      pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
+  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); pc = /^win/.test(as); }
+  if (pc) d.classList.add("pc");
+  d.classList.add(mac ? (chromium ? "get-both" : "get-mac") : "get-chrome");
+})();</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -625,6 +674,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <symbol id="eps" viewBox="119.5 125 274 274"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="m5.5 12.5 4.2 4.2 8.8-9.2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4.5v10.5M7.5 10.5 12 15l4.5-4.5M5.5 19h13"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
   <symbol id="i-file" viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h3.8l2 2h7.2a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></symbol>
@@ -645,8 +695,11 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <a href="#search" data-t="Features" data-spy="search peek copy navigation journals more">Features</a>
     <a href="#privacy" data-t="Privacy" data-spy="privacy">Privacy</a>
     <a href="#new" data-t="What's new" data-spy="new">What's new</a>
+    <a href="mac" data-t="Mac">Mac</a>
   </nav>
-  <a class="btn btn-sm" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome</a>
+  <a class="btn btn-sm" data-get="chrome" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome</a>
+  <a class="btn btn-sm" data-get="mac" href="mac?download">Download<span class="long"> for Mac</span></a>
+  <a class="btn btn-sm" data-get="both" href="#get">Get Epsilon</a>
 </header>
 
 <main id="main">
@@ -655,19 +708,21 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <section class="hero" id="top" aria-labelledby="hero-title">
     <div class="art-band" data-speed="0.3" data-far><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/milkyway-800.avif 800w, assets/paintings/milkyway-1200.avif 1200w, assets/paintings/milkyway-1672.avif 1672w, assets/paintings/milkyway-2048.avif 2048w, assets/paintings/milkyway-2800.avif 2800w" sizes="(max-width: 600px) 1010px, 119vw"><source type="image/webp" srcset="assets/paintings/milkyway-800.webp 800w, assets/paintings/milkyway-1200.webp 1200w, assets/paintings/milkyway-1672.webp 1672w, assets/paintings/milkyway-2048.webp 2048w" sizes="(max-width: 600px) 1010px, 119vw"><img src="assets/paintings/milkyway-1200.webp" width="1672" height="942" alt="" decoding="async" fetchpriority="high"></picture></div>
     <div class="wrap">
-      <div class="on-art" style="display:contents"><div class="eps-name hero-name" role="img" aria-label="Epsilon PDF viewer for Chrome"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span><span></span><span class="eps-sub">for Chrome</span></div>
+      <div class="on-art" style="display:contents"><div class="eps-name hero-name" role="img" aria-label="Epsilon PDF viewer"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span><span></span><span class="eps-sub"><span data-get="chrome">for Chrome</span><span data-get="both">for Chrome and Mac</span><span data-get="mac">for Mac</span></span></div>
       <h1 id="hero-title">The PDF reader made for scientific papers.</h1>
       <div class="cta-row">
-        <a class="btn" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <a class="link" href="#search">See what it does <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-down"/></svg></a>
+        <a class="btn" data-get="chrome both" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn" data-get="mac both" href="mac?download">Download for Mac <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a>
+        <a class="link" data-get="mac" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Also for Chrome</a>
+        <a class="link" data-get="chrome" href="#search">See what it does <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-down"/></svg></a>
       </div></div>
       <div class="scene hero-scene">
         <figure class="plane window tour" id="tour" style="margin:0" role="img" aria-label="One reading session in Epsilon on a physics paper: a click on section 3.5 in the outline jumps there; \phi_r typed in the find bar marks every φ_r on the page; a Cmd+click on the reference (2.8) brings up a peek of that equation from below; a drag into equation (3.31) selects the whole bracket, Cmd+C copies it as LaTeX; and Back returns to where the reading started.">
           <div class="shot" aria-hidden="true"><div class="stage">
-            <picture><img class="vw" src="assets/nav-a.webp" srcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" sizes="(max-width: 600px) 100vw, 1120px" width="1920" height="1200" fetchpriority="high" decoding="async" alt=""></picture>
+            <picture><img class="vw" src="assets/navin-a.webp" srcset="assets/navin-a-960.webp 960w, assets/navin-a.webp 1920w" sizes="(max-width: 600px) 100vw, 1120px" width="1920" height="1200" fetchpriority="high" decoding="async" alt=""></picture>
             <picture><img class="vw fr" data-k="v" src="assets/tour-v.webp" srcset="assets/tour-v-960.webp 960w, assets/tour-v.webp 1920w" sizes="(max-width: 600px) 100vw, 1120px" width="1920" height="1200" decoding="async" alt=""></picture>
             <div class="strips">
-              <img data-i="0" src="assets/tour-find0.webp" width="693" height="138" alt=""><img data-i="1" src="assets/tour-find1.webp" width="693" height="138" alt=""><img data-i="2" src="assets/tour-find2.webp" width="693" height="138" alt=""><img data-i="3" src="assets/tour-find3.webp" width="693" height="138" alt=""><img data-i="4" src="assets/tour-find4.webp" width="693" height="138" alt=""><img data-i="5" src="assets/tour-find5.webp" width="693" height="138" alt=""><img data-i="6" src="assets/tour-find6.webp" width="693" height="138" alt="">
+              <img data-i="0" src="assets/tour-find0.webp" width="801" height="138" alt=""><img data-i="1" src="assets/tour-find1.webp" width="801" height="138" alt=""><img data-i="2" src="assets/tour-find2.webp" width="801" height="138" alt=""><img data-i="3" src="assets/tour-find3.webp" width="801" height="138" alt=""><img data-i="4" src="assets/tour-find4.webp" width="801" height="138" alt=""><img data-i="5" src="assets/tour-find5.webp" width="801" height="138" alt=""><img data-i="6" src="assets/tour-find6.webp" width="801" height="138" alt="">
             </div>
             <div class="layer find"></div>
             <div class="layer sel"></div>
@@ -677,7 +732,6 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
             <span class="chip t-copy"><kbd>⌘</kbd><kbd>C</kbd></span>
             <div class="tclip"><div class="clip-head"><svg class="icon"><use href="#i-check"/></svg>Copied as LaTeX</div><pre>\left(\{e^{i\theta },\tau \}+\frac{1}{2}(1-\frac{1}{n^{2}})R(\theta )\right)</pre></div>
           </div></div>
-          <span class="chip back-chip" aria-hidden="true"><svg class="icon"><use href="#i-back"/></svg>Back</span>
           <span class="ripple" aria-hidden="true"></span>
           <svg class="pointer" viewBox="0 0 24 28" aria-hidden="true"><path d="M3 2 L3 22 L8.5 17 L12 25.5 L15.5 24 L12 15.8 L19.5 15.8 Z" fill="#1f1f1f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
         </figure>
@@ -775,7 +829,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
         <p>Use the outline to jump through the paper. Use Chrome's buttons to navigate, or the viewer's. If a paper has no outline or links of its own, Epsilon makes them for you!</p>
       </div>
       <div class="scene">
-        <figure class="plane window nav-demo" id="nav-demo" data-v="chrome" style="margin:0" role="img" aria-label="Reading the introduction: a click on section 3.1 in the outline jumps there, Chrome's Back returns to the introduction, a click on section 2.2 jumps there, and Back returns again." data-in="Navigate in viewer on: a click on section 3.1 in the outline jumps there, the viewer's own Back button, left of the search, returns to the introduction, a click on section 2.2 jumps there, and Back returns again.">
+        <figure class="plane window nav-demo" id="nav-demo" data-v="in" style="margin:0" role="img" aria-label="Reading the introduction, Navigate in viewer on: a click on section 3.1 in the outline jumps there, the viewer's own Back button, left of the search, returns to the introduction, a click on section 2.2 jumps there, and Back returns again." data-chrome="Reading the introduction: a click on section 3.1 in the outline jumps there, Chrome's Back returns to the introduction, a click on section 2.2 jumps there, and Back returns again.">
           <div class="shot" aria-hidden="true"><div class="stage">
             <div class="set" data-v="chrome">
               <picture><source media="(max-width: 600px)" srcset="assets/nav-a-m.webp"><img class="vw" src="assets/nav-a.webp" srcset="assets/nav-a-960.webp 960w, assets/nav-a.webp 1920w" sizes="1120px" width="1920" height="1200" loading="lazy" decoding="async" alt=""></picture>
@@ -792,7 +846,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
           <span class="ripple" aria-hidden="true"></span>
           <svg class="pointer" viewBox="0 0 24 28" aria-hidden="true"><path d="M3 2 L3 22 L8.5 17 L12 25.5 L15.5 24 L12 15.8 L19.5 15.8 Z" fill="#1f1f1f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
         </figure>
-        <div class="tour-steps nav-modes" role="group" aria-label="How Back works in the demo"><button type="button" data-v="chrome" aria-pressed="true">native</button><button type="button" data-v="in" aria-pressed="false">viewer</button></div>
+        <div class="tour-steps nav-modes" role="group" aria-label="How Back works in the demo"><button type="button" data-v="chrome" aria-pressed="false">native</button><button type="button" data-v="in" aria-pressed="true">viewer</button></div>
       </div>
     </div>
   </section>
@@ -830,6 +884,41 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
           <li class="wm sc">Cambridge<small>University Press</small></li>
           <li class="wm more">and more</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 the Mac app: to the source and back -->
+  <section class="feature right" id="editor" aria-labelledby="f6">
+    <div class="wrap grid">
+      <div class="copy reveal">
+        <p class="num"><span class="plat">Mac app</span></p>
+        <h2 id="f6"><a class="h-link" href="mac#latex">Click the PDF, land on the line.</a></h2>
+        <p>Writing a paper? Epsilon for Mac supports SyncTeX: <kbd>⌥</kbd>-click any word or formula and your editor
+        opens its LaTeX source at that line. Epsilon updates the PDF automatically as you edit.</p>
+        <p class="go"><a class="link" href="mac#latex">Set up your editor <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a></p>
+      </div>
+      <div class="scene">
+        <div class="sync-demo" role="img" aria-label="An Option-click on an equation in the PDF opens chain.tex in the editor at line 43, the equation's source.">
+          <div class="sheet pdf">
+            <div class="page">
+              <p>The Hamiltonian of the chain is</p>
+              <p class="eq"><span class="hit"><i>H</i> = &minus;<i>J</i> <span class="op">&Sigma;</span><sub><i>i</i></sub> <i>&sigma;</i><span class="ss"><sup><i>z</i></sup><sub><i>i</i></sub></span><i>&sigma;</i><span class="ss"><sup><i>z</i></sup><sub><i>i</i>+1</sub></span> &minus; <i>h</i> <span class="op">&Sigma;</span><sub><i>i</i></sub> <i>&sigma;</i><span class="ss"><sup><i>x</i></sup><sub><i>i</i></sub></span> ,</span><span class="no">(2.1)</span></p>
+              <p>where <i>J</i> &gt; 0 couples neighbors and <i>h</i> is the transverse field.</p>
+            </div>
+          </div>
+          <div class="win ed">
+            <div class="bar"><i></i><i></i><i></i><span>chain.tex</span></div>
+<pre><span class="ln">41</span>The Hamiltonian of the chain is
+<span class="ln">42</span><b>\begin</b>{equation}
+<span class="cur"><span class="ln">43</span>  H = -J\sum_i \sigma^z_i\sigma^z_{i+1} - h\sum_i \sigma^x_i ,</span><span class="ln">44</span><b>\end</b>{equation}
+<span class="ln">45</span>where $J&gt;0$ couples neighbors and $h$ is
+<span class="ln">46</span>the transverse field.</pre>
+          </div>
+          <span class="chip opt" aria-hidden="true"><kbd>⌥</kbd> click</span>
+          <span class="ripple" aria-hidden="true"></span>
+          <svg class="pointer" viewBox="0 0 24 28" aria-hidden="true"><path d="M3 2 L3 22 L8.5 17 L12 25.5 L15.5 24 L12 15.8 L19.5 15.8 Z" fill="#1f1f1f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
       </div>
     </div>
   </section>
@@ -898,13 +987,16 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 <div class="end on-art">
   <div class="art-band"><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/forest-800.avif 800w, assets/paintings/forest-1200.avif 1200w, assets/paintings/forest-1536.avif 1536w, assets/paintings/forest-2048.avif 2048w, assets/paintings/forest-2800.avif 2800w" sizes="(max-width: 600px) 1080px, 100vw"><source type="image/webp" srcset="assets/paintings/forest-800.webp 800w, assets/paintings/forest-1200.webp 1200w, assets/paintings/forest-1536.webp 1536w, assets/paintings/forest-2048.webp 2048w" sizes="(max-width: 600px) 1080px, 100vw"><img src="assets/paintings/forest-1200.webp" width="1536" height="1024" alt="" decoding="async" loading="lazy"></picture></div>
   <!-- last call -->
-  <section class="final" aria-labelledby="last">
+  <section class="final" id="get" aria-labelledby="last">
     <div class="wrap">
       <div class="eps-name" role="img" aria-label="Epsilon PDF viewer"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span></div>
       <h2 id="last">Read your next paper in&nbsp;Epsilon.</h2>
       <div class="cta-row">
-        <a class="btn" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn" data-get="chrome both" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn" data-get="mac both" href="mac?download">Download for Mac <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a>
+        <a class="link" data-get="mac" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Also for Chrome</a>
       </div>
+      <p class="also" data-get="chrome">Also a Mac app, with your LaTeX editor one click away. <a class="link" href="mac">Epsilon for Mac</a></p>
     </div>
   </section>
 
@@ -921,6 +1013,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
       <a href="#new">What's new</a>
       <a href="releases">Release notes</a>
       <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome Web Store</a>
+      <a href="mac">Mac app</a>
     </nav>
   </div>
 </footer>
@@ -931,7 +1024,8 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
    motion), the nav's mark on the section in view, and where CSS scroll-driven animations are missing, the 3D planes
    scrubbed by the scroll (the same keyframes, paused).
    The demos' marks and boxes are the extension's: recorded in Chrome from the built extension on arXiv 1911.12333
-   (pages 22 and 27, at 160%), in % of the page picture: [left, top, width, height]. */
+   (pages 22 and 27, at 160%), in % of the page picture: [left, top, width, height]. The frames, and these places,
+   by store/site-frames.mjs (the navigation demo's frames: store/nav-frames.mjs). */
 (() => {
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const root = document.documentElement;
@@ -966,26 +1060,26 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 
   // 0. the hero: one session, round and round. The outline's 3.5 Entropy clicked (the page jumps there); \phi_r typed
   //    (the find bar as it was at each key, the marks the extension drew); a Cmd+click on (2.8), the peek up and away;
-  //    a drag into (3.31), the boxes as drawn, Cmd+C and what was copied; Back, to the start. All recorded in one
-  //    session of the extension on 1911.12333 at 105%, in % of its 1280x800 view.
+  //    a drag into (3.31), the boxes as drawn, Cmd+C and what was copied; the viewer's own Back (Navigate in viewer
+  //    on, its Back and Forward left of the search), to the start. All recorded in one session of the extension on
+  //    1911.12333 at 105%, in % of its 1280x800 view.
   {
     const el = $("#tour"), stage = $(".stage", el);
     const V = $('.fr[data-k="v"]', el), strips = $(".strips", el), strip = [...strips.children];
     const fl = $(".layer.find", el), sl = $(".layer.sel", el);
-    const ptr = $(".pointer", el), rip = $(".ripple", el), back = $(".back-chip", el), beam = $(".ibeam", el);
+    const ptr = $(".pointer", el), rip = $(".ripple", el), beam = $(".ibeam", el);
     const cPeek = $(".t-peek", el), cCopy = $(".t-copy", el), card = $(".tclip", el), pre = $(".tclip pre", el);
     const pk = $(".pk-body", el), pkStrip = $(".pk-body img", el);
     const steps = [...document.querySelectorAll(".tour-steps li")];
     pre.innerHTML = pre.textContent.replace(/[&<>]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"})[c])
       .replace(/(\\[A-Za-z]+|\\[[\]{}]|\$)/g, "<b>$1</b>");
-    const NAV = [3.75, 86.38], LINK = [51.48, 20.4], REST = [62, 72];
-    const PHI = [[0, [58.72,38.524,0.928,1.868], [71.896,38.524,0.928,1.868], [52.351,53.417,0.928,1.868], [63.838,53.417,0.928,1.868]], [1, [52.352,24.094,0.928,1.868]]];
-    const FIND = [[], [], [], PHI, PHI, [[0, [58.72,38.524,1.345,2.055], [71.896,38.524,1.345,2.055], [52.351,53.417,1.345,2.055], [63.838,53.417,1.345,2.055]], [1, [52.352,24.094,1.345,2.055]]]];
-    const BOXES = [[],[[59.484,24.954,3.978,2.299]],[[59.484,24.954,5.17,2.299]],[[59.484,24.094,6.161,4.466]],[[59.484,24.094,10.766,4.466]],[[59.484,24.094,11.671,4.466]],[[59.484,24.094,13.201,4.466]],[[58.606,23.924,14.955,4.848]]];
-    const SSTEPS = [[59.84,0],[59.97,1],[64.16,2],[65.21,3],[66,4],[70.72,5],[71.38,6],[73.08,7]], S0 = [59.71, 26.27], S1 = 73.6;
-    // (the pointer and the Back button live on the window, the view's places in the stage's %: on a phone it is cropped)
+    const NAV = [3.75, 86.38], LINK = [51.48, 20.4], BACK = [23.05, 2.75], REST = [62, 72];
+    const PHI = [[0, [58.719,38.523,0.928,1.889], [71.896,38.523,0.928,1.889], [52.351,53.42,0.928,1.889], [63.838,53.42,0.928,1.889]], [1, [52.352,24.094,0.928,1.889]]];
+    const FIND = [[], [], [], PHI, PHI, [[0, [58.719,38.523,1.345,1.889], [71.896,38.523,1.345,1.889], [52.351,53.42,1.345,1.889], [63.838,53.42,1.345,1.889]], [1, [52.352,24.094,1.345,1.889]]]];
+    const BOXES = [[],[[59.484,24.939,3.978,2.42]],[[59.484,24.939,5.17,2.42]],[[59.484,24.115,6.161,4.445]],[[59.484,24.115,10.767,4.445]],[[59.484,24.115,11.671,4.445]],[[59.484,24.115,13.201,4.445]],[[58.606,23.941,14.955,4.752]]];
+    const SSTEPS = [[59.87,1],[64.13,2],[65.11,3],[65.93,4],[70.63,5],[71.29,6],[73.04,7]], S0 = [59.71, 26.27], S1 = 73.68;
+    // (the pointer lives on the window, the view's places in the stage's %: on a phone it is cropped)
     const fig = p => [(stage.offsetLeft + p[0] / 100 * stage.offsetWidth) / el.offsetWidth * 100, (stage.offsetTop + p[1] / 100 * stage.offsetHeight) / el.offsetHeight * 100];
-    const backAt = () => [(back.offsetLeft + back.offsetWidth * 0.32) / el.offsetWidth * 100, (back.offsetTop + back.offsetHeight * 0.55) / el.offsetHeight * 100];
     const go = (p, show = true) => { ptr.style.left = p[0] + "%"; ptr.style.top = p[1] + "%"; ptr.classList.toggle("on", show && p[0] >= 0 && p[0] <= 100); };
     const click = async p => {
       ptr.classList.add("down"); rip.style.left = p[0] + "%"; rip.style.top = p[1] + "%";
@@ -1012,9 +1106,9 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     const w = ms => Promise.race([sleep(ms), cutP]);
     const wGlide = (...a) => Promise.race([glide(...a), cutP]);
     const clean = k => {   // the window as it is when step k begins
-      const all = [ptr, rip, back, beam, V, strips, fl, sl, pk, cPeek, cCopy, card, ...strip];
+      const all = [ptr, rip, beam, V, strips, fl, sl, pk, cPeek, cCopy, card, ...strip];
       all.forEach(x => x.style.transition = "none");
-      ptr.classList.remove("on", "down"); rip.classList.remove("go"); back.classList.remove("on", "press"); beam.classList.remove("on");
+      ptr.classList.remove("on", "down"); rip.classList.remove("go"); beam.classList.remove("on");
       strips.classList.remove("on"); strip.forEach(im => im.classList.remove("on")); fl.innerHTML = ""; fl.classList.remove("out");
       sl.innerHTML = ""; sl.classList.remove("out"); shown = -1; pk.classList.remove("on"); pkStrip.style.transform = "";
       el.classList.remove("peeking"); cPeek.classList.remove("on", "press"); cCopy.classList.remove("on", "press"); card.classList.remove("on");
@@ -1050,10 +1144,10 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
       card.classList.add("on"); await w(300); cCopy.classList.remove("on");
       await w(2200);
       card.classList.remove("on"); sl.classList.add("out"); await w(450); sl.innerHTML = ""; sl.classList.remove("out"); shown = -1;
-      // back, to the start
-      label("nav"); const b = backAt(); back.classList.add("on"); go(b); await w(950);
-      back.classList.add("press"); await click(b); back.classList.remove("press"); V.classList.remove("on");
-      await w(350); back.classList.remove("on"); await w(550);
+      // back, to the start: the viewer's Back button
+      label("nav"); const b = fig(BACK); go(b); await w(950);
+      await click(b); V.classList.remove("on");
+      await w(900);
     };
     let first = true;
     loop(el, async () => {
@@ -1062,7 +1156,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
         try { await play(k); return; }
         catch (e) {
           if (e !== ABORT) throw e;
-          k = pending; arm(); shot.classList.add("jump"); ptr.classList.remove("on"); back.classList.remove("on");
+          k = pending; arm(); shot.classList.add("jump"); ptr.classList.remove("on");
           await sleep(140); clean(k); await sleep(60); shot.classList.remove("jump"); await sleep(140);
         }
       }
@@ -1074,10 +1168,10 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   {
     const el = $("#find-demo");
     const Q = "\\phi_r";
-    const A = [[37.17,30.27,1.88,9.93],[56.34,30.27,1.88,9.93],[7.88,65.56,1.84,9.93],[12.71,65.56,1.84,9.93]], B = [[29.79,37.13,1.84,9.93]];
+    const A = [[37.22,31.61,1.84,10.1],[56.4,31.61,1.84,10.1],[7.88,67.11,1.84,10.1],[12.71,67.11,1.84,10.1]], B = [[29.8,38.52,1.84,10.1]];
     const PHI = [[0, ...A], [1, ...B]];
     const STEPS = [["", []], ["", []], ["", []], ["14/57", PHI], ["11/49", PHI],
-      ["6/41", [[0, [56.34,30.27,2.71,10.92], [12.71,65.56,2.66,10.92]], [1, [37.17,30.27,2.71,10.92]]]]];
+      ["6/41", [[0, [56.4,31.61,2.67,10.1], [12.71,67.11,2.67,10.1]], [1, [37.22,31.61,2.67,10.1]]]]];
     const typed = $(".typed", el), count = $(".count", el), layer = $(".layer", el);
     const show = n => {
       typed.textContent = Q.slice(0, n);
@@ -1130,12 +1224,12 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   //    menu, its Copy as Mathematica clicked (Ctrl+Cmd+C), and what that copied
   {
     const el = $("#copy-demo");
-    const BOXES = [[],[[50.88,33.62,12.22,28.18]],[[50.88,33.62,15.88,28.18]],[[50.88,23.08,18.93,54.74]],[[50.88,23.08,33.07,54.74]],[[50.88,23.08,35.85,54.74]],[[50.88,23.08,40.55,54.74]],[[48.19,20.99,45.94,59.41]]];
-    const STEPS = [[52.4,1],[65.3,2],[68.5,3],[70.9,4],[85.4,5],[87.4,6],[92.7,7]];   // (from this x on, those boxes)
-    const X0 = 51.6, X1 = 94.3, Y = 49.8;
-    // (the part: from just left of the 1/2, its boxes as the whole's, from the 1/2's edge; the drag stops short of the big ))
-    const PART = [[],[[67.42,23.08,2.39,54.74]],[[67.42,23.08,16.53,54.74]],[[67.42,23.08,19.31,54.74]],[[67.42,23.08,24.01,54.74]]];
-    const PSTEPS = [[67.9,1],[70.9,2],[85.4,3],[87.4,4]], P0 = 67.3, P1 = 90.9;
+    const BOXES = [[],[[50.8,35.6,12.24,29.65]],[[50.8,35.6,15.91,29.65]],[[50.8,25.5,18.96,54.46]],[[50.8,25.5,33.14,54.46]],[[50.8,25.5,35.92,54.46]],[[50.8,25.5,40.63,54.46]],[[48.1,23.39,46.03,58.2]]];
+    const STEPS = [[52.16,1],[65.07,2],[68.17,3],[70.59,4],[85.12,5],[87.14,6],[92.52,7]];   // (from this x on, those boxes)
+    const X0 = 51.48, X1 = 94.5, Y = 51.9;
+    // (the part: a drag of its own, from just left of the 1/2; it stops short of the big ))
+    const PART = [[],[[67.26,25.5,2.51,54.46]],[[67.26,25.5,16.68,54.46]],[[67.26,25.5,19.46,54.46]],[[67.26,25.5,24.17,54.46]]];
+    const PSTEPS = [[68.23,1],[70.65,2],[85.05,3],[87.2,4]], P0 = 67.29, P1 = 90.87;
     const layer = $(".layer", el), beam = $(".ibeam", el), chip = $(".copy-chip", el);
     const [clip, mclip] = el.querySelectorAll(".clip"), pre = $("pre", clip), mpre = $("pre", mclip);
     const ctx = $(".ctx", el), item = $(".ctx .m", el), ptr = $(".pointer", el), rip = $(".ripple", el);
@@ -1207,18 +1301,19 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 
   // 4. navigation: the outline's 3.1 clicked (the page jumps there), Back (to the introduction, where it was), the
   //    outline's 2.2, Back again: round to the start. The three views are the extension's, Back returning exactly.
-  //    Two versions, chosen by the buttons under the window: Back is Chrome's (a chip standing over the window), or,
-  //    with Navigate in viewer on, the viewer's own Back button left of the search (frames navin-*: store/nav-frames.mjs)
+  //    Two versions, chosen by the buttons under the window: with Navigate in viewer on (shown first), the viewer's own
+  //    Back button left of the search (frames navin-*), or Back is Chrome's (a chip standing over the window; frames
+  //    nav-*). Both by store/nav-frames.mjs
   {
     const el = $("#nav-demo");
     const ptr = $(".pointer", el), rip = $(".ripple", el), back = $(".back-chip", el);
     const frs = k => [...el.querySelectorAll(`.fr[data-k="${k}"]`)];
     const fr = {b: frs("b"), c: frs("c")};
     const T1 = [3.75, 63.5], T2 = [3.75, 50.4];          // (the outline's entries, where they were clicked: % of the view)
-    const BACK = [23.02, 2.75];                          // (the viewer's own Back button, navin-*: % of the view)
+    const BACK = [23.05, 2.75];                          // (the viewer's own Back button, navin-*: % of the view)
     const stage = $(".stage", el), modes = [...document.querySelectorAll(".nav-modes button")];
-    const label = {chrome: el.getAttribute("aria-label"), in: el.dataset.in};
-    let mode = "chrome";
+    const label = {in: el.getAttribute("aria-label"), chrome: el.dataset.chrome};
+    let mode = el.dataset.v;
     // (the view's places in the stage's %, the pointer on the window: on a phone the stage is cropped)
     const fig = p => [(stage.offsetLeft + p[0] / 100 * stage.offsetWidth) / el.offsetWidth * 100, (stage.offsetTop + p[1] / 100 * stage.offsetHeight) / el.offsetHeight * 100];
     const backAt = () => [(back.offsetLeft + back.offsetWidth * 0.32) / el.offsetWidth * 100, (back.offsetTop + back.offsetHeight * 0.55) / el.offsetHeight * 100];
@@ -1432,5 +1527,41 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 </script>
 <script>/* (a lone ⌘ key is Ctrl off the Mac; keys that differ otherwise are written both ways, .mac and .pc) */
 if (document.documentElement.classList.contains("pc")) document.querySelectorAll("kbd").forEach(function (k) { if (k.textContent === "⌘" && !k.closest(".mac")) k.textContent = "Ctrl"; });</script>
+<script>/* the Mac section's demo, as the others play: the pointer glides to the equation, ⌥ held, the click (the pointer
+   pressed, the ripple); the editor comes forward at its line. It plays while in view; reduced motion shows the end */
+(function () {
+  const el = document.querySelector(".sync-demo"); if (!el) return;
+  const q = s => el.querySelector(s), ptr = q(".pointer"), rip = q(".ripple"), chip = q(".chip.opt"),
+    hit = q(".hit"), ed = q(".ed"), cur = q(".cur");
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const end = () => { hit.classList.add("on"); ed.classList.add("on"); cur.classList.add("on"); };
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) { end(); return; }
+  let seen = false, wake = null;
+  new IntersectionObserver(es => { seen = es[0].isIntersecting; if (seen && wake) { wake(); wake = null; } }, {threshold: 0.35}).observe(el);
+  const inView = () => seen ? Promise.resolve() : new Promise(r => { wake = r; });
+  const at = () => { const a = el.getBoundingClientRect(), h = hit.getBoundingClientRect();
+    return [h.left - a.left + 0.62 * h.width, h.top - a.top + 0.55 * h.height]; };
+  const go = (p, jump) => { if (jump) ptr.style.transition = "none"; ptr.style.left = p[0] + "px"; ptr.style.top = p[1] + "px";
+    if (jump) { void ptr.offsetWidth; ptr.style.transition = ""; } };
+  (async () => { for (;;) {
+    await inView();
+    [hit, ed, cur].forEach(e => e.classList.remove("on")); chip.className = "chip opt";
+    const p = at(); go([p[0] + 90, p[1] + 110], true);
+    await sleep(500);
+    ptr.classList.add("on"); go(p); await sleep(1100);
+    chip.style.left = p[0] + 22 + "px"; chip.style.top = p[1] + 18 + "px"; chip.classList.add("on"); await sleep(500);
+    chip.classList.add("press"); await sleep(250);
+    ptr.classList.add("down"); rip.style.left = p[0] + "px"; rip.style.top = p[1] + "px";
+    rip.classList.remove("go"); void rip.offsetWidth; rip.classList.add("go");
+    hit.classList.add("on"); await sleep(150); ptr.classList.remove("down"); await sleep(200);
+    chip.classList.remove("press"); await sleep(250);
+    chip.classList.remove("on"); ed.classList.add("on"); await sleep(550);
+    cur.classList.add("on"); await sleep(400);
+    ptr.classList.remove("on");
+    await sleep(3600);
+    [hit, ed, cur].forEach(e => e.classList.remove("on")); await sleep(900);
+  } })();
+})();
+</script>
 </body>
 </html>

@@ -4,6 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Epsilon PDF viewer privacy</title>
+<style>html:not(.pc) .pc, html.pc .mac { display: none; }
+html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([data-get~=mac]), html.get-chrome [data-get]:not([data-get~=chrome]) { display: none !important; }
+@media (max-width: 600px) { .nav .links a[href="mac"] { display: none; } .nav .btn-sm .long { display: none; } }</style>
+<script>/* the platform: .pc writes keys as Ctrl; get-both (a Mac with Chrome or another Chromium browser), get-mac (a Mac
+   with Safari or Firefox) or get-chrome (anything else) choose how the page offers Epsilon. ?as=mac-chrome, mac-safari
+   or win-chrome previews one (kept for the visit) */
+(function () {
+  var d = document.documentElement, u = navigator.userAgent, as = null, q = /[?&]as=([a-z-]+)/.exec(location.search);
+  try { if (q) sessionStorage.epsAs = q[1]; as = sessionStorage.epsAs || null; } catch (e) {}
+  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), chromium = /Chrome\/\d/.test(u) && !/Mobile|Android/.test(u),
+      pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
+  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); pc = /^win/.test(as); }
+  if (pc) d.classList.add("pc");
+  d.classList.add(mac ? (chromium ? "get-both" : "get-mac") : "get-chrome");
+})();</script>
 <meta name="description" content="The privacy policy of Epsilon PDF viewer, a Chrome extension: it collects no data; everything it does happens in your browser.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
@@ -230,8 +245,11 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <a href="features" data-t="Features">Features</a>
     <a class="on" href="privacy" data-t="Privacy" aria-current="page">Privacy</a>
     <a href="releases" data-t="What's new">What's new</a>
+    <a href="mac" data-t="Mac">Mac</a>
   </nav>
-  <a class="btn btn-sm" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
+  <a class="btn btn-sm" data-get="chrome" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
+  <a class="btn btn-sm" data-get="mac" href="mac?download">Download<span class="long"> for Mac</span></a>
+  <a class="btn btn-sm" data-get="both" href="./#get">Get Epsilon</a>
 </header>
 
 <header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/cats-800.avif 800w, assets/paintings/cats-1200.avif 1200w, assets/paintings/cats-1671.avif 1671w, assets/paintings/cats-2048.avif 2048w, assets/paintings/cats-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/cats-800.avif 800w, assets/paintings/cats-1200.avif 1200w, assets/paintings/cats-1671.avif 1671w, assets/paintings/cats-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/cats-800.webp 800w, assets/paintings/cats-1200.webp 1200w, assets/paintings/cats-1671.webp 1671w, assets/paintings/cats-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/cats-1200.webp" width="1671" height="942" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Privacy</h1><p class="date">Version 1.1, October 2026</p></div></header>
