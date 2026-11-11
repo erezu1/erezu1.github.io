@@ -172,7 +172,17 @@ p { text-wrap: pretty; }
 .summary { list-style: none; margin: 36px 0 8px; padding: 6px 20px; border-radius: 16px; background: var(--surface); box-shadow: 0 0 0 1px var(--hair); }
 .summary li { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; font-size: 16px; line-height: 1.45; }
 .summary li + li { border-top: 1px solid var(--hair); }
-.get { margin: 28px 0 4px; }
+.get { margin: 28px 0 4px; text-align: center; }
+.faq { margin-top: 12px; border-radius: 16px; background: var(--surface); box-shadow: 0 0 0 1px var(--hair); }
+.faq:first-of-type { margin-top: 20px; }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary h3 { margin: 0; font-size: 17px; }
+.faq summary .icon { width: 20px; height: 20px; flex: none; color: var(--text-2); transition: transform .2s; }
+.faq[open] summary .icon { transform: rotate(180deg); }
+.faq .ans { padding: 0 20px 18px; }
+.faq .ans > :first-child { margin-top: 0; }
+.faq pre { max-width: 100%; }
 .summary .tick { display: grid; place-items: center; width: 22px; height: 22px; margin-top: -0.5px; border-radius: 50%; background: var(--tonal); color: var(--on-tonal); flex: none; }
 .summary .tick .icon { width: 15px; height: 15px; stroke-width: 2.2; }
 
@@ -255,6 +265,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   <!-- the ε: its bounds x 176..337, y 143.9..380, with room for the stroke -->
   <symbol id="eps" viewBox="152 120 210 284"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="m5.5 12.5 4.2 4.2 8.8-9.2"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
   <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4.5v10.5M7.5 10.5 12 15l4.5-4.5M5.5 19h13"/></symbol>
 </svg>
 
@@ -299,10 +310,40 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
       <li>Control-click the app, choose <b>Open</b>, then <b>Open</b> again.</li>
     </ol>
     <p>After that it opens like any other app.</p>
+    <p class="note">PDFs downloaded from the web carry macOS's quarantine mark, and Finder won't open them in an app
+    that isn't notarized. Open them with File &rsaquo; Open, or drag them onto an open window.</p>
   </section>
 
-  <section aria-labelledby="default">
-    <h2 id="default">Make it your PDF app</h2>
+  <section aria-labelledby="keys">
+    <h2 id="keys">Keys</h2>
+    <table class="keys">
+      <tr><td><kbd>⌘</kbd> <kbd>F</kbd>, <kbd>⌘</kbd> <kbd>G</kbd>, <kbd>⇧</kbd> <kbd>⌘</kbd> <kbd>G</kbd></td><td>Search formulas, next, previous</td></tr>
+      <tr><td><kbd>⌘</kbd> <kbd>C</kbd></td><td>Copy as LaTeX</td></tr>
+      <tr><td><kbd>⌃</kbd> <kbd>⌘</kbd> <kbd>C</kbd></td><td>Copy as Mathematica</td></tr>
+      <tr><td><kbd>⌘</kbd>-click a link</td><td>Peek at its target</td></tr>
+      <tr><td><kbd>⌥</kbd>-click, <kbd>⇧</kbd> <kbd>⌘</kbd>-click</td><td>Show the line in your LaTeX editor</td></tr>
+      <tr><td><kbd>⌘</kbd> <kbd>[</kbd>, <kbd>⌘</kbd> <kbd>]</kbd></td><td>Back, forward</td></tr>
+      <tr><td><kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>G</kbd></td><td>Go to page</td></tr>
+      <tr><td><kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>↑</kbd>, <kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>↓</kbd></td><td>Previous page, next page</td></tr>
+      <tr><td><kbd>⌘</kbd> <kbd>+</kbd>, <kbd>⌘</kbd> <kbd>−</kbd>, <kbd>⌘</kbd> <kbd>0</kbd></td><td>Zoom in, out, actual size</td></tr>
+      <tr><td><kbd>⌘</kbd> <kbd>R</kbd></td><td>Reload from disk</td></tr>
+      <tr><td><kbd>⌘</kbd> <kbd>S</kbd>, <kbd>⌘</kbd> <kbd>P</kbd></td><td>Save a copy, print</td></tr>
+      <tr><td><kbd>⌃</kbd> <kbd>⌘</kbd> <kbd>F</kbd></td><td>Full screen</td></tr>
+    </table>
+  </section>
+
+  <section aria-labelledby="private">
+    <h2 id="private">Privacy</h2>
+    <p>Everything stays on your Mac: settings, your place in each file and saved signatures. The app reads your PDFs
+    from disk and sends them nowhere. Its only network request is the daily update check to this website, which sends
+    nothing about you or your Mac. Links in a PDF open in your browser. See also the <a class="link" href="privacy.html">privacy policy</a>.</p>
+  </section>
+
+  <section aria-labelledby="faq">
+    <h2 id="faq">FAQ</h2>
+    <details class="faq" id="default">
+      <summary><h3>How to make it the default PDF app?</h3><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="ans">
     <p>The first time it opens, Epsilon PDF asks whether to become your PDF app; Settings &rsaquo; General has the same
     <b>Make Default</b> button. Or by hand:</p>
     <ol>
@@ -310,10 +351,11 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
       <li>Under <b>Open with</b>, choose Epsilon PDF, then click <b>Change All&hellip;</b> and <b>Continue</b>.</li>
     </ol>
     <p>To go back, do the same and choose Preview.</p>
-  </section>
-
-  <section aria-labelledby="latex">
-    <h2 id="latex">Writing LaTeX</h2>
+      </div>
+    </details>
+    <details class="faq" id="latex">
+      <summary><h3>How to use Epsilon PDF for LaTeX editing?</h3><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="ans">
     <p>When the PDF changes on disk, after a LaTeX run, it is replaced in place: the page, zoom, sidebar and outline
     stay where they were. File &rsaquo; Reload from Disk (<kbd>⌘</kbd> <kbd>R</kbd>) does it by hand.</p>
     <p>With a PDF built with <code>-synctex=1</code>, <kbd>⌥</kbd>-click, <kbd>⇧</kbd> <kbd>⌘</kbd>-click or right-click &rsaquo;
@@ -344,58 +386,20 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
 let g:vimtex_view_general_viewer = '/Applications/Epsilon PDF.app/Contents/Resources/displayline'
 let g:vimtex_view_general_options = '-g @line @pdf @tex'</code></pre>
     <p class="ed">Emacs (AUCTeX): an entry in <code>TeX-view-program-list</code> that runs <code>displayline -g %n %o %b</code>.</p>
-  </section>
-
-  <section aria-labelledby="mac">
-    <h2 id="mac">On the Mac</h2>
-    <ul class="plain">
-      <li>Open Recent, and PDFs dragged onto the Dock icon or a window.</li>
-      <li>The Mac's print panel, and Save a Copy.</li>
-      <li>Settings in their own window (<kbd>⌘</kbd> <kbd>,</kbd>).</li>
-      <li>Trackpad pinch that follows your fingers.</li>
-      <li>Back and forward inside the PDF always on (<kbd>⌘</kbd> <kbd>[</kbd> and <kbd>⌘</kbd> <kbd>]</kbd>).</li>
-      <li>Your place in each file kept; leaving presentation mode returns to the page you ended on.</li>
-      <li>Copy, Copy as LaTeX and Copy as Mathematica in the Edit menu and the right-click menu.</li>
-    </ul>
-  </section>
-
-  <section aria-labelledby="keys">
-    <h2 id="keys">Keys</h2>
-    <table class="keys">
-      <tr><td><kbd>⌘</kbd> <kbd>F</kbd>, <kbd>⌘</kbd> <kbd>G</kbd>, <kbd>⇧</kbd> <kbd>⌘</kbd> <kbd>G</kbd></td><td>Search formulas, next, previous</td></tr>
-      <tr><td><kbd>⌘</kbd> <kbd>C</kbd></td><td>Copy as LaTeX</td></tr>
-      <tr><td><kbd>⌃</kbd> <kbd>⌘</kbd> <kbd>C</kbd></td><td>Copy as Mathematica</td></tr>
-      <tr><td><kbd>⌘</kbd>-click a link</td><td>Peek at its target</td></tr>
-      <tr><td><kbd>⌥</kbd>-click, <kbd>⇧</kbd> <kbd>⌘</kbd>-click</td><td>Show the line in your LaTeX editor</td></tr>
-      <tr><td><kbd>⌘</kbd> <kbd>[</kbd>, <kbd>⌘</kbd> <kbd>]</kbd></td><td>Back, forward</td></tr>
-      <tr><td><kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>G</kbd></td><td>Go to page</td></tr>
-      <tr><td><kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>↑</kbd>, <kbd>⌥</kbd> <kbd>⌘</kbd> <kbd>↓</kbd></td><td>Previous page, next page</td></tr>
-      <tr><td><kbd>⌘</kbd> <kbd>+</kbd>, <kbd>⌘</kbd> <kbd>−</kbd>, <kbd>⌘</kbd> <kbd>0</kbd></td><td>Zoom in, out, actual size</td></tr>
-      <tr><td><kbd>⌘</kbd> <kbd>R</kbd></td><td>Reload from disk</td></tr>
-      <tr><td><kbd>⌘</kbd> <kbd>S</kbd>, <kbd>⌘</kbd> <kbd>P</kbd></td><td>Save a copy, print</td></tr>
-      <tr><td><kbd>⌃</kbd> <kbd>⌘</kbd> <kbd>F</kbd></td><td>Full screen</td></tr>
-    </table>
-  </section>
-
-  <section aria-labelledby="notyet">
-    <h2 id="notyet">Not yet</h2>
-    <ul class="plain">
-      <li>Page editing: rotate, delete, reorder, combine, crop.</li>
-      <li>Saving in place: highlights and notes are kept only with Save a Copy, and are lost when the window closes or the file changes.</li>
-      <li>Preview's own markup tools; the viewer's highlight, text, drawing and signature tools are there.</li>
-      <li>Tabs, Share and AppleScript.</li>
-    </ul>
-    <p class="note">PDFs downloaded from the web carry macOS's quarantine mark, and Finder won't open them in an app
-    that isn't notarized. Open them with File &rsaquo; Open, or drag them onto an open window.</p>
-  </section>
-
-  <section aria-labelledby="updates">
-    <h2 id="updates">Updates and removal</h2>
+      </div>
+    </details>
+    <details class="faq" id="updates">
+      <summary><h3>How to update the app?</h3><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="ans">
     <p>Once a day the app checks this website for a new version, downloads it in the background and installs it when
     you quit; Epsilon PDF &rsaquo; Check for Updates&hellip; checks at once.</p>
-    <p>To remove it:</p>
+      </div>
+    </details>
+    <details class="faq" id="remove">
+      <summary><h3>How to uninstall the app?</h3><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="ans">
     <ol>
-      <li>If it is your PDF app, choose another first (above, choosing Preview).</li>
+      <li>If it is your PDF app, choose another first (see the question above, choosing Preview).</li>
       <li>Quit Epsilon PDF (<kbd>⌘</kbd> <kbd>Q</kbd>).</li>
       <li>Drag <b>Epsilon PDF</b> from your Applications folder to the Trash.</li>
       <li>To remove what it keeps too (its settings and your place in each file, saved signatures, the updater's
@@ -403,13 +407,8 @@ let g:vimtex_view_general_options = '-g @line @pdf @tex'</code></pre>
 <pre><code>defaults delete nl.uva.epsilon.pdfapp
 rm -rf ~/Library/WebKit/nl.uva.epsilon.pdfapp ~/Library/Caches/nl.uva.epsilon.pdfapp ~/Library/HTTPStorages/nl.uva.epsilon.pdfapp</code></pre></li>
     </ol>
-  </section>
-
-  <section aria-labelledby="private">
-    <h2 id="private">Privacy</h2>
-    <p>Everything stays on your Mac: settings, your place in each file and saved signatures. The app reads your PDFs
-    from disk and sends them nowhere. Its only network request is the daily update check to this website, which sends
-    nothing about you or your Mac. Links in a PDF open in your browser. See also the <a class="link" href="privacy.html">privacy policy</a>.</p>
+      </div>
+    </details>
   </section>
 </main>
 
