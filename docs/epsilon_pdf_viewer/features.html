@@ -308,7 +308,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     <h2 id="h-search">Search</h2>
     <ul class="list">
       <li><h3>Formula search</h3><p>Open the search with <kbd>⌘</kbd> <kbd>F</kbd> and type TeX, e.g. <code>\alpha_1</code>, to find every formula that contains it.</p></li>
-      <li><h3>Plain queries</h3><p>Input without backslashes is read as a formula too, e.g. <code>alpha_1</code>, <code>psi(t,x)</code>, <code>n -&gt; \infty</code>, <code>1/2 m v^2</code>, <code>O(N^-1)</code>.</p></li>
+      <li><h3>Plain queries</h3><p>Input without backslashes is read as a formula too, e.g. <code>alpha_1</code>, <code>psi(t,x)</code>, <code>n -&gt; \infty</code>, <code>1/2 m v^2</code>, <code>O(N^-1)</code>. A fraction typed with a slash, e.g. <code>(a+b)/2</code> or <code>1/x^2</code>, finds the stacked one too.</p></li>
       <li><h3>Equivalent spellings</h3><p>Spellings that draw the same thing match each other, e.g. <code>\sqrt t</code> and <code>\sqrt{t}</code>, <code>\to</code> and <code>\rightarrow</code>, <code>\rm</code> and <code>\mathrm</code>.</p></li>
       <li><h3>Words and symbols</h3><p>A symbol's name finds the word and the symbol, e.g. <code>phi</code> finds "phi" and φ, <code>log</code> the word and the operator; in <code>$…$</code>, e.g. <code>$phi$</code>, only formulas are searched.</p></li>
       <li><h3>Text and formulas together</h3><p>A query mixing words and formulas finds the sentence, e.g. "C is a cylinder" finds "<i>C</i> is a cylinder", as does a copied passage with <code>$…$</code> formulas.</p></li>
@@ -325,7 +325,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
   <section class="cat" id="peek" aria-labelledby="h-peek">
     <h2 id="h-peek">Peek</h2>
     <ul class="list">
-      <li><h3>Open <span class="badge">New in 1.4.7</span></h3><p>Click a link, or right-click it and choose "Open in peek", to show its target in a panel at the bottom while the page above stays where it is. <kbd>⌘</kbd> + click goes to the target instead. The Peek on click setting swaps the two.</p></li>
+      <li><h3>Open <span class="badge">New in 1.4.7</span></h3><p>Click a reference to the bibliography, <kbd>⌘</kbd> + click any other link, or right-click a link and choose "Open in peek", to show its target in a panel at the bottom while the page above stays where it is. <kbd>⌘</kbd> + click on a reference goes there instead.</p></li>
       <li><h3>Target mark</h3><p>The target is marked: an equation with its number, a figure or table with its caption; a figure is shown whole; a footnote, its number and its lines.</p></li>
       <li><h3>Zoom</h3><p>The peek opens at the page's zoom; its own − and + buttons, pinch, or <kbd>⌘</kbd> <kbd>+</kbd>/<kbd>−</kbd> with the pointer over it zoom the peek alone, and <kbd>⌘</kbd> <kbd>0</kbd> returns it to the page's zoom.</p></li>
       <li><h3>Resize and expand</h3><p>Drag its top edge to resize it; drag it up to the toolbar, or click Expand, to move the main view to the target and close the peek (Back returns).</p></li>
@@ -343,7 +343,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <li><h3>Keyboard</h3><p>With a selection, <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> extends it by one element (a letter with its scripts, a whole fraction), <span class="mac"><kbd>⌥</kbd></span><span class="pc"><kbd>Ctrl</kbd></span> <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> by a word, and <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> by a line.</p></li>
       <li><h3>Triple click</h3><p>Selects the sentence, across lines; on a displayed formula, the whole formula with all its rows, without its number.</p></li>
       <li><h3>Submatrix</h3><p>Drag from one matrix entry to another to select the block between them, copied as <code>\begin{matrix}…\end{matrix}</code>.</p></li>
-      <li><h3>Table block <span class="badge">New in 1.4.7</span></h3><p>Drag from one cell of a table to another to select the block of cells between them, copied as <code>\begin{tabular}…\end{tabular}</code>.</p></li>
+      <li><h3>Table block <span class="badge">New in 1.4.7</span></h3><p>Drag from one cell of a table to another to select the block of cells between them, copied as <code>\begin{tabular}…\end{tabular}</code>. Tables ruled by horizontal lines only (booktabs) too; a heading over several columns is copied as <code>\multicolumn</code> when the block holds all its columns.</p></li>
       <li><h3>Scanned papers</h3><p>A scan with a text layer (OCR) can be selected and copied, also when the scan is tilted.</p></li>
     </ul>
   </section>
@@ -352,7 +352,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     <h2 id="h-links">Links</h2>
     <ul class="list">
       <li><h3>Generated links</h3><p>In a PDF without internal links, references to sections, equations, figures, tables, theorems, footnotes and citations, and table of contents entries, become links; a PDF with its own links is left as it is.</p></li>
-      <li><h3>Link tooltip</h3><p>Hovering a link shows its target and the key to go there, e.g. "Eq. (2.3) (page 12) · ⌘+click to go there"; with Peek on click off, the key to peek.</p></li>
+      <li><h3>Link tooltip</h3><p>Hovering a link shows its target and what <kbd>⌘</kbd> + click does: on a reference, e.g. "Ref. [4] (page 30) · ⌘+click to go there"; on any other link, e.g. "Eq. (2.3) (page 12) · ⌘+click to peek".</p></li>
     </ul>
   </section>
 
@@ -388,7 +388,8 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     <ul class="list">
       <li><h3>Look and theme</h3><p>Look: Epsilon's or Chrome's; Theme: light, dark, or as the system is set.</p></li>
       <li><h3>Link borders</h3><p>Off by default; on, it draws the colored boxes some PDFs put around their links.</p></li>
-      <li><h3>Peek on click <span class="badge">New in 1.4.7</span></h3><p>On by default: a click on a link opens its target in the peek, and <kbd>⌘</kbd> + click goes there. Off, a click goes to the target and <kbd>⌘</kbd> + click peeks.</p></li>
+      <li><h3>Peek at references <span class="badge">New in 1.4.7</span></h3><p>On by default: a click on a reference to the bibliography opens it in the peek, and <kbd>⌘</kbd> + click goes there. Off, a click on a reference goes there, as on any other link.</p></li>
+      <li><h3>Sections <span class="badge">New in 1.4.7</span></h3><p>The settings in four groups: Appearance, Behavior, Default view and Advanced.</p></li>
       <li data-plat="chrome"><h3>Sync <span class="badge plat">Chrome</span></h3><p>With Chrome Sync on, settings are copied to your other computers.</p></li>
     </ul>
   </section>
