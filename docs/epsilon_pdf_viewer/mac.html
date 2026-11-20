@@ -14,19 +14,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Epsilon PDF for Mac</title>
 <style>html:not(.pc) .pc, html.pc .mac { display: none; }
-html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([data-get~=mac]), html.get-chrome [data-get]:not([data-get~=chrome]) { display: none !important; }
+html.get-chrome-mac [data-get]:not([data-get~=chrome-mac]), html.get-firefox-mac [data-get]:not([data-get~=firefox-mac]), html.get-mac [data-get]:not([data-get~=mac]),
+html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:not([data-get~=firefox]) { display: none !important; }
 @media (max-width: 600px) { .nav .links a[href="mac"] { display: none; } .nav .btn-sm .long { display: none; } }</style>
-<script>/* the platform: .pc writes keys as Ctrl; get-both (a Mac with Chrome or another Chromium browser), get-mac (a Mac
-   with Safari or Firefox) or get-chrome (anything else) choose how the page offers Epsilon. ?as=mac-chrome, mac-safari
-   or win-chrome previews one (kept for the visit) */
+<script>/* the platform: .pc writes keys as Ctrl; one class chooses how the page offers Epsilon: get-chrome-mac (a Mac with
+   Chrome or another Chromium browser), get-firefox-mac (a Mac with Firefox), get-mac (a Mac with Safari or another
+   browser), get-firefox (Firefox elsewhere, phones too) or get-chrome (anything else: Chromium elsewhere, phones too,
+   or another browser). ?as=mac-chrome, mac-firefox, mac-safari, win-chrome or win-firefox previews one (kept for the
+   visit) */
 (function () {
   var d = document.documentElement, u = navigator.userAgent, as = null, q = /[?&]as=([a-z-]+)/.exec(location.search);
   try { if (q) sessionStorage.epsAs = q[1]; as = sessionStorage.epsAs || null; } catch (e) {}
-  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), chromium = /Chrome\/\d/.test(u) && !/Mobile|Android/.test(u),
-      pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
-  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); pc = /^win/.test(as); }
+  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), firefox = /Firefox\/\d|FxiOS\/\d/.test(u),
+      chromium = !firefox && /Chrome\/\d|CriOS\/\d/.test(u), pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
+  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); firefox = /firefox$/.test(as); pc = /^win/.test(as); }
   if (pc) d.classList.add("pc");
-  d.classList.add(mac ? (chromium ? "get-both" : "get-mac") : "get-chrome");
+  var b = firefox ? "firefox" : chromium ? "chrome" : "";
+  d.classList.add(mac ? (b ? "get-" + b + "-mac" : "get-mac") : "get-" + (b || "chrome"));
 })();</script>
 <meta name="description" content="Epsilon PDF for Mac: the Epsilon PDF viewer as a Mac app for local PDFs, with reload on recompile and SyncTeX for LaTeX. How to install it, set it as your PDF app, and what it keeps.">
 <meta name="color-scheme" content="light dark">
@@ -272,7 +276,7 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 .notes > .rel:first-of-type { margin-top: 0; border-top: 0; padding-top: 0; }
 .policy > .lede:first-child { margin-top: 0; }
 /* the end: the footer is a window onto the page's painting, its text in white */
-.foot-band { position: relative; isolation: isolate; background: rgb(131 90 118); padding-top: clamp(96px, 16vh, 160px); --scrim: 34 14 40; }
+footer.foot-band { position: relative; isolation: isolate; background: rgb(70 92 110); padding-top: clamp(96px, 16vh, 160px); --scrim: 10 22 40; }
 .foot-band .art-band { inset: 0; }
 .foot-band .art-band img { object-position: 50% 80%; }
 
@@ -475,6 +479,7 @@ rm -rf ~/Library/WebKit/nl.uva.epsilon.pdfapp ~/Library/Caches/nl.uva.epsilon.pd
       </div>
     </details>
   </section>
+  <p class="questions">Questions or a bug to report: write to <a href="mailto:erez.urbach@gmail.com">erez.urbach@gmail.com</a>.</p>
 </main>
 
 <footer class="foot-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w, assets/paintings/rapids-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/rapids-800.avif 800w, assets/paintings/rapids-1200.avif 1200w, assets/paintings/rapids-1536.avif 1536w, assets/paintings/rapids-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/rapids-800.webp 800w, assets/paintings/rapids-1200.webp 1200w, assets/paintings/rapids-1536.webp 1536w, assets/paintings/rapids-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/rapids-1200.webp" width="1536" height="1024" alt="" decoding="async" loading="lazy"></picture></div>
@@ -484,9 +489,12 @@ rm -rf ~/Library/WebKit/nl.uva.epsilon.pdfapp ~/Library/Caches/nl.uva.epsilon.pd
       <p>Built on <a href="https://mozilla.github.io/pdf.js/">PDF.js</a> (Apache License 2.0). Not made by or affiliated with Mozilla.</p>
     </div>
     <nav aria-label="Footer">
-      <a href="privacy">Privacy policy</a>
       <a href="features">Features</a>
       <a href="releases">Release notes</a>
+      <a href="privacy">Privacy policy</a>
+      <a href="mac" aria-current="page">Mac app</a>
+      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome Web Store</a>
+      <a href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Firefox Add-ons</a>
     </nav>
   </div>
 </footer>

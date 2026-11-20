@@ -14,7 +14,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Epsilon PDF viewer features</title>
-<meta name="description" content="The features of Epsilon PDF viewer, a Chrome extension for reading papers: formula search, peek, selection and copy as LaTeX, links, the outline, and how to use each.">
+<meta name="description" content="The features of Epsilon PDF viewer, a browser extension for Chrome and Firefox, and a Mac app, for reading papers: formula search, peek, selection and copy as LaTeX, links, the outline, and how to use each.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1d1d1f" media="(prefers-color-scheme: dark)">
@@ -196,7 +196,7 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 .page-band { position: relative; isolation: isolate; display: flex; align-items: flex-end; min-height: clamp(320px, 48vh, 480px); }
 /* (the title's soft shadow reaches past the window's sides on a phone: cut there, so the page never scrolls sideways) */
 .page-band { overflow-x: clip; }
-.page-band .art-band { inset: 0; background: rgb(87 83 58); --scrim: 6 18 10; }
+.page-band .art-band { inset: 0; background: rgb(120 105 84); --scrim: 42 37 13; }
 .page-band .art-band img { object-position: 50% 30%; }
 /* the painting is busy: a deeper scrim where the title sits */
 .page-band .art-band::after { background: linear-gradient(180deg, rgb(var(--scrim) / 0.45), rgb(var(--scrim) / 0.2) 30%, rgb(var(--scrim) / 0.5) 62%, rgb(var(--scrim) / 0.72)); }
@@ -208,7 +208,7 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 .notes > .rel:first-of-type { margin-top: 0; border-top: 0; padding-top: 0; }
 .policy > .lede:first-child { margin-top: 0; }
 /* the end: the footer is a window onto the page's painting, its text in white */
-.foot-band { position: relative; isolation: isolate; background: rgb(87 83 58); padding-top: clamp(96px, 16vh, 160px); --scrim: 6 18 10; }
+footer.foot-band { position: relative; isolation: isolate; background: rgb(120 105 84); padding-top: clamp(96px, 16vh, 160px); --scrim: 42 37 13; }
 .foot-band .art-band { inset: 0; }
 .foot-band .art-band img { object-position: 50% 80%; }
 
@@ -247,7 +247,9 @@ kbd {
 .seg { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--hair); }
 .seg button { font: 500 14px/1 var(--ui); color: var(--text-2); background: none; border: 0; padding: 9px 14px; border-radius: 999px; cursor: pointer; }
 .seg button[aria-pressed=true] { background: var(--surface); color: var(--text); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
-.feats[data-f=chrome] [data-plat=mac], .feats[data-f=mac] [data-plat=chrome] { display: none; }
+/* (Browser: in Chrome and Firefox, not the Mac app; Chrome, Firefox, Mac app: only there) */
+.feats[data-f=chrome] :is([data-plat=firefox], [data-plat=mac]), .feats[data-f=firefox] :is([data-plat=chrome], [data-plat=mac]),
+.feats[data-f=mac] :is([data-plat=browser], [data-plat=chrome], [data-plat=firefox]) { display: none; }
 .feats[data-f] .badge.plat { display: none; }
 .cat-lead { margin-top: 12px; }
 .cat h2 { font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; }
@@ -263,19 +265,23 @@ kbd {
 }
 </style>
 <style>html:not(.pc) .pc, html.pc .mac { display: none; }
-html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([data-get~=mac]), html.get-chrome [data-get]:not([data-get~=chrome]) { display: none !important; }
+html.get-chrome-mac [data-get]:not([data-get~=chrome-mac]), html.get-firefox-mac [data-get]:not([data-get~=firefox-mac]), html.get-mac [data-get]:not([data-get~=mac]),
+html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:not([data-get~=firefox]) { display: none !important; }
 @media (max-width: 600px) { .nav .links a[href="mac"] { display: none; } .nav .btn-sm .long { display: none; } }</style>
-<script>/* the platform: .pc writes keys as Ctrl; get-both (a Mac with Chrome or another Chromium browser), get-mac (a Mac
-   with Safari or Firefox) or get-chrome (anything else) choose how the page offers Epsilon. ?as=mac-chrome, mac-safari
-   or win-chrome previews one (kept for the visit) */
+<script>/* the platform: .pc writes keys as Ctrl; one class chooses how the page offers Epsilon: get-chrome-mac (a Mac with
+   Chrome or another Chromium browser), get-firefox-mac (a Mac with Firefox), get-mac (a Mac with Safari or another
+   browser), get-firefox (Firefox elsewhere, phones too) or get-chrome (anything else: Chromium elsewhere, phones too,
+   or another browser). ?as=mac-chrome, mac-firefox, mac-safari, win-chrome or win-firefox previews one (kept for the
+   visit) */
 (function () {
   var d = document.documentElement, u = navigator.userAgent, as = null, q = /[?&]as=([a-z-]+)/.exec(location.search);
   try { if (q) sessionStorage.epsAs = q[1]; as = sessionStorage.epsAs || null; } catch (e) {}
-  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), chromium = /Chrome\/\d/.test(u) && !/Mobile|Android/.test(u),
-      pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
-  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); pc = /^win/.test(as); }
+  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), firefox = /Firefox\/\d|FxiOS\/\d/.test(u),
+      chromium = !firefox && /Chrome\/\d|CriOS\/\d/.test(u), pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
+  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); firefox = /firefox$/.test(as); pc = /^win/.test(as); }
   if (pc) d.classList.add("pc");
-  d.classList.add(mac ? (chromium ? "get-both" : "get-mac") : "get-chrome");
+  var b = firefox ? "firefox" : chromium ? "chrome" : "";
+  d.classList.add(mac ? (b ? "get-" + b + "-mac" : "get-mac") : "get-" + (b || "chrome"));
 })();</script>
 </head>
 <body>
@@ -294,15 +300,16 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     <a href="releases" data-t="What's new">What's new</a>
     <a href="mac" data-t="Mac">Mac</a>
   </nav>
-  <a class="btn btn-sm" data-get="chrome" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
+  <a class="btn btn-sm" data-get="chrome" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome</a>
+  <a class="btn btn-sm" data-get="firefox" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Add to Firefox</a>
   <a class="btn btn-sm" data-get="mac" href="mac?download">Download<span class="long"> for Mac</span></a>
-  <a class="btn btn-sm" data-get="both" href="./#get">Get Epsilon</a>
+  <a class="btn btn-sm" data-get="chrome-mac firefox-mac" href="./#get">Get Epsilon</a>
 </header>
 
 <header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w, assets/paintings/prism-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/prism-800.webp 800w, assets/paintings/prism-1200.webp 1200w, assets/paintings/prism-1536.webp 1536w, assets/paintings/prism-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/prism-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Features</h1><p class="date">Version 1.4.7, November 2026</p></div></header>
 <main id="main" class="feats">
   <div class="plat-filter" role="group" aria-label="Show the features of">
-    <div class="seg"><button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="chrome" aria-pressed="false">Chrome extension</button><button type="button" data-f="mac" aria-pressed="false">Mac app</button></div>
+    <div class="seg"><button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="chrome" aria-pressed="false">Chrome</button><button type="button" data-f="firefox" aria-pressed="false">Firefox</button><button type="button" data-f="mac" aria-pressed="false">Mac app</button></div>
   </div>
   <section class="cat" id="search" aria-labelledby="h-search">
     <h2 id="h-search">Search</h2>
@@ -336,7 +343,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
   <section class="cat" id="copy" aria-labelledby="h-copy">
     <h2 id="h-copy">Select and copy</h2>
     <ul class="list">
-      <li><h3>Select by formula</h3><p>In a formula a selection takes whole elements, e.g. a fraction or bracket entered from outside, and what is highlighted is what is copied; "Select as text" in the ⋮ menu switches to Chrome's own selection.</p></li>
+      <li><h3>Select by formula</h3><p>In a formula a selection takes whole elements, e.g. a fraction or bracket entered from outside, and what is highlighted is what is copied; "Select as text" in the ⋮ menu switches to the browser's own selection.</p></li>
       <li><h3>Copy as LaTeX</h3><p><kbd>⌘</kbd> <kbd>C</kbd> copies inline formulas as <code>$…$</code>, displayed equations as <code>\[…\]</code>, and part of a formula as the TeX of that part.</p></li>
       <li><h3>Copied TeX</h3><p>Symbols copy as their commands, e.g. α as <code>\alpha</code>, matrices and cases as environments, and text inside formulas as <code>\text{…}</code>.</p></li>
       <li><h3>Copy as Mathematica</h3><p><span class="mac"><kbd>Ctrl</kbd> <kbd>⌘</kbd> <kbd>C</kbd></span><span class="pc"><kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>C</kbd></span>, or "Copy as Mathematica" in the right-click menu, copies the selected formula, or the one under the pointer, as Mathematica input; an ordinary copy where it cannot convert.</p></li>
@@ -362,13 +369,14 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <li><h3>Outline on hover</h3><p>Hovering the sidebar button shows the outline over the page; a click docks it beside the page.</p></li>
       <li><h3>Generated outline</h3><p>A PDF without an outline gets one from its numbered headings (chapters for books), with TeX in titles typeset, e.g. <code>\alpha'</code> as α′.</p></li>
       <li><h3>Remembered state</h3><p>Each PDF reopens at the last position read, with the sidebar open or closed as left.</p></li>
-      <li><h3>Navigate in viewer</h3><p>An option in the ⋮ menu, off by default: jumps from links, the outline and search go into the viewer's own history, with Back and Forward buttons left of the search and <span class="mac"><kbd>⌘</kbd> <kbd>[</kbd>/<kbd>]</kbd></span><span class="pc"><kbd>Alt</kbd> + <kbd>←</kbd>/<kbd>→</kbd></span>, and Chrome's Back leaves the PDF. In the Mac app it is always on.</p></li>
+      <li><h3>Navigate in viewer</h3><p>An option in the ⋮ menu, off by default: jumps from links, the outline and search go into the viewer's own history, with Back and Forward buttons left of the search and <span class="mac"><kbd>⌘</kbd> <kbd>[</kbd>/<kbd>]</kbd></span><span class="pc"><kbd>Alt</kbd> + <kbd>←</kbd>/<kbd>→</kbd></span>, and the browser's Back leaves the PDF. In the Mac app it is always on.</p></li>
     </ul>
   </section>
 
   <section class="cat" id="viewer" aria-labelledby="h-viewer">
     <h2 id="h-viewer">Viewer</h2>
     <ul class="list">
+      <li data-plat="firefox"><h3>Local files <span class="badge plat">Firefox</span></h3><p>A PDF opened from your computer stays in Firefox's own viewer. To read it in Epsilon, use its Open File button, or drop the file onto it.</p></li>
       <li><h3>Tab title</h3><p>The tab shows the paper's title, read from its first page when the PDF names none.</p></li>
       <li><h3>Copy link to page</h3><p>⋮ menu: copies a link that opens the PDF at the current page.</p></li>
       <li data-plat="chrome"><h3>Tabs restored <span class="badge plat">Chrome</span></h3><p>PDF tabs that Chrome closes when the extension updates reopen at their page.</p></li>
@@ -386,11 +394,11 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
   <section class="cat" id="settings" aria-labelledby="h-settings">
     <h2 id="h-settings">Settings</h2>
     <ul class="list">
-      <li><h3>Look and theme</h3><p>Look: Epsilon's or Chrome's; Theme: light, dark, or as the system is set.</p></li>
+      <li><h3>Look and theme</h3><p>Look: Epsilon's or the browser's; Theme: light, dark, or as the system is set.</p></li>
       <li><h3>Link borders</h3><p>Off by default; on, it draws the colored boxes some PDFs put around their links.</p></li>
       <li><h3>Peek at references <span class="badge">New in 1.4.7</span></h3><p>On by default: a click on a reference to the bibliography opens it in the peek, and <kbd>⌘</kbd> + click goes there. Off, a click on a reference goes there, as on any other link.</p></li>
       <li><h3>Sections <span class="badge">New in 1.4.7</span></h3><p>The settings in four groups: Appearance, Behavior, Default view and Advanced.</p></li>
-      <li data-plat="chrome"><h3>Sync <span class="badge plat">Chrome</span></h3><p>With Chrome Sync on, settings are copied to your other computers.</p></li>
+      <li data-plat="browser"><h3>Sync <span class="badge plat">Browser</span></h3><p>With Chrome Sync on, or Firefox Sync with Add-ons ticked, settings are copied to your other computers.</p></li>
     </ul>
   </section>
 
@@ -421,12 +429,12 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     <h2 id="h-privacy">Privacy</h2>
     <ul class="list">
       <li><h3>Local</h3><p>Formulas are read in your browser; PDFs, searches and browsing are sent nowhere, and the extension has no account and no analytics.</p></li>
-      <li><h3>Stored</h3><p>Settings, each PDF's last position and saved signatures stay in Chrome's storage, and go when the extension is removed.</p></li>
+      <li><h3>Stored</h3><p>Settings, each PDF's last position and saved signatures stay in the browser's storage, and go when the extension is removed.</p></li>
     </ul>
     <p class="cat-lead">For more information, see our <a class="link" href="privacy">privacy policy</a>.</p>
   </section>
 
-  <p class="questions">Changes in each version: the <a href="releases">release notes</a>.</p>
+  <p class="questions">Questions or a bug to report: write to <a href="mailto:erez.urbach@gmail.com">erez.urbach@gmail.com</a>.</p>
 </main>
 
 <footer class="foot-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w, assets/paintings/prism-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/prism-800.webp 800w, assets/paintings/prism-1200.webp 1200w, assets/paintings/prism-1536.webp 1536w, assets/paintings/prism-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/prism-1200.webp" width="1536" height="1024" alt="" decoding="async" loading="lazy"></picture></div>
@@ -436,10 +444,12 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <p>Built on <a href="https://mozilla.github.io/pdf.js/">PDF.js</a> (Apache License 2.0). Not made by or affiliated with Mozilla.</p>
     </div>
     <nav aria-label="Footer">
-      <a href="privacy">Privacy policy</a>
       <a href="features" aria-current="page">Features</a>
       <a href="releases">Release notes</a>
-      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Chrome Web Store</a>
+      <a href="privacy">Privacy policy</a>
+      <a href="mac">Mac app</a>
+      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome Web Store</a>
+      <a href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Firefox Add-ons</a>
     </nav>
   </div>
 </footer>
@@ -508,7 +518,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
 </script>
 <script>/* (a lone ⌘ key is Ctrl off the Mac; keys that differ otherwise are written both ways, .mac and .pc) */
 if (document.documentElement.classList.contains("pc")) document.querySelectorAll("kbd").forEach(function (k) { if (k.textContent === "⌘" && !k.closest(".mac")) k.textContent = "Ctrl"; });</script>
-<script>/* the filter: All, the Chrome extension's or the Mac app's features (it starts at All; kept for the visit) */
+<script>/* the filter: All, or the features in Chrome, in Firefox or in the Mac app (it starts at All; kept for the visit) */
 (function () {
   var m = document.querySelector(".feats"), bs = m.querySelectorAll(".seg button");
   function set(f) { if (f === "all") m.removeAttribute("data-f"); else m.dataset.f = f;

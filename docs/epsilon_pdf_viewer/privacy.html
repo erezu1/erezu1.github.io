@@ -5,21 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Epsilon PDF viewer privacy</title>
 <style>html:not(.pc) .pc, html.pc .mac { display: none; }
-html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([data-get~=mac]), html.get-chrome [data-get]:not([data-get~=chrome]) { display: none !important; }
+html.get-chrome-mac [data-get]:not([data-get~=chrome-mac]), html.get-firefox-mac [data-get]:not([data-get~=firefox-mac]), html.get-mac [data-get]:not([data-get~=mac]),
+html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:not([data-get~=firefox]) { display: none !important; }
 @media (max-width: 600px) { .nav .links a[href="mac"] { display: none; } .nav .btn-sm .long { display: none; } }</style>
-<script>/* the platform: .pc writes keys as Ctrl; get-both (a Mac with Chrome or another Chromium browser), get-mac (a Mac
-   with Safari or Firefox) or get-chrome (anything else) choose how the page offers Epsilon. ?as=mac-chrome, mac-safari
-   or win-chrome previews one (kept for the visit) */
+<script>/* the platform: .pc writes keys as Ctrl; one class chooses how the page offers Epsilon: get-chrome-mac (a Mac with
+   Chrome or another Chromium browser), get-firefox-mac (a Mac with Firefox), get-mac (a Mac with Safari or another
+   browser), get-firefox (Firefox elsewhere, phones too) or get-chrome (anything else: Chromium elsewhere, phones too,
+   or another browser). ?as=mac-chrome, mac-firefox, mac-safari, win-chrome or win-firefox previews one (kept for the
+   visit) */
 (function () {
   var d = document.documentElement, u = navigator.userAgent, as = null, q = /[?&]as=([a-z-]+)/.exec(location.search);
   try { if (q) sessionStorage.epsAs = q[1]; as = sessionStorage.epsAs || null; } catch (e) {}
-  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), chromium = /Chrome\/\d/.test(u) && !/Mobile|Android/.test(u),
-      pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
-  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); pc = /^win/.test(as); }
+  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), firefox = /Firefox\/\d|FxiOS\/\d/.test(u),
+      chromium = !firefox && /Chrome\/\d|CriOS\/\d/.test(u), pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
+  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); firefox = /firefox$/.test(as); pc = /^win/.test(as); }
   if (pc) d.classList.add("pc");
-  d.classList.add(mac ? (chromium ? "get-both" : "get-mac") : "get-chrome");
+  var b = firefox ? "firefox" : chromium ? "chrome" : "";
+  d.classList.add(mac ? (b ? "get-" + b + "-mac" : "get-mac") : "get-" + (b || "chrome"));
 })();</script>
-<meta name="description" content="The privacy policy of Epsilon PDF viewer, a Chrome extension: it collects no data; everything it does happens in your browser.">
+<meta name="description" content="The privacy policy of Epsilon PDF viewer, a browser extension for Chrome and Firefox: it collects no data; everything it does happens in your browser.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1d1d1f" media="(prefers-color-scheme: dark)">
@@ -213,7 +217,7 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 .notes > .rel:first-of-type { margin-top: 0; border-top: 0; padding-top: 0; }
 .policy > .lede:first-child { margin-top: 0; }
 /* the end: the footer is a window onto the page's painting, its text in white */
-.foot-band { position: relative; isolation: isolate; background: rgb(131 90 118); padding-top: clamp(96px, 16vh, 160px); --scrim: 34 14 40; }
+footer.foot-band { position: relative; isolation: isolate; background: rgb(131 90 118); padding-top: clamp(96px, 16vh, 160px); --scrim: 34 14 40; }
 .foot-band .art-band { inset: 0; }
 .foot-band .art-band img { object-position: 50% 80%; }
 
@@ -247,20 +251,21 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <a href="releases" data-t="What's new">What's new</a>
     <a href="mac" data-t="Mac">Mac</a>
   </nav>
-  <a class="btn btn-sm" data-get="chrome" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
+  <a class="btn btn-sm" data-get="chrome" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome</a>
+  <a class="btn btn-sm" data-get="firefox" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Add to Firefox</a>
   <a class="btn btn-sm" data-get="mac" href="mac?download">Download<span class="long"> for Mac</span></a>
-  <a class="btn btn-sm" data-get="both" href="./#get">Get Epsilon</a>
+  <a class="btn btn-sm" data-get="chrome-mac firefox-mac" href="./#get">Get Epsilon</a>
 </header>
 
-<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/cats-800.avif 800w, assets/paintings/cats-1200.avif 1200w, assets/paintings/cats-1671.avif 1671w, assets/paintings/cats-2048.avif 2048w, assets/paintings/cats-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/cats-800.avif 800w, assets/paintings/cats-1200.avif 1200w, assets/paintings/cats-1671.avif 1671w, assets/paintings/cats-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/cats-800.webp 800w, assets/paintings/cats-1200.webp 1200w, assets/paintings/cats-1671.webp 1671w, assets/paintings/cats-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/cats-1200.webp" width="1671" height="942" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Privacy</h1><p class="date">Version 1.1, October 2026</p></div></header>
+<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/cats-800.avif 800w, assets/paintings/cats-1200.avif 1200w, assets/paintings/cats-1671.avif 1671w, assets/paintings/cats-2048.avif 2048w, assets/paintings/cats-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/cats-800.avif 800w, assets/paintings/cats-1200.avif 1200w, assets/paintings/cats-1671.avif 1671w, assets/paintings/cats-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/cats-800.webp 800w, assets/paintings/cats-1200.webp 1200w, assets/paintings/cats-1671.webp 1671w, assets/paintings/cats-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/cats-1200.webp" width="1671" height="942" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Privacy</h1><p class="date">Version 1.2, November 2026</p></div></header>
 <main id="main" class="policy">
-  <p class="lede">Epsilon PDF viewer is a Chrome extension that opens PDF files in a viewer built on PDF.js. Everything it does
+  <p class="lede">Epsilon PDF viewer is a browser extension for Chrome and Firefox that opens PDF files in a viewer built on PDF.js. Everything it does
   happens in your browser, on your own computer.</p>
 
   <ul class="summary" aria-label="In short">
     <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>No data collected: your PDFs, searches and browsing go to no one.</li>
     <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>No account, no analytics, no advertising.</li>
-    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Settings and your place in each PDF stay in Chrome (with Chrome Sync on, settings follow you to your other computers); removing the extension removes them.</li>
+    <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>Settings and your place in each PDF stay in your browser (with Chrome Sync or Firefox Sync on, settings follow you to your other computers); removing the extension removes them.</li>
     <li><span class="tick" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>It reads only the PDFs websites send, never other pages.</li>
   </ul>
 
@@ -280,9 +285,10 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     <h2 id="keeps">What it keeps</h2>
     <p>Your settings for the viewer; for each document, the place you were reading, so that it opens there again; the
     signatures you choose to save; and which PDFs your open tabs show, so that they open again after the extension
-    updates. These stay in Chrome's storage for the extension on your computer. If you use Chrome Sync, Chrome may
-    also copy the viewer's settings to your other computers through your Google account, as it does for any
-    extension's settings; they still never reach the author. Removing the extension removes them.</p>
+    updates. These stay in the browser's storage for the extension on your computer. If you use Chrome Sync, or Firefox
+    Sync with add-ons synced, the browser may also copy the viewer's settings to your other computers through your
+    Google or Mozilla account, as it does for any extension's settings; they still never reach the author. Removing the
+    extension removes them.</p>
   </section>
 
   <section aria-labelledby="sites">
@@ -291,7 +297,7 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
     file to display it. It does not read other pages.</p>
   </section>
 
-  <p class="questions">Questions: write to the author through the extension's page in the <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Chrome Web Store</a>.</p>
+  <p class="questions">Questions or a bug to report: write to <a href="mailto:erez.urbach@gmail.com">erez.urbach@gmail.com</a>.</p>
 </main>
 
 <footer class="foot-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/cats-800.avif 800w, assets/paintings/cats-1200.avif 1200w, assets/paintings/cats-1671.avif 1671w, assets/paintings/cats-2048.avif 2048w, assets/paintings/cats-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/cats-800.avif 800w, assets/paintings/cats-1200.avif 1200w, assets/paintings/cats-1671.avif 1671w, assets/paintings/cats-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/cats-800.webp 800w, assets/paintings/cats-1200.webp 1200w, assets/paintings/cats-1671.webp 1671w, assets/paintings/cats-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/cats-1200.webp" width="1671" height="942" alt="" decoding="async" loading="lazy"></picture></div>
@@ -301,10 +307,12 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
       <p>Built on <a href="https://mozilla.github.io/pdf.js/">PDF.js</a> (Apache License 2.0). Not made by or affiliated with Mozilla.</p>
     </div>
     <nav aria-label="Footer">
-      <a href="privacy" aria-current="page">Privacy policy</a>
       <a href="features">Features</a>
       <a href="releases">Release notes</a>
-      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Chrome Web Store</a>
+      <a href="privacy" aria-current="page">Privacy policy</a>
+      <a href="mac">Mac app</a>
+      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome Web Store</a>
+      <a href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Firefox Add-ons</a>
     </nav>
   </div>
 </footer>

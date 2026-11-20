@@ -13,7 +13,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Epsilon PDF viewer</title>
-<meta name="description" content="A Chrome extension for reading scientific papers: search formulas as you type them, peek at a linked equation without losing your place, copy formulas as LaTeX. Built on PDF.js; everything runs in your browser.">
+<meta name="description" content="A browser extension for Chrome and Firefox, and a Mac app, for reading scientific papers: search formulas as you type them, peek at a linked equation without losing your place, copy formulas as LaTeX. Built on PDF.js; everything runs on your computer.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1d1d1f" media="(prefers-color-scheme: dark)">
@@ -190,10 +190,14 @@ kbd {
 .eps-name .eps-sub { font-size: 0.45em; font-weight: 400; line-height: 1.3; letter-spacing: 0; color: var(--text-2); margin-top: 0.3em; }
 .hero-name { font-size: clamp(30px, 3.4vw, 40px); margin: 0 auto clamp(28px, min(9vh, 6vw), 104px); }
 .hero h1 { font-size: clamp(42px, 6.6vw, 86px); line-height: 1.0; max-width: 16ch; margin-inline: auto; }
-.get-both .cta-row .btn, .get-mac .cta-row .btn { min-width: 232px; justify-content: center; }
+.get-chrome-mac .cta-row .btn, .get-firefox-mac .cta-row .btn, .get-mac .cta-row .btn { min-width: 232px; justify-content: center; }
+.also-for { color: var(--blue-text); font-weight: 500; }
 .also { position: relative; margin-top: 18px; font-size: 15px; color: var(--text-2); text-align: center; }
 .also .link { margin-left: 4px; }
 .cta-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 22px; margin-top: 36px; }
+/* two buttons that no longer fit side by side (a Mac with Chrome or Firefox, a narrow window): the browser's alone, the
+   Mac app and the other browser as links beside it ("Also for Mac and Firefox"); the script below sets .narrow */
+.cta-row:not(.narrow) .also-narrow, .cta-row.narrow > .btn[href^="mac"], .cta-row.narrow > a.link { display: none !important; }
 
 /* ---- 3D staging: a scene gives depth, its plane tilts back while it comes in, lies flat at the middle of the
    view, and leans away as it leaves; what floats over a plane sits a little above it (translateZ) ---- */
@@ -649,19 +653,23 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   filter: blur(24px); pointer-events: none; }
 </style>
 <style>html:not(.pc) .pc, html.pc .mac { display: none; }
-html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([data-get~=mac]), html.get-chrome [data-get]:not([data-get~=chrome]) { display: none !important; }
+html.get-chrome-mac [data-get]:not([data-get~=chrome-mac]), html.get-firefox-mac [data-get]:not([data-get~=firefox-mac]), html.get-mac [data-get]:not([data-get~=mac]),
+html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:not([data-get~=firefox]) { display: none !important; }
 @media (max-width: 600px) { .nav .links a[href="mac"] { display: none; } .nav .btn-sm .long { display: none; } }</style>
-<script>/* the platform: .pc writes keys as Ctrl; get-both (a Mac with Chrome or another Chromium browser), get-mac (a Mac
-   with Safari or Firefox) or get-chrome (anything else) choose how the page offers Epsilon. ?as=mac-chrome, mac-safari
-   or win-chrome previews one (kept for the visit) */
+<script>/* the platform: .pc writes keys as Ctrl; one class chooses how the page offers Epsilon: get-chrome-mac (a Mac with
+   Chrome or another Chromium browser), get-firefox-mac (a Mac with Firefox), get-mac (a Mac with Safari or another
+   browser), get-firefox (Firefox elsewhere, phones too) or get-chrome (anything else: Chromium elsewhere, phones too,
+   or another browser). ?as=mac-chrome, mac-firefox, mac-safari, win-chrome or win-firefox previews one (kept for the
+   visit) */
 (function () {
   var d = document.documentElement, u = navigator.userAgent, as = null, q = /[?&]as=([a-z-]+)/.exec(location.search);
   try { if (q) sessionStorage.epsAs = q[1]; as = sessionStorage.epsAs || null; } catch (e) {}
-  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), chromium = /Chrome\/\d/.test(u) && !/Mobile|Android/.test(u),
-      pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
-  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); pc = /^win/.test(as); }
+  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), firefox = /Firefox\/\d|FxiOS\/\d/.test(u),
+      chromium = !firefox && /Chrome\/\d|CriOS\/\d/.test(u), pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
+  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); firefox = /firefox$/.test(as); pc = /^win/.test(as); }
   if (pc) d.classList.add("pc");
-  d.classList.add(mac ? (chromium ? "get-both" : "get-mac") : "get-chrome");
+  var b = firefox ? "firefox" : chromium ? "chrome" : "";
+  d.classList.add(mac ? (b ? "get-" + b + "-mac" : "get-mac") : "get-" + (b || "chrome"));
 })();</script>
 </head>
 <body>
@@ -674,7 +682,6 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
   <symbol id="i-check" viewBox="0 0 24 24"><path d="m5.5 12.5 4.2 4.2 8.8-9.2"/></symbol>
   <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4.5v10.5M7.5 10.5 12 15l4.5-4.5M5.5 19h13"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
   <symbol id="i-file" viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h3.8l2 2h7.2a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></symbol>
   <symbol id="i-highlight" viewBox="0 0 24 24"><path d="m14.5 5 4.5 4.5-7 7L7.5 12z"/><path d="m7.5 12-3 3v3.5H8l3-3"/><path d="M14 20h6"/></symbol>
   <symbol id="i-text" viewBox="0 0 24 24"><path d="M5 7.5V5h14v2.5"/><path d="M12 5v14"/><path d="M9 19h6"/></symbol>
@@ -690,14 +697,15 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
 <header class="nav away" aria-label="Site">
   <a class="brand" href="#top" aria-label="Epsilon PDF viewer, back to top"><svg class="eps" aria-hidden="true"><use href="#eps"/></svg></a>
   <nav class="links" aria-label="Sections">
-    <a href="#search" data-t="Features" data-spy="search peek copy navigation journals more">Features</a>
+    <a href="#search" data-t="Features" data-spy="search peek copy navigation journals editor more">Features</a>
     <a href="#privacy" data-t="Privacy" data-spy="privacy">Privacy</a>
     <a href="#new" data-t="What's new" data-spy="new">What's new</a>
     <a href="mac" data-t="Mac">Mac</a>
   </nav>
   <a class="btn btn-sm" data-get="chrome" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome</a>
+  <a class="btn btn-sm" data-get="firefox" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Add to Firefox</a>
   <a class="btn btn-sm" data-get="mac" href="mac?download">Download<span class="long"> for Mac</span></a>
-  <a class="btn btn-sm" data-get="both" href="#get">Get Epsilon</a>
+  <a class="btn btn-sm" data-get="chrome-mac firefox-mac" href="#get">Get Epsilon</a>
 </header>
 
 <main id="main">
@@ -706,13 +714,17 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
   <section class="hero" id="top" aria-labelledby="hero-title">
     <div class="art-band" data-speed="0.3" data-far><picture class="art " aria-hidden="true"><source type="image/avif" srcset="assets/paintings/milkyway-800.avif 800w, assets/paintings/milkyway-1200.avif 1200w, assets/paintings/milkyway-1672.avif 1672w, assets/paintings/milkyway-2048.avif 2048w, assets/paintings/milkyway-2800.avif 2800w" sizes="(max-width: 600px) 1010px, 119vw"><source type="image/webp" srcset="assets/paintings/milkyway-800.webp 800w, assets/paintings/milkyway-1200.webp 1200w, assets/paintings/milkyway-1672.webp 1672w, assets/paintings/milkyway-2048.webp 2048w" sizes="(max-width: 600px) 1010px, 119vw"><img src="assets/paintings/milkyway-1200.webp" width="1672" height="942" alt="" decoding="async" fetchpriority="high"></picture></div>
     <div class="wrap">
-      <div class="on-art" style="display:contents"><div class="eps-name hero-name" role="img" aria-label="Epsilon PDF viewer"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span><span></span><span class="eps-sub"><span data-get="chrome">for Chrome</span><span data-get="both">for Chrome and Mac</span><span data-get="mac">for Mac</span></span></div>
+      <div class="on-art" style="display:contents"><div class="eps-name hero-name" role="img" aria-label="Epsilon PDF viewer"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span><span></span><span class="eps-sub"><span data-get="chrome">for Chrome</span><span data-get="firefox">for Firefox</span><span data-get="chrome-mac">for Chrome and Mac</span><span data-get="firefox-mac">for Firefox and Mac</span><span data-get="mac">for Mac</span></span></div>
       <h1 id="hero-title">The PDF reader made for scientific papers.</h1>
       <div class="cta-row">
-        <a class="btn" data-get="chrome both" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <a class="btn" data-get="mac both" href="mac?download">Download for Mac <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a>
-        <a class="link" data-get="mac" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Also for Chrome</a>
-        <a class="link" data-get="chrome" href="#search">See what it does <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-down"/></svg></a>
+        <a class="btn" data-get="chrome chrome-mac" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn" data-get="firefox firefox-mac" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Add to Firefox <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn" data-get="mac chrome-mac firefox-mac" href="mac?download">Download for Mac <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a>
+        <a class="link" data-get="firefox firefox-mac" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Also for Chrome</a>
+        <a class="link" data-get="chrome chrome-mac" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Also for Firefox</a>
+        <span class="also-for" data-get="mac">Also for <a class="link" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome</a> and <a class="link" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Firefox</a></span>
+        <span class="also-for also-narrow" data-get="chrome-mac">Also for <a class="link" href="mac">Mac</a> and <a class="link" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Firefox</a></span>
+        <span class="also-for also-narrow" data-get="firefox-mac">Also for <a class="link" href="mac">Mac</a> and <a class="link" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome</a></span>
       </div></div>
       <div class="scene hero-scene">
         <figure class="plane window tour" id="tour" style="margin:0" role="img" aria-label="One reading session in Epsilon on a physics paper: a click on section 3.5 in the outline jumps there; \phi_r typed in the find bar marks every φ_r on the page; a click on the reference (2.8) brings up a peek of that equation from below; a drag into equation (3.31) selects the whole bracket, Cmd+C copies it as LaTeX; and Back returns to where the reading started.">
@@ -822,7 +834,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     <div class="wrap">
       <div class="copy center reveal">
         <h2 id="f4"><a class="h-link" href="features#navigation">Move through the paper, and back.</a></h2>
-        <p>Use the outline to jump through the paper. Use Chrome's buttons to navigate, or the viewer's. If a paper has no outline or links of its own, Epsilon makes them for you!</p>
+        <p>Use the outline to jump through the paper. Use the browser's buttons to navigate, or the viewer's. If a paper has no outline or links of its own, Epsilon makes them for you!</p>
       </div>
       <div class="scene">
         <figure class="plane window nav-demo" id="nav-demo" data-v="in" style="margin:0" role="img" aria-label="Reading the introduction, Navigate in viewer on: a click on section 3.1 in the outline jumps there, the viewer's own Back button, left of the search, returns to the introduction, a click on section 2.2 jumps there, and Back returns again." data-chrome="Reading the introduction: a click on section 3.1 in the outline jumps there, Chrome's Back returns to the introduction, a click on section 2.2 jumps there, and Back returns again.">
@@ -934,7 +946,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
         <li><svg class="icon" aria-hidden="true"><use href="#i-form"/></svg><h3>Fill in forms</h3><p>Right in the viewer.</p></li>
         <li><svg class="icon" aria-hidden="true"><use href="#i-print"/></svg><h3>Print and save</h3><p>Print it, or save a copy.</p></li>
         <li><svg class="icon" aria-hidden="true"><use href="#i-present"/></svg><h3>Presentation mode</h3><p>Full screen, page by page.</p></li>
-        <li><svg class="icon" aria-hidden="true"><use href="#i-palette"/></svg><h3>Your look</h3><p>Epsilon's or Chrome's, in light or dark.</p></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-palette"/></svg><h3>Your look</h3><p>Epsilon's or your browser's, in light or dark.</p></li>
       </ul>
       <p class="all-feats"><a class="link" href="features">All features <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a></p>
     </div>
@@ -967,6 +979,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
         <a class="link news-all" href="releases">All release notes <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a>
       </div>
       <ul>
+        <li>Epsilon is now a Firefox add-on too.</li>
         <li>New in 1.4.7: a click on a reference to the bibliography opens it in the peek, and <span class="mac">⌘+click</span><span class="pc">Ctrl+click</span> goes there; any other link opens in the peek with <span class="mac">⌘+click</span><span class="pc">Ctrl+click</span>. Drag across a table's cells to copy the block as a LaTeX tabular.</li>
         <li>Footnotes open marked exactly, tables with only horizontal rules are found, and typing (a+b)/2 finds the stacked fraction. Settings come in sections. In 1.4.6, copy a formula as Mathematica input, and Navigate in viewer.</li>
         <li>In 1.4.5, fraction bars, roots and overlines read by the fonts' own layout rules, about 20% fewer equations missed. APS journals and matplotlib figure labels read as they are set, and equations with words in them read whole.</li>
@@ -988,11 +1001,16 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <div class="eps-name" role="img" aria-label="Epsilon PDF viewer"><svg class="eps eps-e" viewBox="157 124.9 199 274.1" aria-hidden="true"><path d="M 331.1 173.7 A 76 56 0 1 0 250.8 255.1 L 248.7 253.0 A 88 64 0 1 0 337.0 351.8" fill="none" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="eps-title">Epsilon<br>PDF viewer</span></div>
       <h2 id="last">Read your next paper in&nbsp;Epsilon.</h2>
       <div class="cta-row">
-        <a class="btn" data-get="chrome both" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <a class="btn" data-get="mac both" href="mac?download">Download for Mac <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a>
-        <a class="link" data-get="mac" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Also for Chrome</a>
+        <a class="btn" data-get="chrome chrome-mac" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn" data-get="firefox firefox-mac" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Add to Firefox <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn" data-get="mac chrome-mac firefox-mac" href="mac?download">Download for Mac <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></a>
+        <a class="link" data-get="firefox firefox-mac" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Also for Chrome</a>
+        <a class="link" data-get="chrome chrome-mac" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Also for Firefox</a>
+        <span class="also-for" data-get="mac">Also for <a class="link" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome</a> and <a class="link" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Firefox</a></span>
+        <span class="also-for also-narrow" data-get="chrome-mac">Also for <a class="link" href="mac">Mac</a> and <a class="link" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Firefox</a></span>
+        <span class="also-for also-narrow" data-get="firefox-mac">Also for <a class="link" href="mac">Mac</a> and <a class="link" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome</a></span>
       </div>
-      <p class="also" data-get="chrome">Also a Mac app, with your LaTeX editor one click away. <a class="link" href="mac">Epsilon for Mac</a></p>
+      <p class="also" data-get="chrome firefox">Also a Mac app, with your LaTeX editor one click away. <a class="link" href="mac">Epsilon for Mac</a></p>
     </div>
   </section>
 
@@ -1003,13 +1021,12 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <p>Built on <a href="https://mozilla.github.io/pdf.js/">PDF.js</a> (Apache License 2.0). Not made by or affiliated with Mozilla.</p>
     </div>
     <nav aria-label="Footer">
-      <a href="privacy">Privacy policy</a>
-      <a href="#search">Features</a>
-      <a href="features">All features</a>
-      <a href="#new">What's new</a>
+      <a href="features">Features</a>
       <a href="releases">Release notes</a>
-      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome Web Store</a>
+      <a href="privacy">Privacy policy</a>
       <a href="mac">Mac app</a>
+      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome Web Store</a>
+      <a href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Firefox Add-ons</a>
     </nav>
   </div>
 </footer>
@@ -1426,6 +1443,28 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
 })();
 </script>
 <noscript><style>.nav.away { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%); }</style></noscript>
+<script>
+// (the button rows: two buttons wrapped onto two lines, the second's place taken by a line of links: .narrow; measured
+// with both shown, at each width and once the fonts are in)
+(() => {
+  const d = document.documentElement;
+  if (!d.matches(".get-chrome-mac, .get-firefox-mac")) return;
+  const rows = [...document.querySelectorAll(".cta-row")];
+  let w = 0;
+  const fit = force => {
+    if (!force && innerWidth === w) return;
+    w = innerWidth;
+    for (const row of rows) {
+      row.classList.remove("narrow");
+      const bs = [...row.querySelectorAll(":scope > .btn")].filter(b => b.offsetParent);
+      if (bs.length === 2 && bs[1].offsetTop > bs[0].offsetTop + 4) row.classList.add("narrow");
+    }
+  };
+  fit(true);
+  addEventListener("resize", () => fit());
+  document.fonts && document.fonts.ready.then(() => fit(true));
+})();
+</script>
 <script>
 // the tab bar in once the hero's Add to Chrome has scrolled up past the bar's place, away again when it comes back
 (() => {

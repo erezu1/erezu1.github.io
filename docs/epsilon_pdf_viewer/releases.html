@@ -13,7 +13,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Epsilon PDF viewer release notes</title>
-<meta name="description" content="Release notes for Epsilon PDF viewer, a Chrome extension for reading papers: what changed in each version.">
+<meta name="description" content="Release notes for Epsilon PDF viewer, a browser extension for Chrome and Firefox, and a Mac app, for reading papers: what changed in each version.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1d1d1f" media="(prefers-color-scheme: dark)">
@@ -233,7 +233,7 @@ footer.on-art .art-band::after, .end .art-band::after { background: linear-gradi
 .notes > .rel { border-top: 0; padding-top: 0; margin-top: clamp(56px, 8vh, 80px); }
 .policy > .lede:first-child { margin-top: 0; }
 /* the end: the footer is a window onto the page's painting, its text in white */
-.foot-band { position: relative; isolation: isolate; background: rgb(79 51 54); padding-top: clamp(96px, 16vh, 160px); --scrim: 30 10 26; }
+footer.foot-band { position: relative; isolation: isolate; background: rgb(79 51 54); padding-top: clamp(96px, 16vh, 160px); --scrim: 30 10 26; }
 .foot-band .art-band { inset: 0; }
 .foot-band .art-band img { object-position: 50% 80%; }
 
@@ -250,19 +250,23 @@ footer.on-art .art-band::after { background: linear-gradient(180deg, rgb(var(--s
   filter: blur(24px); pointer-events: none; }
 </style>
 <style>html:not(.pc) .pc, html.pc .mac { display: none; }
-html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([data-get~=mac]), html.get-chrome [data-get]:not([data-get~=chrome]) { display: none !important; }
+html.get-chrome-mac [data-get]:not([data-get~=chrome-mac]), html.get-firefox-mac [data-get]:not([data-get~=firefox-mac]), html.get-mac [data-get]:not([data-get~=mac]),
+html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:not([data-get~=firefox]) { display: none !important; }
 @media (max-width: 600px) { .nav .links a[href="mac"] { display: none; } .nav .btn-sm .long { display: none; } }</style>
-<script>/* the platform: .pc writes keys as Ctrl; get-both (a Mac with Chrome or another Chromium browser), get-mac (a Mac
-   with Safari or Firefox) or get-chrome (anything else) choose how the page offers Epsilon. ?as=mac-chrome, mac-safari
-   or win-chrome previews one (kept for the visit) */
+<script>/* the platform: .pc writes keys as Ctrl; one class chooses how the page offers Epsilon: get-chrome-mac (a Mac with
+   Chrome or another Chromium browser), get-firefox-mac (a Mac with Firefox), get-mac (a Mac with Safari or another
+   browser), get-firefox (Firefox elsewhere, phones too) or get-chrome (anything else: Chromium elsewhere, phones too,
+   or another browser). ?as=mac-chrome, mac-firefox, mac-safari, win-chrome or win-firefox previews one (kept for the
+   visit) */
 (function () {
   var d = document.documentElement, u = navigator.userAgent, as = null, q = /[?&]as=([a-z-]+)/.exec(location.search);
   try { if (q) sessionStorage.epsAs = q[1]; as = sessionStorage.epsAs || null; } catch (e) {}
-  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), chromium = /Chrome\/\d/.test(u) && !/Mobile|Android/.test(u),
-      pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
-  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); pc = /^win/.test(as); }
+  var mac = /Macintosh/.test(u) && !(navigator.maxTouchPoints > 1), firefox = /Firefox\/\d|FxiOS\/\d/.test(u),
+      chromium = !firefox && /Chrome\/\d|CriOS\/\d/.test(u), pc = /Windows|Linux|CrOS|X11/.test(u) && !/Android|iPhone|iPad|Macintosh/.test(u);
+  if (as) { mac = /^mac/.test(as); chromium = /chrome$/.test(as); firefox = /firefox$/.test(as); pc = /^win/.test(as); }
   if (pc) d.classList.add("pc");
-  d.classList.add(mac ? (chromium ? "get-both" : "get-mac") : "get-chrome");
+  var b = firefox ? "firefox" : chromium ? "chrome" : "";
+  d.classList.add(mac ? (b ? "get-" + b + "-mac" : "get-mac") : "get-" + (b || "chrome"));
 })();</script>
 </head>
 <body>
@@ -282,12 +286,13 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     <a class="on" href="releases" data-t="What's new" aria-current="page">What's new</a>
     <a href="mac" data-t="Mac">Mac</a>
   </nav>
-  <a class="btn btn-sm" data-get="chrome" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Add to Chrome</a>
+  <a class="btn btn-sm" data-get="chrome" href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Add to Chrome</a>
+  <a class="btn btn-sm" data-get="firefox" href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Add to Firefox</a>
   <a class="btn btn-sm" data-get="mac" href="mac?download">Download<span class="long"> for Mac</span></a>
-  <a class="btn btn-sm" data-get="both" href="./#get">Get Epsilon</a>
+  <a class="btn btn-sm" data-get="chrome-mac firefox-mac" href="./#get">Get Epsilon</a>
 </header>
 
-<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w, assets/paintings/garden-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/garden-800.webp 800w, assets/paintings/garden-1200.webp 1200w, assets/paintings/garden-1672.webp 1672w, assets/paintings/garden-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/garden-1200.webp" width="1672" height="942" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Release notes</h1><p class="date">Updated November 17, 2026</p></div></header>
+<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w, assets/paintings/garden-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/garden-800.webp 800w, assets/paintings/garden-1200.webp 1200w, assets/paintings/garden-1672.webp 1672w, assets/paintings/garden-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/garden-1200.webp" width="1672" height="942" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Release notes</h1><p class="date">Updated November 20, 2026</p></div></header>
 <main id="main" class="policy notes">
 
 
@@ -297,6 +302,11 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <p class="date"><time datetime="2026-11-17">November 17, 2026</time></p>
     </header>
     <div class="rel-body">
+      <h3>Epsilon for Firefox <span class="badge plat">Firefox</span></h3>
+      <ul>
+        <li>The first release of the viewer as a Firefox add-on. <a href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Get it</a>.</li>
+        <li>PDFs opened from your computer stay in Firefox's own viewer; open them in Epsilon with its Open File button, or drop them onto it.</li>
+      </ul>
       <h3>Peek at references</h3>
       <ul>
         <li>A click on a reference to the bibliography, like [4], opens it in the peek, and the page stays where it is. <span class="mac">⌘+click</span><span class="pc">Ctrl+click</span> goes there.</li>
@@ -357,7 +367,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
         <li><span class="mac">Ctrl+⌘+C</span><span class="pc">Ctrl+Alt+C</span>, or Copy as Mathematica in the right-click menu on a formula, copies the selected formula, or the one under the pointer, as Mathematica input: fractions, roots, sums and integrals, derivatives, special functions (\Gamma(z) as Gamma[z]) and definitions (\equiv as :=).</li>
         <li>A selection of text with formulas in it copies each formula converted, one a line. Where a formula cannot be written in Mathematica, you get the ordinary copy.</li>
       </ul>
-      <h3>Navigate in viewer <span class="badge plat">Chrome</span></h3>
+      <h3>Navigate in viewer <span class="badge plat">Browser</span></h3>
       <ul>
         <li>An option in the ⋮ menu, off by default: links, the outline and search keep their jumps in the viewer's own history, with Back and Forward buttons left of the search and <span class="mac">⌘+[ and ⌘+]</span><span class="pc">Alt+← and Alt+→</span>. Chrome's Back leaves the PDF at once.</li>
         <li>Their tooltips name the place they go to, as the paper abbreviates it: Eq. (2.3), Sec. 3, Fig. 2.</li>
@@ -372,7 +382,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <ul>
         <li>More spellings found as the same formula: \AA as \mathring{A}, a typeset apostrophe as '. The highlight over a root sits on the root.</li>
         <li>A generated outline with math in its titles appears once, finished.</li>
-        <li><span class="badge plat">Chrome</span> Settings now also open from the end of the ⋮ menu.</li>
+        <li><span class="badge plat">Browser</span> Settings now also open from the end of the ⋮ menu.</li>
       </ul>
     </div>
   </section>
@@ -596,7 +606,7 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
     </div>
   </section>
 
-  <p class="questions">Questions or a bug to report: write to the author through the extension's page in the <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Chrome Web Store</a>.</p>
+  <p class="questions">Questions or a bug to report: write to <a href="mailto:erez.urbach@gmail.com">erez.urbach@gmail.com</a>.</p>
 </main>
 
 <footer class="foot-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w, assets/paintings/garden-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/garden-800.avif 800w, assets/paintings/garden-1200.avif 1200w, assets/paintings/garden-1672.avif 1672w, assets/paintings/garden-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/garden-800.webp 800w, assets/paintings/garden-1200.webp 1200w, assets/paintings/garden-1672.webp 1672w, assets/paintings/garden-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/garden-1200.webp" width="1672" height="942" alt="" decoding="async" loading="lazy"></picture></div>
@@ -606,10 +616,12 @@ html.get-both [data-get]:not([data-get~=both]), html.get-mac [data-get]:not([dat
       <p>Built on <a href="https://mozilla.github.io/pdf.js/">PDF.js</a> (Apache License 2.0). Not made by or affiliated with Mozilla.</p>
     </div>
     <nav aria-label="Footer">
-      <a href="privacy">Privacy policy</a>
       <a href="features">Features</a>
       <a href="releases" aria-current="page">Release notes</a>
-      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio">Chrome Web Store</a>
+      <a href="privacy">Privacy policy</a>
+      <a href="mac">Mac app</a>
+      <a href="https://chromewebstore.google.com/detail/jlmnplilklopnlgnndhhpogpogamllio" data-store-link>Chrome Web Store</a>
+      <a href="https://addons.mozilla.org/firefox/addon/epsilon-pdf-viewer/" data-store-link>Firefox Add-ons</a>
     </nav>
   </div>
 </footer>
