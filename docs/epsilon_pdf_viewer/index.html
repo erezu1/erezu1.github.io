@@ -974,19 +974,19 @@ html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:
     <div class="wrap news">
       <div class="copy reveal">
         <p class="num">What's new</p>
-        <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Click a reference to peek at it.</h2>
-        <p class="ver">Version 1.4.7</p>
+        <h2 id="news" style="font-size:clamp(30px,3.6vw,44px);line-height:1.06">Read a paper in another language.</h2>
+        <p class="ver">Version 1.5</p>
         <a class="link news-all" href="releases">All release notes <svg class="icon" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a>
       </div>
       <ul>
+        <li>New in 1.5: Translate (experimental) draws a paper's text translated in place, on your computer, and every formula stays exactly as it is. In Chrome, and in the Mac app on macOS 26 and later.</li>
+        <li>Search looks in the translation while it is shown, and translated text copies with each formula as its LaTeX.</li>
+        <li>One page at a time: Space goes to the next page, and the scroll wheel and the trackpad turn the pages.</li>
         <li>Epsilon is now a Firefox add-on too.</li>
-        <li>New in 1.4.7: a click on a reference to the bibliography opens it in the peek, and <span class="mac">⌘+click</span><span class="pc">Ctrl+click</span> goes there; any other link opens in the peek with <span class="mac">⌘+click</span><span class="pc">Ctrl+click</span>. Drag across a table's cells to copy the block as a LaTeX tabular.</li>
-        <li>Footnotes open marked exactly, tables with only horizontal rules are found, and typing (a+b)/2 finds the stacked fraction. Settings come in sections. In 1.4.6, copy a formula as Mathematica input, and Navigate in viewer.</li>
-        <li>In 1.4.5, fraction bars, roots and overlines read by the fonts' own layout rules, about 20% fewer equations missed. APS journals and matplotlib figure labels read as they are set, and equations with words in them read whole.</li>
-        <li>Accents and bars over letters read right in more fonts, and accented words copy as they read (Kähler). Books get their chapters in the outline, and a figure link opens with the whole figure in view.</li>
-        <li>In 1.4.4, text selects as in Chrome, and Epsilon steps in only at formulas. Displays with words read whole, and older plain TeX papers read better.</li>
-        <li>In 1.4.3, papers without links get them: sections, equations, figures, citations and the contents.</li>
-        <li>Cases, wide accents and integral limits read right, so almost every copy compiles. Earlier, in 1.4.2: copy part of a matrix, and every standard symbol read as its LaTeX command.</li>
+        <li>In 1.4.7, a click on a reference opens it in the peek, and <span class="mac">⌘+click</span><span class="pc">Ctrl+click</span> goes there. Drag across a table's cells to copy the block as a LaTeX tabular.</li>
+        <li>In 1.4.5, fraction bars, roots and overlines read by the fonts' own layout rules, about 20% fewer equations missed. APS journals and matplotlib figure labels read as they are set.</li>
+        <li>In 1.4.4, text selects as in the browser, and Epsilon steps in only at formulas; scanned papers select their text too.</li>
+        <li>In 1.4.2, copy part of a matrix, and every standard symbol reads as its LaTeX command.</li>
       </ul>
     </div>
   </section>

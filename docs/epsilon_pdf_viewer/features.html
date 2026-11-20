@@ -14,7 +14,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Epsilon PDF viewer features</title>
-<meta name="description" content="The features of Epsilon PDF viewer, a browser extension for Chrome and Firefox, and a Mac app, for reading papers: formula search, peek, selection and copy as LaTeX, links, the outline, and how to use each.">
+<meta name="description" content="The features of Epsilon PDF viewer, a browser extension for Chrome and Firefox, and a Mac app, for reading papers: formula search, peek, selection and copy as LaTeX, translation, links, the outline, and how to use each.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1d1d1f" media="(prefers-color-scheme: dark)">
@@ -247,9 +247,11 @@ kbd {
 .seg { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--hair); }
 .seg button { font: 500 14px/1 var(--ui); color: var(--text-2); background: none; border: 0; padding: 9px 14px; border-radius: 999px; cursor: pointer; }
 .seg button[aria-pressed=true] { background: var(--surface); color: var(--text); box-shadow: 0 0 0 0.5px var(--hair), 0 1px 2px rgb(0 0 0 / 0.08); }
-/* (Browser: in Chrome and Firefox, not the Mac app; Chrome, Firefox, Mac app: only there) */
-.feats[data-f=chrome] :is([data-plat=firefox], [data-plat=mac]), .feats[data-f=firefox] :is([data-plat=chrome], [data-plat=mac]),
-.feats[data-f=mac] :is([data-plat=browser], [data-plat=chrome], [data-plat=firefox]) { display: none; }
+/* (Browser: in Chrome and Firefox, not the Mac app; Chrome, Firefox, Mac app: only there; several tags, e.g.
+   data-plat="chrome mac", in each of them) */
+.feats[data-f=chrome] [data-plat]:not([data-plat~=chrome], [data-plat~=browser]),
+.feats[data-f=firefox] [data-plat]:not([data-plat~=firefox], [data-plat~=browser]),
+.feats[data-f=mac] [data-plat]:not([data-plat~=mac]) { display: none; }
 .feats[data-f] .badge.plat { display: none; }
 .cat-lead { margin-top: 12px; }
 .cat h2 { font-size: clamp(28px, 3.4vw, 38px); line-height: 1.1; }
@@ -306,7 +308,7 @@ html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:
   <a class="btn btn-sm" data-get="chrome-mac firefox-mac" href="./#get">Get Epsilon</a>
 </header>
 
-<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w, assets/paintings/prism-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/prism-800.webp 800w, assets/paintings/prism-1200.webp 1200w, assets/paintings/prism-1536.webp 1536w, assets/paintings/prism-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/prism-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Features</h1><p class="date">Version 1.4.7, November 2026</p></div></header>
+<header class="page-band on-art"><div class="art-band"><picture class="art " aria-hidden="true"><source media="(min-width: 601px)" type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w, assets/paintings/prism-2800.avif 2800w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/avif" srcset="assets/paintings/prism-800.avif 800w, assets/paintings/prism-1200.avif 1200w, assets/paintings/prism-1536.avif 1536w, assets/paintings/prism-2048.avif 2048w" sizes="(max-width: 600px) 600px, 100vw"><source type="image/webp" srcset="assets/paintings/prism-800.webp 800w, assets/paintings/prism-1200.webp 1200w, assets/paintings/prism-1536.webp 1536w, assets/paintings/prism-2048.webp 2048w" sizes="(max-width: 600px) 600px, 100vw"><img src="assets/paintings/prism-1200.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high"></picture></div><div class="band-in"><h1>Features</h1><p class="date">Version 1.5, November 2026</p></div></header>
 <main id="main" class="feats">
   <div class="plat-filter" role="group" aria-label="Show the features of">
     <div class="seg"><button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="chrome" aria-pressed="false">Chrome</button><button type="button" data-f="firefox" aria-pressed="false">Firefox</button><button type="button" data-f="mac" aria-pressed="false">Mac app</button></div>
@@ -332,7 +334,7 @@ html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:
   <section class="cat" id="peek" aria-labelledby="h-peek">
     <h2 id="h-peek">Peek</h2>
     <ul class="list">
-      <li><h3>Open <span class="badge">New in 1.4.7</span></h3><p>Click a reference to the bibliography, <kbd>⌘</kbd> + click any other link, or right-click a link and choose "Open in peek", to show its target in a panel at the bottom while the page above stays where it is. <kbd>⌘</kbd> + click on a reference goes there instead.</p></li>
+      <li><h3>Open</h3><p>Click a reference to the bibliography, <kbd>⌘</kbd> + click any other link, or right-click a link and choose "Open in peek", to show its target in a panel at the bottom while the page above stays where it is. <kbd>⌘</kbd> + click on a reference goes there instead.</p></li>
       <li><h3>Target mark</h3><p>The target is marked: an equation with its number, a figure or table with its caption; a figure is shown whole; a footnote, its number and its lines.</p></li>
       <li><h3>Zoom</h3><p>The peek opens at the page's zoom; its own − and + buttons, pinch, or <kbd>⌘</kbd> <kbd>+</kbd>/<kbd>−</kbd> with the pointer over it zoom the peek alone, and <kbd>⌘</kbd> <kbd>0</kbd> returns it to the page's zoom.</p></li>
       <li><h3>Resize and expand</h3><p>Drag its top edge to resize it; drag it up to the toolbar, or click Expand, to move the main view to the target and close the peek (Back returns).</p></li>
@@ -350,8 +352,17 @@ html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:
       <li><h3>Keyboard</h3><p>With a selection, <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> extends it by one element (a letter with its scripts, a whole fraction), <span class="mac"><kbd>⌥</kbd></span><span class="pc"><kbd>Ctrl</kbd></span> <kbd>Shift</kbd> + <kbd>←</kbd>/<kbd>→</kbd> by a word, and <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> by a line.</p></li>
       <li><h3>Triple click</h3><p>Selects the sentence, across lines; on a displayed formula, the whole formula with all its rows, without its number.</p></li>
       <li><h3>Submatrix</h3><p>Drag from one matrix entry to another to select the block between them, copied as <code>\begin{matrix}…\end{matrix}</code>.</p></li>
-      <li><h3>Table block <span class="badge">New in 1.4.7</span></h3><p>Drag from one cell of a table to another to select the block of cells between them, copied as <code>\begin{tabular}…\end{tabular}</code>. Tables ruled by horizontal lines only (booktabs) too; a heading over several columns is copied as <code>\multicolumn</code> when the block holds all its columns.</p></li>
+      <li><h3>Table block</h3><p>Drag from one cell of a table to another to select the block of cells between them, copied as <code>\begin{tabular}…\end{tabular}</code>. Tables ruled by horizontal lines only (booktabs) too; a heading over several columns is copied as <code>\multicolumn</code> when the block holds all its columns.</p></li>
       <li><h3>Scanned papers</h3><p>A scan with a text layer (OCR) can be selected and copied, also when the scan is tilted.</p></li>
+    </ul>
+  </section>
+
+  <section class="cat" id="translate" aria-labelledby="h-translate" data-plat="chrome mac">
+    <h2 id="h-translate">Translate <span class="badge plat">Chrome</span><span class="badge plat">Mac app</span></h2>
+    <ul class="list">
+      <li><h3>Translate in place <span class="badge">New in 1.5</span></h3><p>Experimental. Translate in the ⋮ menu, or its button in the toolbar on a paper not in English, draws the pages' text translated in place, in a font like the paper's, with every formula exactly as it is; Show original switches back. It runs on your computer, by Chrome's own translator, or by macOS's in the Mac app (macOS 26 and later); a language may need a one-time download.</p></li>
+      <li><h3>Search the translation <span class="badge">New in 1.5</span></h3><p>While a translation is shown, the find bar searches it; pages not yet translated are translated as it searches, nearest first.</p></li>
+      <li><h3>Copy the translation <span class="badge">New in 1.5</span></h3><p>Translated text can be selected and copied, each formula as its LaTeX.</p></li>
     </ul>
   </section>
 
@@ -377,6 +388,7 @@ html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:
     <h2 id="h-viewer">Viewer</h2>
     <ul class="list">
       <li data-plat="firefox"><h3>Local files <span class="badge plat">Firefox</span></h3><p>A PDF opened from your computer stays in Firefox's own viewer. To read it in Epsilon, use its Open File button, or drop the file onto it.</p></li>
+      <li><h3>One page at a time <span class="badge">New in 1.5</span></h3><p>In the ⋮ menu, beside Continuous scroll and Two pages side by side. <kbd>Space</kbd> goes to the next page and <kbd>Shift</kbd> <kbd>Space</kbd> back, a page taller than the window read down first; the scroll wheel and the trackpad turn the pages.</p></li>
       <li><h3>Tab title</h3><p>The tab shows the paper's title, read from its first page when the PDF names none.</p></li>
       <li><h3>Copy link to page</h3><p>⋮ menu: copies a link that opens the PDF at the current page.</p></li>
       <li data-plat="chrome"><h3>Tabs restored <span class="badge plat">Chrome</span></h3><p>PDF tabs that Chrome closes when the extension updates reopen at their page.</p></li>
@@ -386,6 +398,7 @@ html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:
   <section class="cat" id="annotate" aria-labelledby="h-annotate">
     <h2 id="h-annotate">Annotate and sign</h2>
     <ul class="list">
+      <li><h3>Markup tools</h3><p>The highlight, text, draw and signature tools show in the toolbar once "Show markup tools" is on in the ⋮ menu.</p></li>
       <li><h3>Highlight</h3><p>Select text and click the highlighter in the toolbar; five colors.</p></li>
       <li><h3>Sign</h3><p>The toolbar's signature tool: type, draw or upload a signature and place it on the page; up to five are kept.</p></li>
     </ul>
@@ -396,8 +409,8 @@ html.get-chrome [data-get]:not([data-get~=chrome]), html.get-firefox [data-get]:
     <ul class="list">
       <li><h3>Look and theme</h3><p>Look: Epsilon's or the browser's; Theme: light, dark, or as the system is set.</p></li>
       <li><h3>Link borders</h3><p>Off by default; on, it draws the colored boxes some PDFs put around their links.</p></li>
-      <li><h3>Peek at references <span class="badge">New in 1.4.7</span></h3><p>On by default: a click on a reference to the bibliography opens it in the peek, and <kbd>⌘</kbd> + click goes there. Off, a click on a reference goes there, as on any other link.</p></li>
-      <li><h3>Sections <span class="badge">New in 1.4.7</span></h3><p>The settings in four groups: Appearance, Behavior, Default view and Advanced.</p></li>
+      <li><h3>Peek at references</h3><p>On by default: a click on a reference to the bibliography opens it in the peek, and <kbd>⌘</kbd> + click goes there. Off, a click on a reference goes there, as on any other link.</p></li>
+      <li><h3>Sections</h3><p>The settings in four groups: Appearance, Behavior, Default view and Advanced.</p></li>
       <li data-plat="browser"><h3>Sync <span class="badge plat">Browser</span></h3><p>With Chrome Sync on, or Firefox Sync with Add-ons ticked, settings are copied to your other computers.</p></li>
     </ul>
   </section>
