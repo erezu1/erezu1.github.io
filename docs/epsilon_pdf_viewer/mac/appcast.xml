@@ -3,12 +3,12 @@
   <channel>
     <title>Epsilon PDF</title>
     <item>
-      <title>Epsilon PDF 1.5.1</title>
-      <pubDate>Fri, 20 Nov 2026 12:04:27 GMT</pubDate>
-      <sparkle:version>202611201203</sparkle:version>
-      <sparkle:shortVersionString>1.5.1</sparkle:shortVersionString>
+      <title>Epsilon PDF 1.5.2</title>
+      <pubDate>Mon, 23 Nov 2026 14:04:51 GMT</pubDate>
+      <sparkle:version>202611231404</sparkle:version>
+      <sparkle:shortVersionString>1.5.2</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <enclosure url="https://erezu1.github.io/epsilon_pdf_viewer/mac/Epsilon-PDF-1.5.1-202611201203.zip" length="7284142" type="application/octet-stream" sparkle:edSignature="DD8h7W+JpO8kkG5l3cdeH7Pqsqt1FuqoEaWqCXdeex/fE+iqE+XAXOxvvcWX9bJGFwn28y3GJmTBHxhHLJzDAA=="/>
+      <enclosure url="https://erezu1.github.io/epsilon_pdf_viewer/mac/Epsilon-PDF-1.5.2-202611231404.zip" length="7322710" type="application/octet-stream" sparkle:edSignature="asVQxusXF5vY0q5l6yqjNb1wremZO3uYO/7iM80RvVeXWlN6AuOfVeIFALRd1NVk+NAalMCoel3nlDlx6uvACA=="/>
     </item>
   </channel>
 </rss>
